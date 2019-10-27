@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- DTD 선언 -->
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+	<mapper namespace="DeviceMapper">
+	<!-- DAO의 메서드가 될 것이다. -->
+	
+	<!-- 행 삽입 -->
+	<insert id = "insertDevice">
+		INSERT INTO 
+			gztls_device( 
+				device_id
+				, device_name
+				, device_ip
+				, device_address
+				, device_latitude
+				, device_longitude
+		) VALUES( 
+				#{device_id}
+				, #{device_name}
+				, #{device_ip}
+				, #{device_address}
+				, #{device_latitude}
+				, #{device_longitude}
+		)
+	</insert>
+	
+	<!--행 조회 -->
+	<select id="selectDevice" resultType="DeviceVO">
+		SELECT
+			* 
+		FROM
+			gztls_device
+		WHERE
+			device_id = #{device_id}
+	</select>
+	
+	<!--전체 조회 -->
+	<select id="deviceList" resultType="DeviceVO">
+		SELECT
+			*
+		FROM 
+			gztls_device
+		ORDER BY
+			device_id
+	</select>
+	
+	<!-- 행 삭제 -->
+	<delete id="deleteDevice">
+		DELETE FROM
+			gztls_device
+		WHERE device_id = #{device_id}
+	</delete>
+	
+</mapper>
