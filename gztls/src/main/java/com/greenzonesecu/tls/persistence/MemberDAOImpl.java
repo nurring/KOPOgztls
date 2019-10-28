@@ -1,5 +1,7 @@
 package com.greenzonesecu.tls.persistence;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.apache.ibatis.session.SqlSession;
@@ -16,6 +18,7 @@ public class MemberDAOImpl implements MemberDAO{//샘플
 	private static final String GetTime = "MemberMapper.getTime";
 	private static final String InsertMember = "MemberMapper.insertMember";
 	private static final String SelectMember = "MemberMapper.selectMember";
+	private static final String SelectAll = "MemberMapper.selectAll";
 	
 	@Override
 	public String getTime() {
@@ -29,5 +32,9 @@ public class MemberDAOImpl implements MemberDAO{//샘플
 	@Override
 	public MemberVO selectMember(String userid) {
 		return (MemberVO)sqlSession.selectOne(SelectMember,userid);
+	}
+	@Override
+	public List<MemberVO> selectAll() {
+		return sqlSession.selectList(SelectAll);
 	}
 }

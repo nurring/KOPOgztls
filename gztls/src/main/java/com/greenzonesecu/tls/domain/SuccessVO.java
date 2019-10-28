@@ -8,8 +8,8 @@ public class SuccessVO {
 	private String sequence_no;
 	private String data_type;
 	private Double data_content;
-	private Date regidate;
-	private Date updatedate;
+	private long create_time;
+	private Date server_time;
 	
 	public String getG_id() {
 		return g_id;
@@ -41,17 +41,17 @@ public class SuccessVO {
 	public void setData_content(Double data_content) {
 		this.data_content = data_content;
 	}
-	public Date getRegidate() {
-		return regidate;
+	public long getCreate_time() {
+		return create_time;
 	}
-	public void setRegidate(Date regidate) {
-		this.regidate = regidate;
+	public void setCreate_time(long create_time) {
+		this.create_time = create_time;
 	}
-	public Date getUpdatedate() {
-		return updatedate;
+	public Date getServer_time() {
+		return server_time;
 	}
-	public void setUpdatedate(Date updatedate) {
-		this.updatedate = updatedate;
+	public void setServer_time(Date server_time) {
+		this.server_time = server_time;
 	}
-
+	
 }

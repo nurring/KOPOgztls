@@ -28,13 +28,20 @@
 	</insert>
 	
 	<!--데이터 조회 -->
-	<select id="selectMember" resultType="com.greenzonesecu.tls.domain.MemberVO">
+	<select id="selectMember" resultType="MemberVO">
 		SELECT
 			*
 		FROM 
 			Member
 		WHERE 
 			userid = #{userid}
+	</select>
+	
+	<select id="selectAll" parameterType="map" resultType="MemberVo">
+		SELECT
+			*
+		FROM
+			Member
 	</select>
 	
 </mapper>
