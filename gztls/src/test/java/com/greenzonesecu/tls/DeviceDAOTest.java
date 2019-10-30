@@ -25,7 +25,7 @@ public class DeviceDAOTest {
 	@Inject
 	private DeviceDAO dao;
 	
-//	@Before //@Test 전에 실행
+//	@Test
 //	public void testInsertDevice() throws Exception{
 //		DeviceVO vo = new DeviceVO();
 //		vo.setDevice_id("test");
@@ -37,9 +37,10 @@ public class DeviceDAOTest {
 //		dao.insertDevice(vo);
 //		
 //	}
+	
 //	@Test
 //	public void testSelectDevice() throws Exception{
-//		DeviceVO vo = dao.selectDevice("test");
+//		DeviceVO vo = dao.selectDevice("0000000090bcf7ffb827eb");
 //		System.out.println(vo.getDevice_id()+"/"+vo.getDevice_name()+"/"
 //							+vo.getDevice_ip()+"/"
 //							+vo.getDevice_address()+"/"
@@ -50,7 +51,7 @@ public class DeviceDAOTest {
 //	}
 	
 //	@Test
-//	public void testDeviceAll() throws Exception{
+//	public void testDevice() throws Exception{
 //		List<DeviceVO> vos = dao.deviceList();
 //		for (DeviceVO vo : vos) {
 //			String print = vo.getDevice_id()+"/"+vo.getDevice_name()+"/"

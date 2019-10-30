@@ -6,5 +6,5 @@ import java.util.List;
 import com.greenzonesecu.tls.domain.SuccessVO;
 
 public interface SuccessDAO {
-	public List<SuccessVO> selectTime(Date time);
+	public List<SuccessVO> selectTime(String time);
 }

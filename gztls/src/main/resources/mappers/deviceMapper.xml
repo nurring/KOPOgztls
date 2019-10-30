@@ -3,11 +3,9 @@
 <!-- DTD 선언 -->
 <!DOCTYPE mapper
 	PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
-	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">	
 	
 	<mapper namespace="DeviceMapper">
-	<!-- DAO의 메서드가 될 것이다. -->
-	
 	<!-- 행 삽입 -->
 	<insert id = "insertDevice">
 		INSERT INTO 
@@ -55,4 +53,4 @@
 		WHERE device_id = #{device_id}
 	</delete>
 	
-</mapper>
+	</mapper>

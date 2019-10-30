@@ -8,6 +8,12 @@
 <title>출력쓰~</title>
 </head>
 <body>
-<h1>특정 일자 데이터 출력쓰!</h1>
+	<h1>특정 일자 데이터 출력쓰!</h1>
+	${time }
+<hr>
+${vo.get(0).getServer_time() } <br>
+${vo.get(0).getData_type() } <br>
+${vo.get(0).getData_content() } <br>
+${vo.get(0).getDevice().getDevice_id() } <br>
 </body>
 </html>

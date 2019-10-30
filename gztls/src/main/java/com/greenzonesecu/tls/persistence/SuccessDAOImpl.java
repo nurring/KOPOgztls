@@ -20,7 +20,7 @@ public class SuccessDAOImpl implements SuccessDAO{
 	private static final String SelectTime = SM + ".selectTime";
 
 	@Override
-	public List<SuccessVO> selectTime(Date time) {
+	public List<SuccessVO> selectTime(String time) {
 		return sqlSession.selectList(SelectTime, time);
 	}
 

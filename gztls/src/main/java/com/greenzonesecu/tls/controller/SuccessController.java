@@ -1,13 +1,12 @@
 package com.greenzonesecu.tls.controller;
 
-import java.util.Date;
+import java.text.ParseException;
 import java.util.List;
 
 import javax.inject.Inject;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,11 +22,13 @@ public class SuccessController {
 	
 	private static final Logger logger = 	LoggerFactory.getLogger(SuccessController.class);
 	
-	@GetMapping(value = "/time/{date}")	//날짜 String으로 가져와서 Date로 변환하여 조회하자~ 내일 고치기
-	public String time(@PathVariable("date") @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date time, Model model) {
-		logger.info("selecTime called..........."+time);
+	@GetMapping(value = "/time/{date}")
+	public String time(@PathVariable("date") String time, Model model) throws ParseException {
+		logger.info("time..........."+time);
 		List<SuccessVO> vo = service.selectTime(time);
-		model.addAttribute("user", vo);
+		logger.info("vo.get(0).getServer_time()...."+vo.get(0).getData_content());
+		model.addAttribute("time", time);
+		model.addAttribute("vo", vo);
 		return "time";
 	}
 }

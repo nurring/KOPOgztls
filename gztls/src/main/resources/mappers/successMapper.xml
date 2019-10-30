@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- DTD 선언 -->
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+	<mapper namespace="SuccessMapper">
+	
+	<select id="selectTime" resultType="SuccessVO">		
+		SELECT 
+			a.device_id
+			, a.device_latitude
+			, a.device_longitude
+			, b.data_type
+			, b.data_content
+			, b.server_time
+		FROM 
+			gztls_device a
+		JOIN 
+			(
+				SELECT
+					device_id
+					, data_type
+					, data_content
+					, server_time 
+				FROM
+					gztls_success 
+				WHERE 
+					server_time = DATE_FORMAT(#{server_time}, '%Y-%m-%d %H:%i:%s')
+				GROUP BY 
+					device_id
+					, data_type
+					, data_content
+			) b
+		WHERE 
+			a.device_id = b.device_id;
+	</select>
+	
+	</mapper>

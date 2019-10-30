@@ -1,7 +1,11 @@
 package com.greenzonesecu.tls.domain;
 
 import java.util.Date;
+import java.util.List;
 
+import org.apache.ibatis.type.Alias;
+
+@Alias("DeviceVO")
 public class DeviceVO {
 	private String device_id;
 	private String device_name;
@@ -11,6 +15,7 @@ public class DeviceVO {
 	private double device_longitude;
 	private Date regidate;
 	private Date updatedate;
+	private List<SuccessVO> successList;
 	
 	public String getDevice_id() {
 		return device_id;
@@ -60,5 +65,10 @@ public class DeviceVO {
 	public void setUpdatedate(Date updatedate) {
 		this.updatedate = updatedate;
 	}
-
+	public List<SuccessVO> getSuccessList() {
+		return successList;
+	}
+	public void setSuccessList(List<SuccessVO> successList) {
+		this.successList = successList;
+	}
 }

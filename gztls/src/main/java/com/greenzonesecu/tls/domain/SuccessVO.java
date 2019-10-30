@@ -2,9 +2,12 @@ package com.greenzonesecu.tls.domain;
 
 import java.util.Date;
 
+import org.apache.ibatis.type.Alias;
+
+@Alias("SuccessVO")
 public class SuccessVO {
 	private String g_id;
-	private DeviceVO device; //Device Entity에 매핑
+	private String device_id; //Device Entity에 매핑
 	private String sequence_no;
 	private String data_type;
 	private Double data_content;
@@ -17,11 +20,11 @@ public class SuccessVO {
 	public void setG_id(String g_id) {
 		this.g_id = g_id;
 	}
-	public DeviceVO getDevice() {
-		return device;
+	public String getDevice_id() {
+		return device_id;
 	}
-	public void setDevice(DeviceVO device) {
-		this.device = device;
+	public void setDevice_id(String device_id) {
+		this.device_id = device_id;
 	}
 	public String getSequence_no() {
 		return sequence_no;
