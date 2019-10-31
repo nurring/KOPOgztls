@@ -1,5 +1,6 @@
 package com.greenzonesecu.tls.persistence;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -20,11 +21,11 @@ public class MemberDAOImpl implements MemberDAO{//샘플
 	private static final String SelectMember = "MemberMapper.selectMember";
 	private static final String SelectAll = "MemberMapper.selectAll";
 	
-	@Override
-	public String getTime() {
-		return sqlSession.selectOne(GetTime);
-		
-	}
+//	@Override
+//	public String getTime() {
+//		return sqlSession.selectOne(GetTime);
+//		
+//	}
 	@Override
 	public void insertMember(MemberVO vo) {
 		sqlSession.insert(InsertMember,vo);
@@ -33,8 +34,17 @@ public class MemberDAOImpl implements MemberDAO{//샘플
 	public MemberVO selectMember(String userid) {
 		return (MemberVO)sqlSession.selectOne(SelectMember,userid);
 	}
+//	@Override
+//	public String selectMember(HashMap<String, Object> map) {
+//		//return (MemberVO)sqlSession.selectOne(SelectMember,userid);
+//		return sqlSession.getMapper(MemberDAO.class).selectMember(map);
+//	}
+//	@Override
+//	public List<MemberVO> selectAll() {
+//		return sqlSession.selectList(SelectAll);
+//	}
 	@Override
-	public List<MemberVO> selectAll() {
+	public List<String> selectAll() {
 		return sqlSession.selectList(SelectAll);
 	}
 }

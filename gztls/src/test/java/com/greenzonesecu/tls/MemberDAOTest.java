@@ -33,9 +33,9 @@ public class MemberDAOTest {
 	}
 	@Test
 	public void testSelectMember() throws Exception{
-		MemberVO vo = dao.selectMember("gguri");
-		System.out.println(vo.getUserid()+"/"+vo.getUsername()+"/"
-				+vo.getEmail());
+//		MemberVO vo = dao.selectMember("gguri");
+//		System.out.println(vo.getUserid()+"/"+vo.getUsername()+"/"
+//				+vo.getEmail());
 	}
 	
 }

@@ -5,6 +5,12 @@
 	
 	<mapper namespace="MemberMapper">
 	<!-- DAO의 메서드가 될 것이다. -->
+	<resultMap id="selectMemberResultMap" type="MemberVO">
+	    <id property="userid" column="user_id" />
+	    <result property="userpw" column="userpw"/>
+	    <result property="username" column="username"/>
+	    <result property="email" column="email"/>
+	</resultMap>
 	
 	<!-- 현재 시간 조회 -->
 	<select id="getTime" resultType="String"> 
@@ -28,7 +34,7 @@
 	</insert>
 	
 	<!--데이터 조회 -->
-	<select id="selectMember" resultType="MemberVO">
+	<select id="selectMember" resultType="String" parameterType="hashmap">
 		SELECT
 			*
 		FROM 
@@ -37,7 +43,7 @@
 			userid = #{userid}
 	</select>
 	
-	<select id="selectAll" parameterType="map" resultType="MemberVo">
+	<select id="selectAll" resultType="map">
 		SELECT
 			*
 		FROM
