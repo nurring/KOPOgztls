@@ -6,5 +6,4 @@ import java.util.List;
 import com.greenzonesecu.tls.domain.SuccessVO;
 
 public interface SuccessService {
-	public List<SuccessVO> selectTime(String time);
 }

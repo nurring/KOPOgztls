@@ -15,8 +15,5 @@ public class SuccessServiceImpl implements SuccessService {
 	@Inject
 	private SuccessDAO dao;
 
-	@Override
-	public List<SuccessVO> selectTime(String time) {
-		return dao.selectTime(time);
-	}
+
 }

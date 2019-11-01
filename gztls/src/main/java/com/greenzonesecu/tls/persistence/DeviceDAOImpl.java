@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.greenzonesecu.tls.domain.DeviceVO;
@@ -11,7 +12,7 @@ import com.greenzonesecu.tls.domain.DeviceVO;
 @Repository
 public class DeviceDAOImpl implements DeviceDAO {
 	
-	@Inject
+	@Autowired
 	private SqlSession sqlSession;
 	
 	private static final String DM = "DeviceMapper";
@@ -19,6 +20,7 @@ public class DeviceDAOImpl implements DeviceDAO {
 	private static final String SelectDevice = DM + ".selectDevice";
 	private static final String DeviceList = DM + ".deviceList";
 	private static final String DeleteDevice = DM + ".deleteDevice";
+	private static final String SelectByServerTime = DM + ".selectByServerTime";
 	//update만들기~
 
 	@Override
@@ -40,5 +42,12 @@ public class DeviceDAOImpl implements DeviceDAO {
 	public void deleteDevice(String device_id) {
 		sqlSession.delete(DeleteDevice, device_id);	
 	}
+
+	@Override
+	public List<DeviceVO> selectByServerTime(String server_time) {
+		return sqlSession.selectList(SelectByServerTime, server_time);
+	}
+
+
 
 }

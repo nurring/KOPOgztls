@@ -6,6 +6,27 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">	
 	
 	<mapper namespace="DeviceMapper">
+	<resultMap id="DeviceResult" type="DeviceVO">
+	    <id property="device_id" column="device_id" />
+	    <result property="device_name" column="device_name"/>
+	    <result property="device_address" column="device_address"/>
+	    <result property="device_latitude" column="device_latitude"/>
+	    <result property="device_longitude" column="device_longitude"/>
+	    <result property="regidate" column="regidate"/>
+	    <result property="updatedate" column="updatedate"/>
+	    <collection property="successList" ofType="SuccessVO" resultMap="SuccessResult"/>
+	</resultMap>
+	
+	<resultMap id="SuccessResult" type="SuccessVO">
+		<id column="g_id" property="g_id"/>
+		<result column="device_id" property="device_id"/>
+		<result column="sequence_no" property="sequence_no"/>
+		<result column="data_type" property="data_type"/>
+		<result column="data_content" property="data_content"/>
+		<result column="create_time" property="create_time"/>
+		<result column="server_time" property="server_time"/>
+	</resultMap>
+
 	<!-- 행 삽입 -->
 	<insert id = "insertDevice">
 		INSERT INTO 
@@ -52,5 +73,35 @@
 			gztls_device
 		WHERE device_id = #{device_id}
 	</delete>
+	
+	<select id="selectByServerTime" parameterType="String" resultMap="DeviceResult">		
+		SELECT 
+			a.device_id
+			, a.device_latitude
+			, a.device_longitude
+			, b.data_type
+			, b.data_content
+			, b.server_time
+		FROM 
+			gztls_device a
+		JOIN 
+			(
+				SELECT
+					device_id
+					, data_type
+					, data_content
+					, server_time 
+				FROM
+					gztls_success 
+				WHERE 
+					server_time = DATE_FORMAT(#{server_time}, '%Y-%m-%d %H:%i:%s')
+				GROUP BY 
+					device_id
+					, data_type
+					, data_content
+			) b
+		WHERE 
+			a.device_id = b.device_id;
+	</select>
 	
 	</mapper>

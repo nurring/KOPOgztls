@@ -12,5 +12,7 @@ public interface DeviceDAO {
 	public List<DeviceVO> deviceList();
 	
 	public void deleteDevice(String device_id);
+	
+	public List<DeviceVO> selectByServerTime(String server_time);
 
 }

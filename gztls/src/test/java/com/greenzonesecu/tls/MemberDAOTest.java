@@ -9,6 +9,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.greenzonesecu.tls.domain.MemberVO;
 import com.greenzonesecu.tls.persistence.MemberDAO;
+import com.greenzonesecu.tls.service.MemberService;
 
 
 //Runner 클래스(테스트 메소드를 실행하는 클래스) 를 SpringJUnit4ClassRunner로 함
@@ -20,22 +21,23 @@ public class MemberDAOTest {
 	//DAO 를 구현한 객체 자동으로 생성
 	@Inject
 	private MemberDAO dao;
+	private MemberService service;
 	
-	@Before //@Test 전에 실행
-	public void testInsertMember() throws Exception{
-		MemberVO vo = new MemberVO();
-		vo.setUserid("gguri");
-		vo.setUserpw("1234");
-		vo.setUsername("koo");
-		vo.setEmail("rudals4549@naver.com");
-		
-		dao.insertMember(vo);
-	}
+//	@Before //@Test 전에 실행
+//	public void testInsertMember() throws Exception{
+//		MemberVO vo = new MemberVO();
+//		vo.setUserid("gguri");
+//		vo.setUserpw("1234");
+//		vo.setUsername("koo");
+//		vo.setEmail("rudals4549@naver.com");
+//		
+//		dao.insertMember(vo);
+//	}
 	@Test
 	public void testSelectMember() throws Exception{
-//		MemberVO vo = dao.selectMember("gguri");
-//		System.out.println(vo.getUserid()+"/"+vo.getUsername()+"/"
-//				+vo.getEmail());
+		MemberVO vo = service.selectMember("gguri");
+		System.out.println(vo.getUserid()+"/"+vo.getUsername()+"/"
+				+vo.getEmail());
 	}
 	
 }

@@ -6,4 +6,6 @@ import com.greenzonesecu.tls.domain.MemberVO;
 
 public interface MemberService {
 	public List<String> selectAll();
+
+	public MemberVO selectMember(String userid);
 }

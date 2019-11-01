@@ -20,5 +20,11 @@ public class MemberServiceImpl implements MemberService{
 		return dao.selectAll();
 	}
 
+	@Override
+	public MemberVO selectMember(String userid) {
+		// TODO Auto-generated method stub
+		return dao.selectMember(userid);
+	}
+
 
 }

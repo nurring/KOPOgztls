@@ -71,4 +71,13 @@ public class DeviceVO {
 	public void setSuccessList(List<SuccessVO> successList) {
 		this.successList = successList;
 	}
+
+	@Override
+	public String toString() {
+		return "DeviceVO [device_id=" + device_id + ", device_name=" + device_name + ", device_ip=" + device_ip
+				+ ", device_address=" + device_address + ", device_latitude=" + device_latitude + ", device_longitude="
+				+ device_longitude + ", regidate=" + regidate + ", updatedate=" + updatedate + ", successList="
+				+ successList + "]";
+	}
+	
 }
