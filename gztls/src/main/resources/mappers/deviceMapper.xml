@@ -74,6 +74,7 @@
 		WHERE device_id = #{device_id}
 	</delete>
 	
+	<!-- 지도에 뿌릴 데이터 -->
 	<select id="selectByServerTime" parameterType="String" resultMap="DeviceResult">		
 		SELECT 
 			a.device_id
@@ -102,6 +103,54 @@
 			) b
 		WHERE 
 			a.device_id = b.device_id;
+	</select>
+	
+	<!-- 조건별 평균값 통계용 -->
+	<select id="selectAvgByCondition" parameterType="String" resultMap="DeviceResult">
+	SELECT 
+		a.device_name
+		, a.device_id
+		, b.data_type
+		, b.average 
+	FROM 
+		gztls_device a
+	JOIN 
+		(
+			SELECT 
+				device_id
+				, data_type
+				, AVG(data_content) AS average
+			FROM 
+				gztls_success 
+			WHERE 
+			<!-- choose를 쓸지 
+			<choose> 
+				<when test='column == "device_id"'>
+					device_id = #{columnStr}
+				</when>
+				<when test='column =="server_time"'>
+					AND server_time BETWEEN #{columnStr} AND #{columnStr}				
+				</when>
+				<when test='column =="data_type"'>
+					AND data_type = #{columnStr}
+				</when>
+			</choose>-->
+			
+			<where> <!-- where을 쓸지 고민해보자 -->
+				<if test='device_id != null'>
+					device_id = #{device_id}
+				</if>
+				<if test='server_time != null'>
+					AND server_time BETWEEN #{fromDate} AND #{toDate}
+				</if>
+				<if test='data_type != null'>
+					AND data_type = #{data_type}
+				</if>				
+			</where>
+			GROUP BY device_id, data_type
+		)b
+	WHERE 
+		a.device_id = b.device_id;
 	</select>
 	
 	</mapper>
