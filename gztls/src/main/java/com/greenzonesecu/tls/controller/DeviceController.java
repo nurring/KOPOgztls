@@ -3,6 +3,8 @@ package com.greenzonesecu.tls.controller;
 import java.text.ParseException;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,19 +30,23 @@ public class DeviceController {
 		logger.info("time..........."+server_time);
 		
 		List<DeviceVO> vos = service.selectByServerTime(server_time);
-
-
 		logger.info(vos.toString());
 		model.addAttribute("list",vos);
 		return "time";
 	}
 	
-	@RequestMapping(value="test") //json 데이터 ajax로 어떻게 받아오는 건가요.. url...
+	@GetMapping(value = "/test")
+	public String time(Model model) throws ParseException {
+		
+		return "test2"; //test2.jsp
+	}
+	
+	@RequestMapping(value="/test2")//json ~ 매 초 데이터 갱신 처리
 	@ResponseBody
-	public List<DeviceVO> test(){
+	public List<DeviceVO> test(HttpServletRequest request, String server_time){
 		List<DeviceVO> vos = service.selectByServerTime("20190901000100");
 		return vos;
-	}
+	}	
 	
 
 }

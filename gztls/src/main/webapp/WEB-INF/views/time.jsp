@@ -15,11 +15,13 @@
 	}
 </style>
 <script type="text/javascript">
-var list = new Array();
+var str = "[";
 <c:forEach items="${list}" var="e">
-list.push("${e.device_latitude}");
-list.push("${e.device_longitude}")
+str += "{lat: " + "${e.device_latitude}" + ", lng: " + "${e.device_longitude}" + "},";
 </c:forEach>
+str = str.substr(0, str.length -1);
+str += "]";
+
 </script>
 </head>
 <body>
@@ -54,7 +56,7 @@ list.push("${e.device_longitude}")
 <script>
 
 function initMap() {
-
+	console.log("str", str);
     var map = new google.maps.Map(document.getElementById('map'), {
       zoom: 10,
       center: {lat: 37.385847, lng: 127.121260}
@@ -78,11 +80,12 @@ function initMap() {
     var markerCluster = new MarkerClusterer(map, markers,
         {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
   }
-  var locations = [
-    {lat: 37.385847, lng: 127.121260},
-    {lat: 37.385847, lng: 127.121260},
-    {lat: 37.385847, lng: 127.121260}
-  ]
+  var locations = ""
+  locations =
+  [{lat: 37.612682, lng: 127.078712},
+	{lat: 37.592968, lng: 126.922722},
+	{lat: 37.522076, lng: 126.934715},
+	{lat: 37.403355, lng: 127.101212}]
 </script>
 <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js">
 </script>
