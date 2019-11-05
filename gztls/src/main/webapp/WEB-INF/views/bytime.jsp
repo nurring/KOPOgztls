@@ -7,7 +7,7 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>시간검색</title>
 <script type="text/javascript">
 	function checking() {
 		var server_time = $("#server_time").val();
@@ -26,7 +26,6 @@
 				alert("err");
 			}
 		});
-		 //<- 이 문장으로 새로고침(reload)이 방지됨
 	};
 </script>
 </head>

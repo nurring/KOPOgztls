@@ -13,6 +13,7 @@ public class SuccessVO {
 	private Double data_content;
 	private long create_time;
 	private Date server_time;
+	private Double average;
 	
 	public String getG_id() {
 		return g_id;
@@ -56,11 +57,17 @@ public class SuccessVO {
 	public void setServer_time(Date server_time) {
 		this.server_time = server_time;
 	}
+	public Double getAverage() {
+		return average;
+	}
+	public void setAverage(Double average) {
+		this.average = average;
+	}
 	@Override
 	public String toString() {
 		return "SuccessVO [g_id=" + g_id + ", device_id=" + device_id + ", sequence_no=" + sequence_no + ", data_type="
 				+ data_type + ", data_content=" + data_content + ", create_time=" + create_time + ", server_time="
-				+ server_time + "]";
+				+ server_time + ", average=" + average + "]";
 	}
 	
 }

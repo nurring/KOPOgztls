@@ -1,18 +1,17 @@
 package com.greenzonesecu.tls.controller;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod; 
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.greenzonesecu.tls.domain.DeviceVO;
@@ -48,5 +47,12 @@ public class RController {
 		return vos;
 	}
 	
+	@RequestMapping(value="/avgbyconjsn", method=RequestMethod.GET)
+	public List<DeviceVO> avgbycon(@RequestParam Map<String, String> param, DeviceVO vo){
+		logger.info("param..........."+param);
+		List<DeviceVO> vos = service.selectAvgByCondition(param);
+		logger.info(vos.toString());
+		return vos;
+	}
 
 }

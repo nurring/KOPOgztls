@@ -1,6 +1,7 @@
 package com.greenzonesecu.tls.persistence;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 import org.apache.ibatis.session.SqlSession;
@@ -21,6 +22,8 @@ public class DeviceDAOImpl implements DeviceDAO {
 	private static final String DeviceList = DM + ".deviceList";
 	private static final String DeleteDevice = DM + ".deleteDevice";
 	private static final String SelectByServerTime = DM + ".selectByServerTime";
+	private static final String SelectAvgByCondition = DM + ".selectAvgByCondition";
+	
 	//update만들기~
 
 	@Override
@@ -46,6 +49,11 @@ public class DeviceDAOImpl implements DeviceDAO {
 	@Override
 	public List<DeviceVO> selectByServerTime(String server_time) {
 		return sqlSession.selectList(SelectByServerTime, server_time);
+	}
+
+	@Override
+	public List<DeviceVO> selectAvgByCondition(Map<String, String> map) {
+		return sqlSession.selectList(SelectAvgByCondition, map);
 	}
 
 

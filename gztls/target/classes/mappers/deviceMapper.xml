@@ -25,6 +25,7 @@
 		<result column="data_content" property="data_content"/>
 		<result column="create_time" property="create_time"/>
 		<result column="server_time" property="server_time"/>
+		<result column="average" property="average"/>
 	</resultMap>
 
 	<!-- 행 삽입 -->
@@ -122,26 +123,13 @@
 				, AVG(data_content) AS average
 			FROM 
 				gztls_success 
-			WHERE 
-			<!-- choose를 쓸지 
-			<choose> 
-				<when test='column == "device_id"'>
-					device_id = #{columnStr}
-				</when>
-				<when test='column =="server_time"'>
-					AND server_time BETWEEN #{columnStr} AND #{columnStr}				
-				</when>
-				<when test='column =="data_type"'>
-					AND data_type = #{columnStr}
-				</when>
-			</choose>-->
-			
+			 			
 			<where> <!-- where을 쓸지 고민해보자 -->
 				<if test='device_id != null'>
 					device_id = #{device_id}
 				</if>
 				<if test='server_time != null'>
-					AND server_time BETWEEN #{fromDate} AND #{toDate}
+					AND server_time BETWEEN #{server_time} AND #{to_date}
 				</if>
 				<if test='data_type != null'>
 					AND data_type = #{data_type}

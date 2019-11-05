@@ -14,7 +14,7 @@ import com.greenzonesecu.tls.service.DeviceService;
  * Handles requests for the application home page.
  */
 @Controller
-public class HomeController {
+public class HomeController { //jsp view로 return
 	@Autowired
 	private DeviceService service; 	
 	
@@ -40,9 +40,14 @@ public class HomeController {
 	}
 	
 	@GetMapping(value = "/bytime")
-	public String time(Model model) throws ParseException {	
+	public String time() throws ParseException {	
 		logger.info("bytime.jsp started ===================================");	
 		return "bytime"; //bytime.jsp
+	}
+	
+	@GetMapping(value = "/avgbycon")
+	public String con() {
+		return "avgbycon";
 	}
 	
 }
