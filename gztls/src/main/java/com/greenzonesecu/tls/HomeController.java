@@ -1,10 +1,13 @@
 package com.greenzonesecu.tls;
 
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,7 +38,8 @@ public class HomeController { //jsp view로 return
 	
 	@GetMapping(value = "/")
 	public String oneView(Model model) {
-		logger.info("main.jsp started ===================================");		
+		logger.info("main.jsp started ===================================");
+		//System.out.println(new java.io.File("Chart.min.js").getAbsolutePath());
 		return "main"; //main.jsp
 	}
 	
@@ -48,6 +52,14 @@ public class HomeController { //jsp view로 return
 	@GetMapping(value = "/avgbycon")
 	public String con() {
 		return "avgbycon";
+	}
+	
+	@GetMapping(value = "/byperiod")
+	public String period(Model model) {
+		Calendar calt = Calendar.getInstance();	
+		SimpleDateFormat sdt= new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");		
+		model.addAttribute("now", sdt.format(calt.getTime()));
+		return "byperiod";
 	}
 	
 }

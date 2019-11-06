@@ -141,4 +141,18 @@
 		a.device_id = b.device_id;
 	</select>
 	
+	<!-- 기간별 -->
+	<select id="selectPeriod" parameterType="String" resultMap="SuccessResult">
+	SELECT 
+		data_type
+		, server_time
+		, data_content
+	FROM 
+		gztls_success 
+	WHERE 	
+		server_time BETWEEN #{from_date} AND #{to_date}	
+		AND device_id = #{device_id};
+	
+	</select>
+	
 	</mapper>

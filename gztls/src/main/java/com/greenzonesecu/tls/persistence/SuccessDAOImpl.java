@@ -2,6 +2,7 @@ package com.greenzonesecu.tls.persistence;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -18,10 +19,16 @@ public class SuccessDAOImpl implements SuccessDAO{
 	
 	private static final String SM = "SuccessMapper";
 	private static final String SelectTime = SM + ".selectTime";
+	private static final String SelectPeriod = "DeviceMapper.selectPeriod";
 
 	@Override
 	public List<SuccessVO> selectTime(String time) {
 		return sqlSession.selectList(SelectTime, time);
+	}
+
+	@Override
+	public List<SuccessVO> selectPeriod(Map<String, String> map) {
+		return sqlSession.selectList(SelectPeriod, map);
 	}
 
 }

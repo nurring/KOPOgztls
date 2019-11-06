@@ -4,6 +4,8 @@
 <html>
 <script src="https://code.jquery.com/jquery.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="resources/js/Chart.min.js"></script>
+<link rel="stylesheet" type="text/css" href="resources/css/Chart.min.css">
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
