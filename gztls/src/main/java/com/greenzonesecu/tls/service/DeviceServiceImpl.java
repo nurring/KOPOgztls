@@ -16,6 +16,11 @@ public class DeviceServiceImpl implements DeviceService{
 	private DeviceDAO dao;
 
 	@Override
+	public List<DeviceVO> deviceList() {
+		return dao.deviceList();
+	}
+	
+	@Override
 	public List<DeviceVO> selectByServerTime(String server_time) {
 		return dao.selectByServerTime(server_time);
 	}
@@ -24,5 +29,7 @@ public class DeviceServiceImpl implements DeviceService{
 	public List<DeviceVO> selectAvgByCondition(Map<String, String> map) {
 		return dao.selectAvgByCondition(map);
 	}
+
+	
 
 }

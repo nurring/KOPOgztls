@@ -47,48 +47,11 @@ public class SampleController {
 	
 	@RequestMapping(value = "/hashmap", method=RequestMethod.GET)
 	public String doG(Model model) {
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		List<String> list = new ArrayList();
-		list = service.selectAll();
-		map.put("hashmaplist", list);
-		//map.put(userid, "gguri");
-		//String json = service.selectMember(map);		
-		//String json = new ObjectMapper().writeValueAsString(JsonVO);
-		System.out.println(list);
-		model.addAttribute("hashmaplist",list);
+		
 		return "hashmap";
 	}
 	
-	/**
-	 * Map방식을 이용한 JSON API 컨트롤러
-	 * @return
-	 */
-	@RequestMapping(value="/getJsonByMap")
-	public @ResponseBody Map<String , Object> getJsonByMap() {
-	    Map<String, Object> jsonObject = new HashMap<String, Object>();
-	    Map<String, Object> jsonSubObject = null;
-	    ArrayList<Map<String, Object>> jsonList = new ArrayList<Map<String, Object>>();
-	         
-	    //1번째 데이터
-	    jsonSubObject = new HashMap<String, Object>();
-	    jsonSubObject.put("idx", 1);
-	    jsonSubObject.put("title", "제목입니다");
-	    jsonSubObject.put("create_date", new Date());
-	    jsonList.add(jsonSubObject);
-	    //2번째 데이터
-	    jsonSubObject = new HashMap<String, Object>();
-	    jsonSubObject.put("idx", 2);
-	    jsonSubObject.put("title", "두번째제목입니다");
-	    jsonSubObject.put("create_date", new Date());
-	    jsonList.add(jsonSubObject);
-	         
-	    jsonObject.put("success", true);
-	    jsonObject.put("total_count", 10);
-	    jsonObject.put("result_list", jsonList);
-	         
-	    return jsonObject;
-	}
-	
+
 	@GetMapping(value = "/userid/{userid}")
 	public String time(@PathVariable("userid") String userid, Model model) throws ParseException {
 		logger.info("userid..........."+userid);

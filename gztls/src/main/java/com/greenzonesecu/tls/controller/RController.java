@@ -32,7 +32,7 @@ public class RController {
 	/**
 	 * @RequestMapping(value="/OOOjsn") ~ json 형식으로 return함
 	 */		
-	@RequestMapping(value="/mainjsn")
+	@RequestMapping(value="/bymapjsn")
 	public List<DeviceVO> main(){
 		Calendar cal = Calendar.getInstance();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmm");
@@ -40,7 +40,8 @@ public class RController {
 		//strDate.substring(strDate.length()-2, strDate.length());
 		strDate+="00";
 		logger.info("strDate..........."+strDate);
-		List<DeviceVO> vos = ds.selectByServerTime(strDate);//서버 시간으로 매 초 갱신 됨(ajax)
+		String tempDate = "20190901000000";//데이터 확인용!
+		List<DeviceVO> vos = ds.selectByServerTime(tempDate);//서버 시간으로 매 초 갱신 됨(ajax)
 		return vos; //객체를 json으로 리턴
 	}	
 	

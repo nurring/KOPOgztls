@@ -26,21 +26,17 @@ public class HomeController { //jsp view로 return
 	/**
 	 * Simply selects the home view to render by returning its name.
 	 */
-//	@RequestMapping(value = "/", method = RequestMethod.GET)
-//	public String home(Locale locale, Model model) {
-//		logger.info("Welcome home! The client locale is {}.", locale);		
-//		Date date = new Date();
-//		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);	
-//		String formattedDate = dateFormat.format(date);		
-//		model.addAttribute("serverTime", formattedDate );		
-//		return "home";
-//	}
-	
 	@GetMapping(value = "/")
+	public String home() {
+		logger.info("Welcome home!");					
+		return "time";
+	}
+	
+	@GetMapping(value = "/bymap")
 	public String oneView(Model model) {
 		logger.info("main.jsp started ===================================");
 		//System.out.println(new java.io.File("Chart.min.js").getAbsolutePath());
-		return "main"; //main.jsp
+		return "bymap"; //main.jsp
 	}
 	
 	@GetMapping(value = "/bytime")
@@ -58,6 +54,7 @@ public class HomeController { //jsp view로 return
 	public String period(Model model) {
 		Calendar calt = Calendar.getInstance();	
 		SimpleDateFormat sdt= new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");		
+		model.addAttribute("devices", service.deviceList());
 		model.addAttribute("now", sdt.format(calt.getTime()));
 		return "byperiod";
 	}
