@@ -1,7 +1,9 @@
 package com.greenzonesecu.tls;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -30,17 +32,20 @@ public class DeviceDAOTest {
 	
 	@Test
 	public void testSelectByServerTime() throws Exception{
-		List<DeviceVO> vos = dao.selectByServerTime("20190901000200");
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("server_time", "20190901000100");
+		params.put("device_address", "경기도");
+		List<DeviceVO> vos = dao.selectByCondition(params);
 		for (int i = 0; i<vos.size(); i++){
 			String print = vos.get(i).getDevice_id()+"/"
+					+vos.get(i).getDevice_address()+"/"
 					+vos.get(i).getDevice_latitude()+"/"
 					+vos.get(i).getDevice_longitude()+"/"
 					+vos.get(i).getSuccessList().get(0).getData_type()+"/"
 					+vos.get(i).getSuccessList().get(0).getData_content()+"/"
 					+vos.get(i).getSuccessList().get(0).getServer_time()+"/";			
 			System.out.println(print);
-		}
-		
+		}		
 	}
 	
 //	@Test

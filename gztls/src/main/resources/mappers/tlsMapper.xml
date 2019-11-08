@@ -54,8 +54,14 @@
 			* 
 		FROM
 			gztls_device
-		WHERE
-			device_id = #{device_id}
+		<where>
+			<if test='device_id != null'>
+			AND device_id = #{device_id}
+			</if>
+			<if test='device_name != null'>
+			AND device_name LIKE CONCAT('%', #{device_name}, '%')
+			</if>
+		</where>
 	</select>
 	
 	<!--전체 조회 -->
@@ -76,11 +82,13 @@
 	</delete>
 	
 	<!-- 지도에 뿌릴 데이터 -->
-	<select id="selectByServerTime" parameterType="String" resultMap="DeviceResult">		
+	<select id="selectByCondition" parameterType="String" resultMap="DeviceResult">		
 		SELECT 
-			a.device_id
+			a.device_name
+			, a.device_id
 			, a.device_latitude
 			, a.device_longitude
+			, a.device_address
 			, b.data_type
 			, b.data_content
 			, b.server_time
@@ -95,15 +103,25 @@
 					, server_time 
 				FROM
 					gztls_success 
-				WHERE 
-					server_time = DATE_FORMAT(#{server_time}, '%Y-%m-%d %H:%i:%s')
+				<where>
+					AND server_time = DATE_FORMAT(#{server_time}, '%Y-%m-%d %H:%i:%s')
+					<if test='device_id != null'>
+					AND device_id = #{device_id}
+					</if>
+				</where>
 				GROUP BY 
 					device_id
 					, data_type
 					, data_content
 			) b
-		WHERE 
-			a.device_id = b.device_id;
+		<where>
+			AND a.device_id = b.device_id	
+			<if test='device_address != null'>
+			AND device_address LIKE CONCAT('%', #{device_address}, '%')
+			</if>
+		</where>
+		ORDER BY
+			device_id, data_type;
 	</select>
 	
 	<!-- 조건별 평균값 통계용 -->

@@ -20,7 +20,7 @@ import com.greenzonesecu.tls.domain.SuccessVO;
 import com.greenzonesecu.tls.service.DeviceService;
 import com.greenzonesecu.tls.service.SuccessService;
 
-@RestController
+@RestController //Rest방식만 따로 모음
 public class RController {
 	@Autowired
 	private DeviceService ds; 	
@@ -32,26 +32,30 @@ public class RController {
 	/**
 	 * @RequestMapping(value="/OOOjsn") ~ json 형식으로 return함
 	 */		
-	@RequestMapping(value="/bymapjsn")
-	public List<DeviceVO> main(){
+	@RequestMapping(value="/bymapjsn", method=RequestMethod.GET)
+	public List<DeviceVO> main(@RequestParam Map<String, String> param){
+		Map<String, String> str = new HashMap<String, String>();
+		
 		Calendar cal = Calendar.getInstance();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmm");
 		String strDate = sdf.format(cal.getTime());
-		//strDate.substring(strDate.length()-2, strDate.length());
 		strDate+="00";
-		logger.info("strDate..........."+strDate);
 		String tempDate = "20190901000000";//데이터 확인용!
-		List<DeviceVO> vos = ds.selectByServerTime(tempDate);//서버 시간으로 매 초 갱신 됨(ajax)
+		
+		str.put("device_id", param.get("device_id")); //기기명
+		str.put("server_time", tempDate);
+		logger.info("str..........."+str);
+		List<DeviceVO> vos = ds.selectByCondition(str);
 		return vos; //객체를 json으로 리턴
 	}	
-	
-	@RequestMapping(value="/bytimejsn/{server_time}", method=RequestMethod.GET)
-	public List<DeviceVO> bytime(@PathVariable("server_time") String server_time){
-		logger.info("server_time..........."+server_time);
-		List<DeviceVO> vos = ds.selectByServerTime(server_time);//요청 시간 받은 시간대 출력
-		logger.info(vos.toString());
-		return vos;
-	}
+//	
+//	@RequestMapping(value="/bytimejsn/{server_time}", method=RequestMethod.GET)
+//	public List<DeviceVO> bytime(@PathVariable("server_time") String server_time){
+//		logger.info("server_time..........."+server_time);
+//		List<DeviceVO> vos = ds.selectByCondition(server_time);//요청 시간 받은 시간대 출력
+//		logger.info(vos.toString());
+//		return vos;
+//	}
 	
 	@RequestMapping(value="/avgbyconjsn", method=RequestMethod.GET)
 	public List<DeviceVO> avgbycon(@RequestParam Map<String, String> param, DeviceVO vo){
@@ -63,7 +67,7 @@ public class RController {
 	
 	@RequestMapping(value="/byperiodjsn", method=RequestMethod.GET)
 	public List<SuccessVO> byperiod(@RequestParam Map<String, String> param){
-		logger.info("param..........."+param);
+//		logger.info("param..........."+param);
 		SimpleDateFormat sdt= new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
 		Calendar calt = Calendar.getInstance();	//현재시간		
 		String to_date = sdt.format(calt.getTime());
@@ -75,16 +79,23 @@ public class RController {
 		params.put("from_date", from_date);
 		params.put("to_date", to_date);
 		params.put("device_id", param.get("device_id"));
-		
-//		param.put("server_time", server_time);
-//		param.put("to_date", to_date);
-			
-		logger.info("from_date"+ from_date);	
-		logger.info("to_date"+ to_date);	
-		logger.info("params"+ params);
+//		
+////		param.put("server_time", server_time);
+////		param.put("to_date", to_date);
+//			
+//		logger.info("from_date"+ from_date);	
+//		logger.info("to_date"+ to_date);	
+//		logger.info("params"+ params);
 		List<SuccessVO> vos = ss.selectPeriod(params);
 		return vos;
 		
+	}
+	
+	@RequestMapping(value="/bynamejsn", method=RequestMethod.GET)
+	public DeviceVO byname(@RequestParam Map<String, String> param) {
+		logger.info("param..........."+param);
+		DeviceVO vo = ds.selectDevice(param);
+		return vo;
 	}
 
 }

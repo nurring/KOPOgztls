@@ -21,13 +21,18 @@ public class DeviceServiceImpl implements DeviceService{
 	}
 	
 	@Override
-	public List<DeviceVO> selectByServerTime(String server_time) {
-		return dao.selectByServerTime(server_time);
+	public List<DeviceVO> selectByCondition(Map<String, String> map) {
+		return dao.selectByCondition(map);
 	}
 
 	@Override
 	public List<DeviceVO> selectAvgByCondition(Map<String, String> map) {
 		return dao.selectAvgByCondition(map);
+	}
+
+	@Override
+	public DeviceVO selectDevice(Map<String, String> map) {
+		return dao.selectDevice(map);
 	}
 
 	

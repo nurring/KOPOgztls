@@ -21,8 +21,8 @@
 		}	
 	console.log("set",set);
 	var hlabels = "", hdata="";
-	var tlabels = [], tdata="";	
-	var hdataArray; var hlabelsArray; var tdataArray;
+	var tdata="", d1data="", d2data="";	
+	var hdataArray, hlabelsArray, tdataArray, d1dataArray, d2dataArray;
 	$(document).ready(function() {
 		window.setInterval(function(){		
 			$.ajax({
@@ -33,7 +33,8 @@
 				}			
 			}).done(function(results){
 			hlabels = "", hdata="";
-			tlabels = [], tdata="";			    
+			tdata="", d1data="", d2data="";
+						    
 				for(key in results) {
 					if (results[key].data_type == "H"){
 						hdata += results[key].data_content;
@@ -44,23 +45,41 @@
 						tdata += results[key].data_content;
 						tdata += ",";
 						}
-				}
-				hdata = hdata.substr(0, hdata.length - 1);				
+					if (results[key].data_type == "D1"){
+						d1data += results[key].data_content;
+						d1data += ",";
+						}
+					if (results[key].data_type == "D2"){
+						d2data += results[key].data_content;
+						d2data += ",";
+						}
+				}							
 				hlabels = hlabels.substr(0, hlabels.length - 1);
-				tdata = tdata.substr(0, tdata.length - 1);
-				hdataArray = hdata.split(",");
 				hlabelsArray = hlabels.split(",");
+				
+				hdata = hdata.substr(0, hdata.length - 1);
+				tdata = tdata.substr(0, tdata.length - 1);
+				d1data = d1data.substr(0, d1data.length - 1);
+				d2data = d2data.substr(0, d2data.length - 1);	
+				
+				hdataArray = hdata.split(",");
 				tdataArray = tdata.split(",");
+				d1dataArray = d1data.split(",");
+				d2dataArray = d2data.split(",");
 			});
-			console.log("hlabels", hlabelsArray);
-			console.log("hdata", hdataArray);
-	    	console.log("tdata", tdataArray);
+			console.log("hlabelsArray", hlabelsArray);
+			console.log("hdataArray", hdataArray);
+	    	console.log("tdataArray", tdataArray);
+	    	console.log("d1dataArray", d1dataArray);
+	    	console.log("d2dataArray", d2dataArray);
 	    	updateChart();
 		}, 1000); //1초마다
 	});
     function updateChart(){
         tempData.datasets[0].data = hdataArray;
         tempData.datasets[1].data = tdataArray;
+        tempData.datasets[2].data = d1dataArray;
+        tempData.datasets[3].data = d2dataArray;
         tempData.labels = hlabelsArray;
         testChart.update();
     };
@@ -94,13 +113,25 @@
                 label: 'H:습도',
                 data: hdataArray,
                 borderWidth:2,
-                borderColor:'blue',
+                borderColor:'red',
                 hoverBorderWidth:3
             },{
                 label: 'T:온도',
                 data: tdataArray,
                 borderWidth:2,
-                borderColor:'pink',
+                borderColor:'blue',
+                hoverBorderWidth:3
+            },{
+                label: 'D1:미세먼지',
+                data: d1dataArray,
+                borderWidth:2,
+                borderColor:'green',
+                hoverBorderWidth:3
+            },{
+                label: 'D2:초미세먼지',
+                data: d2dataArray,
+                borderWidth:2,
+                borderColor:'black',
                 hoverBorderWidth:3
             }]
         }

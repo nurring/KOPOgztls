@@ -21,7 +21,7 @@ public class DeviceDAOImpl implements DeviceDAO {
 	private static final String SelectDevice = DM + ".selectDevice";
 	private static final String DeviceList = DM + ".deviceList";
 	private static final String DeleteDevice = DM + ".deleteDevice";
-	private static final String SelectByServerTime = DM + ".selectByServerTime";
+	private static final String SelectByCondition = DM + ".selectByCondition";
 	private static final String SelectAvgByCondition = DM + ".selectAvgByCondition";
 	
 	//update만들기~
@@ -32,8 +32,8 @@ public class DeviceDAOImpl implements DeviceDAO {
 	}
 
 	@Override
-	public DeviceVO selectDevice(String device_id) {
-		return (DeviceVO)sqlSession.selectOne(SelectDevice, device_id);
+	public DeviceVO selectDevice(Map<String, String> map) {
+		return (DeviceVO)sqlSession.selectOne(SelectDevice, map);
 	}
 
 	@Override
@@ -47,8 +47,8 @@ public class DeviceDAOImpl implements DeviceDAO {
 	}
 
 	@Override
-	public List<DeviceVO> selectByServerTime(String server_time) {
-		return sqlSession.selectList(SelectByServerTime, server_time);
+	public List<DeviceVO> selectByCondition(Map<String, String> map) {
+		return sqlSession.selectList(SelectByCondition, map);
 	}
 
 	@Override

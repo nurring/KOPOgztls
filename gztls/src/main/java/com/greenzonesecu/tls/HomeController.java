@@ -3,6 +3,9 @@ package com.greenzonesecu.tls;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,6 +14,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+
+import com.greenzonesecu.tls.domain.DeviceVO;
 import com.greenzonesecu.tls.service.DeviceService;
 
 /**
@@ -27,8 +32,12 @@ public class HomeController { //jsp view로 return
 	 * Simply selects the home view to render by returning its name.
 	 */
 	@GetMapping(value = "/")
-	public String home() {
-		logger.info("Welcome home!");					
+	public String home(Model model) {
+		logger.info("Welcome home!");		
+		SimpleDateFormat sdt= new SimpleDateFormat("YYYYMMddHHmmss");
+		Calendar calt = Calendar.getInstance();
+		List<DeviceVO> vos = service.deviceList();
+		model.addAttribute("list",vos);
 		return "time";
 	}
 	

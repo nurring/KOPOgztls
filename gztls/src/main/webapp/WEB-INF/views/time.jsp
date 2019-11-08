@@ -4,6 +4,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
 <html>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<script src="https://code.jquery.com/jquery.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <head>
 <meta charset="UTF-8">
 <title>출력쓰~</title>
@@ -15,82 +18,132 @@
 	}
 </style>
 <script type="text/javascript">
-var str = "[";
-<c:forEach items="${list}" var="e">
-str += "{lat: " + "${e.device_latitude}" + ", lng: " + "${e.device_longitude}" + "},";
-</c:forEach>
-str = str.substr(0, str.length -1);
-str += "]";
 
 </script>
 </head>
 <body>
-	<h1>특정 일자 데이터 출력쓰!</h1>
-	<hr>
-	<table border="1">
-		<tr>
-			<td>아이디</td>
-			<td>위도</td>
-			<td>경도</td>
-			<td>측정종류</td>
-			<td>측정값</td>
-			<td>서버날짜</td>
-		</tr>
+<div class="container">
+	<div id="map"></div>
+	<div id="search" class="py-2 offset-md-1">	
 		<c:forEach items="${list }" var="e">
-			<tr>
-				<td rowspan="${fn:length(e.successList) }">${e.device_id }</td>
-				<td rowspan="${fn:length(e.successList) }">${e.device_latitude }</td>
-				<td rowspan="${fn:length(e.successList) }">${e.device_longitude }</td>
-				<c:forEach items="${e.successList }" var="f">
-					<td>${f.data_type }</td>
-					<td>${f.data_content }</td>
-					<td>${f.server_time }</td>
-				
-			</tr>
-				</c:forEach>
+		<button class='btn btn-dark' onclick="initMapEach(${e.device_latitude },${e.device_longitude });getdevice('${e.device_id }');">
+			${e.device_name }</button>		
 		</c:forEach>
-
-	</table>
-	<br>
-<div id="map"></div>
+		<input type="text" id="device_name" placeholder="기기명을 입력하세요">
+		<button type="submit" class='btn btn-dark' id="submit" onclick="checking()">검색</button>
+	</div>
+	<div id="haha"></div>
+</div>
 <script>
+function checking(){
+	var device_name = $("#device_name").val();
+	var obj = new Object();
+	obj.device_name = device_name;
+	console.log(obj);
+	$.ajax({
+		url : "bynamejsn",
+		type : "GET",
+		data : obj,
+		error : function() {
+			alert("err");
+		}			
+	}).done(function(results){
+		alert(results);
+		console.log(results);
+		//검색어완성기능 넣을까...?
+	});
+}
+<!--상세 날씨 정보 가져오기-->
+function getdevice(d_id) {
+	var set = new Object();
+	set.device_id = d_id;
+	console.log("set",set);
+	var add = "";
+	 $.ajax({
+			url : "bymapjsn",
+			type : "GET",
+			data : set,
+			error : function() {
+				alert("err");
+			}			
+		}).done(function(results){
+			add += "<table class='table'>";			
+			for(i in results){
+				add += "<tr><td colspan='4'>기기명: "+results[i].device_name+"</td><tr>";
+				add += "<tr><td colspan='4'>주소: "+results[i].device_address+"</td><tr>";
+				add += "<tr>";
+				for(j in results[i].successList){
+					add += "<td>"+results[i].successList[j].data_type+"</td>";
+					}				
+				add += "</tr>";
+				for(j in results[i].successList){
+					add += "<td>"+results[i].successList[j].data_content+"</td>";
+					}
+				}
+			add += "</tr></table>"
+			console.log(add);
+			$('#haha').html(add);
+		});
+}
+
+<!--지도 중점 찾기-->
+var info = new Array();
+var arr = new Array();
+var avglat = 0;var avglng = 0;
+<c:forEach items="${list}" var="e">
+	info.lat = ${e.device_latitude };
+	info.lng = ${e.device_longitude };
+	avglat += ${e.device_latitude }
+	avglng += ${e.device_longitude };
+	arr.push(info);
+	info = new Array();
+</c:forEach>
+console.log(arr);
+
+avglat = avglat/${fn:length(list) }
+avglng = avglng/${fn:length(list) }
+
+function initMapEach(_lat, _lng) {
+	var newlat = _lat;
+	var newlng = _lng;
+	var uluru = {lat: newlat, lng: newlng};
+	var map = new google.maps.Map(
+	document.getElementById('map'), {zoom: 10, center: {lat: avglat, lng: avglng}});
+	var marker = new google.maps.Marker({position: uluru, map: map});
+
+	var infoWindow = new google.maps.InfoWindow({
+	      content: "위도: "+newlat+", 경도: "+newlng
+	 });
+    google.maps.event.addListener(marker, 'click', function(){
+			infoWindow.open(map, marker)
+    });    
+}
 
 function initMap() {
-	console.log("str", str);
     var map = new google.maps.Map(document.getElementById('map'), {
       zoom: 10,
-      center: {lat: 37.385847, lng: 127.121260}
+      center: {lat: avglat, lng: avglng}
     });
-
-    // Create an array of alphabetical characters used to label the markers.
     var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-
-    // Add some markers to the map.
-    // Note: The code uses the JavaScript Array.prototype.map() method to
-    // create an array of markers based on a given "locations" array.
-    // The map() method here has nothing to do with the Google Maps API.
-    var markers = locations.map(function(location, i) {
+    
+    var markers = locations.map(function(location, i) {                
       return new google.maps.Marker({
-        position: location,
-        label: labels[i % labels.length]
-      });
+          position: location,
+          label: labels[i % labels.length]
+        });
     });
-
-    // Add a marker clusterer to manage the markers.
+   
     var markerCluster = new MarkerClusterer(map, markers,
         {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
   }
-  var locations = ""
-  locations =
-  [{lat: 37.612682, lng: 127.078712},
-	{lat: 37.592968, lng: 126.922722},
-	{lat: 37.522076, lng: 126.934715},
-	{lat: 37.403355, lng: 127.101212}]
+  var locations = arr;	
+	
 </script>
 <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js">
 </script>
 	<script async defer
 	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDHi_0s7mt5oQXhq27oqOIWylfbDJu7EWE&callback=initMap">
 	</script>
+
 </body>
 </html>
