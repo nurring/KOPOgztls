@@ -32,8 +32,8 @@ public class DeviceDAOImpl implements DeviceDAO {
 	}
 
 	@Override
-	public DeviceVO selectDevice(Map<String, String> map) {
-		return (DeviceVO)sqlSession.selectOne(SelectDevice, map);
+	public List<DeviceVO> selectDevice(Map<String, String> map) {
+		return sqlSession.selectList(SelectDevice, map);
 	}
 
 	@Override

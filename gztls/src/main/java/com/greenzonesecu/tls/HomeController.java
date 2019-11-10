@@ -38,14 +38,18 @@ public class HomeController { //jsp view로 return
 		Calendar calt = Calendar.getInstance();
 		List<DeviceVO> vos = service.deviceList();
 		model.addAttribute("list",vos);
-		return "time";
+		return "main";
 	}
 	
 	@GetMapping(value = "/bymap")
 	public String oneView(Model model) {
 		logger.info("main.jsp started ===================================");
 		//System.out.println(new java.io.File("Chart.min.js").getAbsolutePath());
-		return "bymap"; //main.jsp
+		SimpleDateFormat sdt= new SimpleDateFormat("YYYYMMddHHmmss");
+		Calendar calt = Calendar.getInstance();
+		List<DeviceVO> vos = service.deviceList();
+		model.addAttribute("list",vos);
+		return "bymap"; //bymap.jsp
 	}
 	
 	@GetMapping(value = "/bytime")

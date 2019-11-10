@@ -8,7 +8,7 @@ import com.greenzonesecu.tls.domain.DeviceVO;
 public interface DeviceDAO {
 	public void insertDevice(DeviceVO vo);
 		
-	public DeviceVO selectDevice(Map<String, String> map);
+	public List<DeviceVO> selectDevice(Map<String, String> map);
 	
 	public List<DeviceVO> deviceList();
 	

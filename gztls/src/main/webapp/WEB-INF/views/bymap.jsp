@@ -1,111 +1,180 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
 <html>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 <script src="https://code.jquery.com/jquery.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script src="resources/js/Chart.min.js"></script>
-<link rel="stylesheet" type="text/css"
-	href="resources/css/Chart.min.css">
 <head>
-<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>출력쓰~</title>
 <style>
-#map {	height: 50%;}
-html, body {
-	height: 100%;
-	margin: 0;
-	padding: 0;}
+	#map {
+	  width: 100%;
+	  height: 400px;
+	  background-color: grey;
+	}
 </style>
+<script type="text/javascript">
+
+</script>
 </head>
 <body>
+<div class="container">
 	<div id="map"></div>
-	<script type="text/javascript">
-	var str = "";
-	var arr = new Array();
-		$(document).ready(function() {
-			window.setInterval(function(){		
-				$.ajax({
-					url : "bymapjsn",
-					type : "POST",				
-					error : function() {
-						alert("err");
+	<div id="search" class="py-2 offset-md-1">			
+		<form onsubmit="return false;">
+			<select id="con" name="con">
+				<option value=''>검색 조건</option>
+				<option value='device_name'>기기명</option>
+				<option value='device_address'>주소</option>
+			</select>
+			<input type="text" id="keyword" placeholder="입력">
+			<button type="submit" class='btn btn-dark' id="submit" onclick="checking()">검색</button>
+		</form>
+	</div>
+	<div id="list">
+		<c:forEach items="${list }" var="e">
+			<table class='table'>
+			<tr>
+			<td><a href='javascript:void(0)' onclick="initMapEach(${e.device_latitude },${e.device_longitude });getdevice('${e.device_id }');">
+				${e.device_name }</a></td>
+			<td>${e.device_address }</td></tr>
+			</table>
+		</c:forEach>
+	</div>
+	<div id="result"></div>
+</div>
+<script>
+function checking(){
+	var obj = new Object();
+	var con = $("#con").val();
+	var keyword = $("#keyword").val();
+	var add = "";
+	if (con == "device_name"){
+		obj.device_name = keyword;
+		}
+	if (con == "device_address"){
+		obj.device_address = keyword;
+		}
+	console.log(obj);
+	$.ajax({
+		url : "searchjsn",
+		type : "GET",
+		data : obj,
+		error : function() {
+			alert("err");
+		}			
+	}).done(function(results){
+		alert(results);
+		console.log(results);
+		
+		for(i in results){
+			add += "<table class='table'>";
+			add += "<tr><td><a href='javascript:void(0)' onclick='initMapEach("
+					+results[i].device_latitude+","+results[i].device_longitude
+					+"); getdevice(\""+results[i].device_id+"\");'>"
+					+results[i].device_name+"</a></td>";
+			add += "<td>"+results[i].device_address+"</td>";
+			add += "</table>"
+		}
+		
+		$('#list').html(add);
+	});
+}
+<!--상세 날씨 정보 가져오기-->
+function getdevice(d_id) {
+	var set = new Object();
+	set.device_id = d_id;
+	console.log("set",set);
+	var add = "";
+	 $.ajax({
+			url : "bymapjsn",
+			type : "GET",
+			data : set,
+			error : function() {
+				alert("err");
+			}			
+		}).done(function(results){
+			add += "<table class='table'>";			
+			for(i in results){
+				add += "<tr><td colspan='4'>기기명: "+results[i].device_name+"</td><tr>";
+				add += "<tr><td colspan='4'>주소: "+results[i].device_address+"</td><tr>";
+				add += "<tr>";
+				for(j in results[i].successList){
+					add += "<td>"+results[i].successList[j].data_type+"</td>";
+					}				
+				add += "</tr>";
+				for(j in results[i].successList){
+					add += "<td>"+results[i].successList[j].data_content+"</td>";
 					}
-				}).done(function(data){		
-					arr = new Array();	
-					arr.push(data);
-					str = "";
-					console.log("arr", typeof(arr));
-					str += "[";
-					for (var i = 0; i < data.length; i++) {
-						str += "{lat: " + data[i].device_latitude + ",";
-						str += " lng: " + data[i].device_longitude + "}, "
-					}
-					str = str.substr(0, str.length - 2);
-					str += "]";
-					console.log("str", str);
-					initMap()
-					});
-			}, 1000);
+				}
+			add += "</tr></table>"
+			console.log(add);
+			$('#result').html(add);
 		});
+}
 
-		function initMap() {
+<!--지도 중점 찾기-->
+var info = new Array();
+var arr = new Array();
+var avglat = 0;var avglng = 0;
+<c:forEach items="${list}" var="e">
+	info.lat = ${e.device_latitude };
+	info.lng = ${e.device_longitude };
+	avglat += ${e.device_latitude }
+	avglng += ${e.device_longitude };
+	arr.push(info);
+	info = new Array();
+</c:forEach>
+console.log(arr);
 
-	        var map = new google.maps.Map(document.getElementById('map'), {
-	          zoom: 3,
-	          center: {lat: -28.024, lng: 140.887}
-	        });
+avglat = avglat/${fn:length(list) }
+avglng = avglng/${fn:length(list) }
 
-	        // Create an array of alphabetical characters used to label the markers.
-	        var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+function initMapEach(_lat, _lng) {
+	var newlat = _lat;
+	var newlng = _lng;
+	var uluru = {lat: newlat, lng: newlng};
+	var map = new google.maps.Map(
+	document.getElementById('map'), {zoom: 10, center: {lat: avglat, lng: avglng}});
+	var marker = new google.maps.Marker({position: uluru, map: map});
 
-	        // Add some markers to the map.
-	        // Note: The code uses the JavaScript Array.prototype.map() method to
-	        // create an array of markers based on a given "locations" array.
-	        // The map() method here has nothing to do with the Google Maps API.
-	        var markers = locations.map(function(location, i) {
-	          return new google.maps.Marker({
-	            position: location,
-	            label: labels[i % labels.length]
-	          });
-	        });
+	var infoWindow = new google.maps.InfoWindow({
+	      content: "위도: "+newlat+", 경도: "+newlng
+	 });
+    google.maps.event.addListener(marker, 'click', function(){
+			infoWindow.open(map, marker)
+    });    
+}
 
-	        // Add a marker clusterer to manage the markers.
-	        var markerCluster = new MarkerClusterer(map, markers,
-	            {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
-	      }
-	      var locations = [
-	        {lat: -31.563910, lng: 147.154312},
-	        {lat: -33.718234, lng: 150.363181},
-	        {lat: -33.727111, lng: 150.371124},
-	        {lat: -33.848588, lng: 151.209834},
-	        {lat: -33.851702, lng: 151.216968},
-	        {lat: -34.671264, lng: 150.863657},
-	        {lat: -35.304724, lng: 148.662905},
-	        {lat: -36.817685, lng: 175.699196},
-	        {lat: -36.828611, lng: 175.790222},
-	        {lat: -37.750000, lng: 145.116667},
-	        {lat: -37.759859, lng: 145.128708},
-	        {lat: -37.765015, lng: 145.133858},
-	        {lat: -37.770104, lng: 145.143299},
-	        {lat: -37.773700, lng: 145.145187},
-	        {lat: -37.774785, lng: 145.137978},
-	        {lat: -37.819616, lng: 144.968119},
-	        {lat: -38.330766, lng: 144.695692},
-	        {lat: -39.927193, lng: 175.053218},
-	        {lat: -41.330162, lng: 174.865694},
-	        {lat: -42.734358, lng: 147.439506},
-	        {lat: -42.734358, lng: 147.501315},
-	        {lat: -42.735258, lng: 147.438000},
-	        {lat: -43.999792, lng: 170.463352}
-	      ]		
-	</script>
-	<script
-		src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js">
-    </script>
-	<script async defer
-		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDHi_0s7mt5oQXhq27oqOIWylfbDJu7EWE&callback=initMap">
-    </script>
+function initMap() {
+    var map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 10,
+      center: {lat: avglat, lng: avglng}
+    });
+    var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    
+    var markers = locations.map(function(location, i) {                
+      return new google.maps.Marker({
+          position: location,
+          label: labels[i % labels.length]
+        });
+    });
+   
+    var markerCluster = new MarkerClusterer(map, markers,
+        {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
+  }
+  var locations = arr;	
+	
+</script>
+<script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js">
+</script>
+<script async defer
+src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDHi_0s7mt5oQXhq27oqOIWylfbDJu7EWE&callback=initMap">
+</script>
+
 </body>
 </html>

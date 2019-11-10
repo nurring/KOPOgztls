@@ -34,6 +34,7 @@ public class DeviceDAOTest {
 	public void testSelectByServerTime() throws Exception{
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("server_time", "20190901000100");
+		params.put("device_id", "0000000090bcf7ffb827eb");
 		params.put("device_address", "경기도");
 		List<DeviceVO> vos = dao.selectByCondition(params);
 		for (int i = 0; i<vos.size(); i++){

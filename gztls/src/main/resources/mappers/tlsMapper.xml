@@ -61,6 +61,9 @@
 			<if test='device_name != null'>
 			AND device_name LIKE CONCAT('%', #{device_name}, '%')
 			</if>
+			<if test='device_address != null'>
+			AND device_address LIKE CONCAT('%', #{device_address}, '%')
+			</if>
 		</where>
 	</select>
 	
@@ -118,6 +121,9 @@
 			AND a.device_id = b.device_id	
 			<if test='device_address != null'>
 			AND device_address LIKE CONCAT('%', #{device_address}, '%')
+			</if>
+			<if test='device_name != null'>
+			AND device_name LIKE CONCAT('%', #{device_name}, '%')
 			</if>
 		</where>
 		ORDER BY

@@ -31,7 +31,7 @@ public class DeviceServiceImpl implements DeviceService{
 	}
 
 	@Override
-	public DeviceVO selectDevice(Map<String, String> map) {
+	public List<DeviceVO> selectDevice(Map<String, String> map) {
 		return dao.selectDevice(map);
 	}
 

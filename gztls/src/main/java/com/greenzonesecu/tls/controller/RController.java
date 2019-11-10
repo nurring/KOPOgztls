@@ -78,8 +78,7 @@ public class RController {
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("from_date", from_date);
 		params.put("to_date", to_date);
-		params.put("device_id", param.get("device_id"));
-//		
+		params.put("device_id", param.get("device_id"));	
 ////		param.put("server_time", server_time);
 ////		param.put("to_date", to_date);
 //			
@@ -91,11 +90,19 @@ public class RController {
 		
 	}
 	
-	@RequestMapping(value="/bynamejsn", method=RequestMethod.GET)
-	public DeviceVO byname(@RequestParam Map<String, String> param) {
+	@RequestMapping(value="/searchjsn", method=RequestMethod.GET)
+	public List<DeviceVO> byname(@RequestParam Map<String, String> param) {
 		logger.info("param..........."+param);
-		DeviceVO vo = ds.selectDevice(param);
+		List<DeviceVO> vo = ds.selectDevice(param);
+		logger.info(vo.toString());
 		return vo;
+	}
+	
+	@RequestMapping(value="/dlistjsn", method=RequestMethod.GET)
+	public List<DeviceVO> deviceList() {
+		List<DeviceVO> vos = ds.deviceList();
+		logger.info("vos.toString()..........."+vos.toString());
+		return vos;
 	}
 
 }
