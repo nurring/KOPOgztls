@@ -144,7 +144,7 @@
 			SELECT 
 				device_id
 				, data_type
-				, AVG(data_content) AS average
+				, ROUND(AVG(data_content),2) AS average
 			FROM 
 				gztls_success 
 			 			

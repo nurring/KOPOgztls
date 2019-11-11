@@ -34,8 +34,8 @@ public class HomeController { //jsp view로 return
 	@GetMapping(value = "/")
 	public String home(Model model) {
 		logger.info("Welcome home!");		
-		SimpleDateFormat sdt= new SimpleDateFormat("YYYYMMddHHmmss");
-		Calendar calt = Calendar.getInstance();
+//		SimpleDateFormat sdt= new SimpleDateFormat("YYYYMMddHHmmss");
+//		Calendar calt = Calendar.getInstance();
 		List<DeviceVO> vos = service.deviceList();
 		model.addAttribute("list",vos);
 		return "main";
@@ -44,9 +44,6 @@ public class HomeController { //jsp view로 return
 	@GetMapping(value = "/bymap")
 	public String oneView(Model model) {
 		logger.info("main.jsp started ===================================");
-		//System.out.println(new java.io.File("Chart.min.js").getAbsolutePath());
-		SimpleDateFormat sdt= new SimpleDateFormat("YYYYMMddHHmmss");
-		Calendar calt = Calendar.getInstance();
 		List<DeviceVO> vos = service.deviceList();
 		model.addAttribute("list",vos);
 		return "bymap"; //bymap.jsp
@@ -72,4 +69,8 @@ public class HomeController { //jsp view로 return
 		return "byperiod";
 	}
 	
+	@GetMapping(value = "/errormain")
+	public String errormain(Model model) {
+		return "errormain";
+	}
 }

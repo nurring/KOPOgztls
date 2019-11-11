@@ -13,16 +13,38 @@
 <style>
 	#map {
 	  width: 100%;
-	  height: 400px;
+	  height: 300px;
 	  background-color: grey;
+	  margin: 10px;
 	}
 </style>
 <script type="text/javascript">
-
+var lat, lng, id, name, address;
+var html = "";
+$(document).ready(function() {	
+	$.ajax({
+		url : "dlistjsn",
+		type : "GET",
+		error : function() {
+			alert("err");
+		}			
+	}).done(function(results){
+		console.log("results",results);
+		html += "<table class='table table-striped'>";
+		for(key in results) {
+			html += "<tr><td><a href='javascript:void(0)' ";
+			html += "onclick='initMapEach("+results[key].device_latitude+","+results[key].device_longitude+");getdevice(\""+results[key].device_id+"\");'>"
+			html += results[key].device_name+"</a></td>"
+			html += "<td>"+results[key].device_address+"</td></tr>";
+		}
+		html +="</table>"
+		$('#list').html(html);
+	});
+});
 </script>
 </head>
 <body>
-<div class="container">
+<div>
 	<div id="map"></div>
 	<div id="search" class="py-2 offset-md-1">			
 		<form onsubmit="return false;">
@@ -32,23 +54,14 @@
 				<option value='device_address'>주소</option>
 			</select>
 			<input type="text" id="keyword" placeholder="입력">
-			<button type="submit" class='btn btn-dark' id="submit" onclick="checking()">검색</button>
+			<button type="submit" class='btn btn-dark' id="submit" onclick="searching()">검색</button>
+			<button class="btn btn-dark" style="float: right;" onclick='initMap();searching();'>전체보기</button>
 		</form>
 	</div>
-	<div id="list">
-		<c:forEach items="${list }" var="e">
-			<table class='table'>
-			<tr>
-			<td><a href='javascript:void(0)' onclick="initMapEach(${e.device_latitude },${e.device_longitude });getdevice('${e.device_id }');">
-				${e.device_name }</a></td>
-			<td>${e.device_address }</td></tr>
-			</table>
-		</c:forEach>
-	</div>
-	<div id="result"></div>
+	<div id="list"></div>
 </div>
 <script>
-function checking(){
+function searching(){
 	var obj = new Object();
 	var con = $("#con").val();
 	var keyword = $("#keyword").val();
@@ -68,20 +81,17 @@ function checking(){
 			alert("err");
 		}			
 	}).done(function(results){
-		alert(results);
-		console.log(results);
-		
-		for(i in results){
-			add += "<table class='table'>";
+		add += "<table class='table table-striped'>";
+		for(i in results){			
 			add += "<tr><td><a href='javascript:void(0)' onclick='initMapEach("
 					+results[i].device_latitude+","+results[i].device_longitude
 					+"); getdevice(\""+results[i].device_id+"\");'>"
 					+results[i].device_name+"</a></td>";
-			add += "<td>"+results[i].device_address+"</td>";
-			add += "</table>"
+			add += "<td>"+results[i].device_address+"</td>";			
 		}
-		
+		add += "</table>"
 		$('#list').html(add);
+		$('#keyword').val('');
 	});
 }
 <!--상세 날씨 정보 가져오기-->
@@ -98,10 +108,10 @@ function getdevice(d_id) {
 				alert("err");
 			}			
 		}).done(function(results){
-			add += "<table class='table'>";			
+			add += "<table class='table table-striped'>";			
 			for(i in results){
-				add += "<tr><td colspan='4'>기기명: "+results[i].device_name+"</td><tr>";
-				add += "<tr><td colspan='4'>주소: "+results[i].device_address+"</td><tr>";
+				add += "<tr><td colspan='4'>"+results[i].device_name+"</td><tr>";
+				add += "<tr><td colspan='4'>"+results[i].device_address+"</td><tr>";
 				add += "<tr>";
 				for(j in results[i].successList){
 					add += "<td>"+results[i].successList[j].data_type+"</td>";
@@ -113,7 +123,7 @@ function getdevice(d_id) {
 				}
 			add += "</tr></table>"
 			console.log(add);
-			$('#result').html(add);
+			$('#list').html(add);
 		});
 }
 

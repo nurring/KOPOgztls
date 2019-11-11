@@ -47,15 +47,7 @@ public class RController {
 		logger.info("str..........."+str);
 		List<DeviceVO> vos = ds.selectByCondition(str);
 		return vos; //객체를 json으로 리턴
-	}	
-//	
-//	@RequestMapping(value="/bytimejsn/{server_time}", method=RequestMethod.GET)
-//	public List<DeviceVO> bytime(@PathVariable("server_time") String server_time){
-//		logger.info("server_time..........."+server_time);
-//		List<DeviceVO> vos = ds.selectByCondition(server_time);//요청 시간 받은 시간대 출력
-//		logger.info(vos.toString());
-//		return vos;
-//	}
+	}
 	
 	@RequestMapping(value="/avgbyconjsn", method=RequestMethod.GET)
 	public List<DeviceVO> avgbycon(@RequestParam Map<String, String> param, DeviceVO vo){
@@ -101,6 +93,18 @@ public class RController {
 	@RequestMapping(value="/dlistjsn", method=RequestMethod.GET)
 	public List<DeviceVO> deviceList() {
 		List<DeviceVO> vos = ds.deviceList();
+		logger.info("vos.toString()..........."+vos.toString());
+		return vos;
+	}
+	
+	@RequestMapping(value="/nowjsn", method=RequestMethod.GET) //수정하다 말았어용
+	public List<DeviceVO> nowData(@RequestParam Map<String, String> param) {
+		SimpleDateFormat sdt= new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
+		Calendar calt = Calendar.getInstance();	//현재시간		
+		String now = sdt.format(calt.getTime());
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("server_time", now);
+		List<DeviceVO> vos = ds.selectByCondition(param);
 		logger.info("vos.toString()..........."+vos.toString());
 		return vos;
 	}
