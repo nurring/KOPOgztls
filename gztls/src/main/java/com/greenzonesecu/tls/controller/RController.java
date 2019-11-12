@@ -97,15 +97,23 @@ public class RController {
 		return vos;
 	}
 	
-	@RequestMapping(value="/nowjsn", method=RequestMethod.GET) //수정하다 말았어용
+	@RequestMapping(value="/nowjsn", method=RequestMethod.GET)
 	public List<DeviceVO> nowData(@RequestParam Map<String, String> param) {
-		SimpleDateFormat sdt= new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
-		Calendar calt = Calendar.getInstance();	//현재시간		
-		String now = sdt.format(calt.getTime());
 		Map<String, String> params = new HashMap<String, String>();
-		params.put("server_time", now);
-		List<DeviceVO> vos = ds.selectByCondition(param);
+		
+		Calendar calt = Calendar.getInstance();	//현재시간		
+		SimpleDateFormat sdt= new SimpleDateFormat("yyyyMMddHHmm");		
+		String now = sdt.format(calt.getTime());
+		now+="00";
+		String tempDate = "20190901000000";//데이터 확인용!
+		
+		//params.put("server_time", now);
+		params.put("server_time", tempDate);
+		params.put("device_id", param.get("device_id"));
+		List<DeviceVO> vos = ds.selectByCondition(params);
+		logger.info("params..........."+params);
 		logger.info("vos.toString()..........."+vos.toString());
+		logger.info("vos.size()..........."+vos.size());
 		return vos;
 	}
 

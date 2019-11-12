@@ -98,23 +98,23 @@ $(document).ready(function() {
 		    datasets: [
 		        {
 		            label: "H:습도",
-		            backgroundColor: "blue",
+		            backgroundColor: "rgba(54, 162, 235, 0.4)",
 		            borderColor: "gray",
 		            data: hdtArray
 		        },
 		        {
 		            label: "T:온도",
-		            backgroundColor: "red",
+		            backgroundColor: "rgba(255, 99, 132, 0.4)",
 		            data: tdtArray
 		        },
 		        {
 		            label: "D1:미세먼지",
-		            backgroundColor: "green",
+		            backgroundColor: "rgba(75, 192, 192, 0.4)",
 		            data: d1dtArray
 		        },
 		        {
 		            label: "D2:초미세먼지",
-		            backgroundColor: "pink",
+		            backgroundColor: "rgba(153, 102, 255, 0.4)",
 		            data: d2dtArray
 		        }
 		    ]

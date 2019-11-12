@@ -68,6 +68,10 @@ public class HomeController { //jsp view로 return
 		model.addAttribute("now", sdt.format(calt.getTime()));
 		return "byperiod";
 	}
+	@GetMapping(value = "/datanow")
+	public String datanow() {
+		return "datanow";
+	}
 	
 	@GetMapping(value = "/errormain")
 	public String errormain(Model model) {

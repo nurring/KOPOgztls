@@ -125,28 +125,28 @@ let tempData = {
             label: 'H:습도',
             data: hdataArray,
             borderWidth:2,
-            borderColor:'red',
+            borderColor: "rgba(54, 162, 235, 0.4)",
             hoverBorderWidth:3,
             backgroundColor: 'rgba(0,0,0,0)'
         },{
             label: 'T:온도',
             data: tdataArray,
             borderWidth:2,
-            borderColor:'blue',
+            borderColor:"rgba(255, 99, 132, 0.4)",
             hoverBorderWidth:3,
             backgroundColor: 'rgba(0,0,0,0)'
         },{
             label: 'D1:미세먼지',
             data: d1dataArray,
             borderWidth:2,
-            borderColor:'green',
+            borderColor:"rgba(75, 192, 192, 0.4)",
             hoverBorderWidth:3,
             backgroundColor: 'rgba(0,0,0,0)'
         },{
             label: 'D2:초미세먼지',
             data: d2dataArray,
             borderWidth:2,
-            borderColor:'pink',
+            borderColor:"rgba(153, 102, 255, 0.4)",
             hoverBorderWidth:3,
             backgroundColor: 'rgba(0,0,0,0)'
         }]

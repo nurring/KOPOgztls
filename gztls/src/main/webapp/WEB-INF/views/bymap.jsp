@@ -12,7 +12,7 @@
 <title>출력쓰~</title>
 <style>
 	#map {
-	  width: 100%;
+	  width: 80%;
 	  height: 300px;
 	  background-color: grey;
 	  margin: 10px;
@@ -45,8 +45,8 @@ $(document).ready(function() {
 </head>
 <body>
 <div>
-	<div id="map"></div>
-	<div id="search" class="py-2 offset-md-1">			
+	<div id="map" class="mx-auto"></div>
+	<div id="search">			
 		<form onsubmit="return false;">
 			<select id="con" name="con">
 				<option value=''>검색 조건</option>
