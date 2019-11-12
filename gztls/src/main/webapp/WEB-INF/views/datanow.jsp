@@ -17,7 +17,7 @@
 }
 </style>
 <script>
-var set = new Object();	
+var obj = new Object();	
 var dname = "";
 var html = "";
 $(document).ready(function() {		
@@ -42,10 +42,10 @@ $(document).ready(function() {
 });
 
 function deviceOne(device){
-	set.device_id = device;	
+	obj.device_id = device;	
 	$.ajax({
 		url : "nowjsn",
-		data : set,
+		data : obj,
 		type : "GET",
 		error : function() {
 			alert("err");
@@ -79,8 +79,7 @@ function deviceOne(device){
 <body>
 <div class="container-fluid">
 	<h1 class="display-3" id="title">
-		데이터 현황
-		 <footer class="blockquote-footer">기기를 선택하세요</footer>
+		데이터 현황 <h5>기기를 선택하세요</h5>
 	</h1>
 	<div class="row">
 	  <div class="col order-first">
