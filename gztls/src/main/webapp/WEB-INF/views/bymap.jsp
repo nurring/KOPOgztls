@@ -30,7 +30,7 @@ $(document).ready(function() {
 		}			
 	}).done(function(results){
 		console.log("results",results);
-		html += "<table class='table table-striped'>";
+		html += "<table class='table table-bordered'>";
 		for(key in results) {
 			html += "<tr><td><a href='javascript:void(0)' ";
 			html += "onclick='initMapEach("+results[key].device_latitude+","+results[key].device_longitude+");getdevice(\""+results[key].device_id+"\");'>"
@@ -45,6 +45,7 @@ $(document).ready(function() {
 </head>
 <body>
 <div>
+	
 	<div id="map" class="mx-auto"></div>
 	<div id="search">			
 		<form onsubmit="return false;">
@@ -57,6 +58,7 @@ $(document).ready(function() {
 			<button type="submit" class='btn btn-dark' id="submit" onclick="searching()">검색</button>
 			<button class="btn btn-dark" style="float: right;" onclick='initMap();searching();'>전체보기</button>
 		</form>
+		<p class="font-weight-light font-italic" >기기명과 주소를 검색하여 지도 상 위치를 확인하세요.</p>
 	</div>
 	<div id="list"></div>
 </div>
@@ -81,7 +83,7 @@ function searching(){
 			alert("err");
 		}			
 	}).done(function(results){
-		add += "<table class='table table-striped'>";
+		add += "<table class='table table-bordered'>";
 		for(i in results){			
 			add += "<tr><td><a href='javascript:void(0)' onclick='initMapEach("
 					+results[i].device_latitude+","+results[i].device_longitude
@@ -108,7 +110,7 @@ function getdevice(d_id) {
 				alert("err");
 			}			
 		}).done(function(results){
-			add += "<table class='table table-striped'>";			
+			add += "<table class='table table-bordered'>";			
 			for(i in results){
 				add += "<tr><td colspan='4'>"+results[i].device_name+"</td><tr>";
 				add += "<tr><td colspan='4'>"+results[i].device_address+"</td><tr>";

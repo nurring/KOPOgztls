@@ -19,12 +19,12 @@
 </head>
 <body>
 	<div class="container">
+	
 		<div>
-			<div>
-				<canvas id="myChart"></canvas>
-				<select id="device" name="device" onchange="deviceSelect(this.value);"></select>
-			</div>
+			<canvas id="myChart"></canvas>
+			<select id="device" name="device" onchange="deviceSelect(this.value);"></select>
 		</div>
+	<p class="font-weight-light font-italic" >기기를 선택하면 최근 24시간 내 데이터 추이를 보여줍니다.</p>
 	</div>
 <script type="text/javascript">
 var set = new Object();	
@@ -37,10 +37,8 @@ var hdataArray, hlabelsArray, tdataArray, d1dataArray, d2dataArray;
 	
 console.log("set",set);	
 
-$(document).ready(function() {	
-	
-    updateDevice();
-    
+$(document).ready(function() {		
+    updateDevice();    
 	window.setInterval(function(){			
 		$.ajax({
 			url : "byperiodjsn",
@@ -90,8 +88,11 @@ $(document).ready(function() {
 //    	console.log("tdataArray", tdataArray);
 //    	console.log("d1dataArray", d1dataArray);
 //   	console.log("d2dataArray", d2dataArray);
+		if(window.testchart && window.testchart !== null){
+	        window.testchart.destroy();
+	    }
     	updateChart();
-	}, 1000); //1초마다
+	}, 2000); //1초마다
 
 function updateDevice(){
 	$.ajax({
@@ -124,31 +125,31 @@ let tempData = {
         datasets:[{
             label: 'H:습도',
             data: hdataArray,
-            borderWidth:2,
-            borderColor: "rgba(54, 162, 235, 0.4)",
-            hoverBorderWidth:3,
-            backgroundColor: 'rgba(0,0,0,0)'
+            borderColor: "rgba(0, 123, 255, 0.6)",
+            backgroundColor: "rgba(0, 123, 255, 0.6)",
+            hoverBorderWidth:4,
+            fill: false
         },{
             label: 'T:온도',
             data: tdataArray,
-            borderWidth:2,
-            borderColor:"rgba(255, 99, 132, 0.4)",
-            hoverBorderWidth:3,
-            backgroundColor: 'rgba(0,0,0,0)'
+            borderColor:"rgba(220, 53, 69, 0.6)",
+            backgroundColor:"rgba(220, 53, 69, 0.6)",
+            hoverBorderWidth:4,
+            fill: false
         },{
             label: 'D1:미세먼지',
             data: d1dataArray,
-            borderWidth:2,
-            borderColor:"rgba(75, 192, 192, 0.4)",
-            hoverBorderWidth:3,
-            backgroundColor: 'rgba(0,0,0,0)'
+            borderColor:"rgba(255, 193, 7, 0.6)",
+            backgroundColor:"rgba(255, 193, 7, 0.6)", 
+            hoverBorderWidth:4,
+            fill: false
         },{
             label: 'D2:초미세먼지',
             data: d2dataArray,
-            borderWidth:2,
-            borderColor:"rgba(153, 102, 255, 0.4)",
-            hoverBorderWidth:3,
-            backgroundColor: 'rgba(0,0,0,0)'
+            borderColor:"rgba(23, 162, 184, 0.6)",
+            backgroundColor:"rgba(23, 162, 184, 0.6)", 
+            hoverBorderWidth:4,
+            fill: false
         }]
     }
 let chartOptions = {
@@ -169,7 +170,8 @@ let chartOptions = {
         }
     },
     tooltips:{
-        enabled:true
+    	mode: 'index',
+		intersect: false
     }
 }
 let myChart = document.getElementById('myChart').getContext('2d');
@@ -180,7 +182,7 @@ Chart.defaults.global.defaultFontSize=15;
 Chart.defaults.global.defaultFontColor='Gray';
 
 
-let testChart = new Chart(myChart, {
+window.testChart = new Chart(myChart, {
     type: 'line',//bar horizontalBar, pie line doughnut radar polarArea
     data: tempData,
     options: chartOptions

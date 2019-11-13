@@ -16,6 +16,7 @@ public class DeviceVO {
 	private Date regidate;
 	private Date updatedate;
 	private List<SuccessVO> successList;
+	private List<ErrorVO> errorList;
 	
 	public String getDevice_id() {
 		return device_id;
@@ -71,13 +72,18 @@ public class DeviceVO {
 	public void setSuccessList(List<SuccessVO> successList) {
 		this.successList = successList;
 	}
-
+	public List<ErrorVO> getErrorList() {
+		return errorList;
+	}
+	public void setErrorList(List<ErrorVO> errorList) {
+		this.errorList = errorList;
+	}
 	@Override
 	public String toString() {
 		return "DeviceVO [device_id=" + device_id + ", device_name=" + device_name + ", device_ip=" + device_ip
 				+ ", device_address=" + device_address + ", device_latitude=" + device_latitude + ", device_longitude="
 				+ device_longitude + ", regidate=" + regidate + ", updatedate=" + updatedate + ", successList="
-				+ successList + "]";
+				+ successList + ", errorList=" + errorList + "]";
 	}
 	
 }

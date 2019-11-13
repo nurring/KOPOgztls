@@ -35,6 +35,12 @@ public class DeviceServiceImpl implements DeviceService{
 		return dao.selectDevice(map);
 	}
 
+	@Override
+	public List<DeviceVO> selectErrByTime(Map<String, String> map) {
+		// TODO Auto-generated method stub
+		return dao.selectErrByTime(map);
+	}
+
 	
 
 }

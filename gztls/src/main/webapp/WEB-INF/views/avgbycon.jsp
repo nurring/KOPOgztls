@@ -98,23 +98,23 @@ $(document).ready(function() {
 		    datasets: [
 		        {
 		            label: "H:습도",
-		            backgroundColor: "rgba(54, 162, 235, 0.4)",
+		            backgroundColor: "rgba(0, 123, 255, 0.6)",
 		            borderColor: "gray",
 		            data: hdtArray
 		        },
 		        {
 		            label: "T:온도",
-		            backgroundColor: "rgba(255, 99, 132, 0.4)",
+		            backgroundColor: "rgba(220, 53, 69, 0.6)",
 		            data: tdtArray
 		        },
 		        {
 		            label: "D1:미세먼지",
-		            backgroundColor: "rgba(75, 192, 192, 0.4)",
+		            backgroundColor: "rgba(255, 193, 7, 0.6)",
 		            data: d1dtArray
 		        },
 		        {
 		            label: "D2:초미세먼지",
-		            backgroundColor: "rgba(153, 102, 255, 0.4)",
+		            backgroundColor: "rgba(23, 162, 184, 0.6)",
 		            data: d2dtArray
 		        }
 		    ]
@@ -176,9 +176,11 @@ $(document).ready(function() {
 			<input type="date" id="server_time" placeholder="fromdate">
 			<input type="date" id="to_date" placeholder="todate">
 			<input type="text" id="data_type" placeholder="data_type">
-			<input type="submit" id="submit" onclick='checking()'>
+			<button type="submit" id="submit" class="btn btn-dark" onclick='checking()'>조회</button>
 		</form>
 	</div>	
+	<p class="font-weight-light font-italic" >조건을 부여하여 기간 내 평균 데이터를 확인하세요.<br>
+	첫 화면에는 해당 기기에 데이터가 기록 된 전체 기간의 평균이 제시됩니다.</p>
 </div>
 
 </body>

@@ -15,6 +15,10 @@
 .container-fluid {
 	color: gray;
 }
+.inner {
+  position: absolute;
+  bottom: 0;
+}
 </style>
 <script>
 var obj = new Object();	
@@ -42,6 +46,7 @@ $(document).ready(function() {
 });
 
 function deviceOne(device){
+	var deviname =	"";
 	obj.device_id = device;	
 	$.ajax({
 		url : "nowjsn",
@@ -52,47 +57,56 @@ function deviceOne(device){
 		}			
 	}).done(function(results){		
 		console.log("results",results);		
-		html = "";	
+		html = ""; deviname = "";	
 		for(key in results[0].successList){
-			$('#timeinsert').html(moment(results[0].successList[key].server_time).format('YYYY-MM-DD HH:mm'));
-			$('#title').html(results[0].device_name+"의 데이터 현황")			
+			$('#timeinsert').html(moment(results[0].successList[key].server_time).format('YYYY-MM-DD HH:mm'));			
+			
+			deviname = 	results[0].device_name;	
 			if (results[0].successList[key].data_type == "H"){
-				html += "<h3>"+results[0].successList[key].data_content+"</h3>"
+				html += "<h3>"+results[0].successList[key].data_content+" %</h3>"
 				}
 			if (results[0].successList[key].data_type == "T"){
-				html += "<h3>"+results[0].successList[key].data_content+"</h3>"
+				html += "<h3>"+results[0].successList[key].data_content+" ℃</h3>"
 				}
 			if (results[0].successList[key].data_type == "D1"){
-				html += "<h3>"+results[0].successList[key].data_content+"</h3>"
+				html += "<h3>"+results[0].successList[key].data_content+" μm</h3>"
 				}
 			if (results[0].successList[key].data_type == "D2"){
-				html += "<h3>"+results[0].successList[key].data_content+"</h3>"
+				html += "<h3>"+results[0].successList[key].data_content+" μm</h3>"
 				}
 			}
 			$('#datainsert').html(html);
+			$('#title').html("현재 데이터 - "+deviname)	
 			
 			
 	});
 };
+function reloading(){
+	var device_id = $("#deviceinfo").val();
+	deviceOne(device_id);
+}
 </script>
 </head>
 <body>
-<div class="container-fluid">
-	<h1 class="display-3" id="title">
-		데이터 현황 <h5>기기를 선택하세요</h5>
-	</h1>
-	<div class="row">
-	  <div class="col order-first">
-		<h3>습도</h3>
-		<h3>온도</h3>
-		<h3>미세먼지</h3>
-		<h3>초미세먼지</h3>
-	  </div>
-	  <div class="col" id="datainsert">
-	  </div>  
+<div class="container-fluid">	
+	<h1 class="display-4" id="title" style="margin-bottom:100px;">현재 데이터</h1>
+	<div class="row align-items-end">
+		<div class="col order-first">
+			<h3>습도</h3>
+			<h3>온도</h3>
+			<h3>미세먼지</h3>
+			<h3>초미세먼지</h3>
+		</div>
+		<div class="col" id="datainsert"></div> 	
+		<div class="col">
+			<h3 align="right" id="timeinsert"></h3>			
+		</div>
 	</div>
-	<h3 align="right" id="timeinsert"></h3>
-	<select id="deviceinfo" name="deviceinfo" onchange="deviceOne(this.value);"></select>
+	<div style="margin-top:50px;">
+		<select id="deviceinfo" name="deviceinfo" onchange="deviceOne(this.value);"></select>
+		<button class="btn btn-dark" style="float: right;" onclick="reloading();">새로고침</button>
+	</div>
+	<p class="font-weight-light font-italic">기기를 선택하면 현재 데이터 현황을 확인하실 수 있습니다.</p>
 </div>
 
 </body>

@@ -30,24 +30,24 @@ public class DeviceDAOTest {
 	private DeviceDAO dao;
 	private DeviceService service;
 	
-	@Test
-	public void testSelectByServerTime() throws Exception{
-		Map<String, String> params = new HashMap<String, String>();
-		params.put("server_time", "20190901000100");
-		params.put("device_id", "0000000090bcf7ffb827eb");
-		params.put("device_address", "경기도");
-		List<DeviceVO> vos = dao.selectByCondition(params);
-		for (int i = 0; i<vos.size(); i++){
-			String print = vos.get(i).getDevice_id()+"/"
-					+vos.get(i).getDevice_address()+"/"
-					+vos.get(i).getDevice_latitude()+"/"
-					+vos.get(i).getDevice_longitude()+"/"
-					+vos.get(i).getSuccessList().get(0).getData_type()+"/"
-					+vos.get(i).getSuccessList().get(0).getData_content()+"/"
-					+vos.get(i).getSuccessList().get(0).getServer_time()+"/";			
-			System.out.println(print);
-		}		
-	}
+//	@Test
+//	public void testSelectByServerTime() throws Exception{
+//		Map<String, String> params = new HashMap<String, String>();
+//		params.put("server_time", "20190901000100");
+//		params.put("device_id", "0000000090bcf7ffb827eb");
+//		params.put("device_address", "경기도");
+//		List<DeviceVO> vos = dao.selectByCondition(params);
+//		for (int i = 0; i<vos.size(); i++){
+//			String print = vos.get(i).getDevice_id()+"/"
+//					+vos.get(i).getDevice_address()+"/"
+//					+vos.get(i).getDevice_latitude()+"/"
+//					+vos.get(i).getDevice_longitude()+"/"
+//					+vos.get(i).getSuccessList().get(0).getData_type()+"/"
+//					+vos.get(i).getSuccessList().get(0).getData_content()+"/"
+//					+vos.get(i).getSuccessList().get(0).getServer_time()+"/";			
+//			System.out.println(print);
+//		}		
+//	}
 	
 //	@Test
 //	public void testInsertDevice() throws Exception{
@@ -93,6 +93,18 @@ public class DeviceDAOTest {
 //	public void testDeleteDevice() throws Exception{
 //		dao.deleteDevice("test");
 //	}
+	
+	@Test
+	public void selectErrByTime() {
+		Map<String, String> params = new HashMap<String, String>();
+//		params.put("yyyy", "2019");
+//		params.put("mm", "02");
+//		params.put("dd", "15");
+//		params.put("hh", "03");
+		params.put("server_time", "2019-02-15 03:19:06");
+		List<DeviceVO> vos = dao.selectErrByTime(params);
+		System.out.println(vos.toString());
+	};
 	
 
 	
