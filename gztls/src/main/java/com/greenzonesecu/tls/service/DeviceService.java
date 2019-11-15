@@ -13,6 +13,5 @@ public interface DeviceService {
 	public List<DeviceVO> selectByCondition(Map<String, String> map);
 	
 	public List<DeviceVO> selectAvgByCondition(Map<String, String> map);
-	
-	public List<DeviceVO> selectErrByTime(Map<String, String> map);
+
 }

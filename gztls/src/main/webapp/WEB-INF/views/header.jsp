@@ -12,8 +12,8 @@
 <body>
 
 <div style="background-color: black; padding: 10px;">
-<a href="/tls/" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Dashboard</a>
-<a href="/tls/errormain" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Error</a>
+<a href="/gztls/" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Dashboard</a>
+<a href="/gztls/errormain" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Error</a>
 </div>
 </body>
 </html>

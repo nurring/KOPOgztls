@@ -94,18 +94,7 @@ public class DeviceDAOTest {
 //		dao.deleteDevice("test");
 //	}
 	
-	@Test
-	public void selectErrByTime() {
-		Map<String, String> params = new HashMap<String, String>();
-//		params.put("yyyy", "2019");
-//		params.put("mm", "02");
-//		params.put("dd", "15");
-//		params.put("hh", "03");
-		params.put("server_time", "2019-02-15 03:19:06");
-		List<DeviceVO> vos = dao.selectErrByTime(params);
-		System.out.println(vos.toString());
-	};
-	
+
 
 	
 }

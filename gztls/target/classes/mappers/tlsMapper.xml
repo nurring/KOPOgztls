@@ -6,218 +6,176 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">	
 	
 	<mapper namespace="DeviceMapper">
-	<resultMap id="DeviceResult" type="DeviceVO">
-	    <id property="device_id" column="device_id" />
-	    <result property="device_name" column="device_name"/>
-	    <result property="device_address" column="device_address"/>
-	    <result property="device_latitude" column="device_latitude"/>
-	    <result property="device_longitude" column="device_longitude"/>
-	    <result property="regidate" column="regidate"/>
-	    <result property="updatedate" column="updatedate"/>
-	    <collection property="successList" ofType="SuccessVO" resultMap="SuccessResult"/>
-	    <collection property="errorList" ofType="ErrorVO" resultMap="ErrorResult">
-	    </collection>
-	</resultMap>
+		<resultMap id="DeviceResult" type="DeviceVO">
+		    <id property="device_id" column="device_id" />
+		    <result property="device_name" column="device_name"/>
+		    <result property="device_address" column="device_address"/>
+		    <result property="device_latitude" column="device_latitude"/>
+		    <result property="device_longitude" column="device_longitude"/>
+		    <result property="regidate" column="regidate"/>
+		    <result property="updatedate" column="updatedate"/>
+		    <collection property="successList" ofType="SuccessVO" resultMap="SuccessResult"/>
+		</resultMap>
+		
+		<resultMap id="SuccessResult" type="SuccessVO">
+			<id column="g_id" property="g_id"/>
+			<result column="device_id" property="device_id"/>
+			<result column="sequence_no" property="sequence_no"/>
+			<result column="data_type" property="data_type"/>
+			<result column="data_content" property="data_content"/>
+			<result column="create_time" property="create_time"/>
+			<result column="server_time" property="server_time"/>
+			<result column="average" property="average"/>
+		</resultMap>
 	
-	<resultMap id="SuccessResult" type="SuccessVO">
-		<id column="g_id" property="g_id"/>
-		<result column="device_id" property="device_id"/>
-		<result column="sequence_no" property="sequence_no"/>
-		<result column="data_type" property="data_type"/>
-		<result column="data_content" property="data_content"/>
-		<result column="create_time" property="create_time"/>
-		<result column="server_time" property="server_time"/>
-		<result column="average" property="average"/>
-	</resultMap>
-	
-	<resultMap id="ErrorResult" type="ErrorVO">
-		<id column="e_id" property="e_id"/>
-		<result column="device_ip" property="device_ip"/>
-		<result column="error_code" property="error_code"/>
-		<result column="error_type" property="error_type"/>
-		<result column="error_message" property="error_message"/>
-		<result column="server_time" property="server_time"/>
-	</resultMap>
-
-	<!-- 행 삽입 -->
-	<insert id = "insertDevice">
-		INSERT INTO 
-			gztls_device( 
+		<!-- 행 삽입 -->
+		<insert id = "insertDevice">
+			INSERT INTO 
+				gztls_device( 
+					device_id
+					, device_name
+					, device_ip
+					, device_address
+					, device_latitude
+					, device_longitude
+			) VALUES( 
+					#{device_id}
+					, #{device_name}
+					, #{device_ip}
+					, #{device_address}
+					, #{device_latitude}
+					, #{device_longitude}
+			)
+		</insert>
+		
+		<!--행 조회 -->
+		<select id="selectDevice" resultType="DeviceVO">
+			SELECT
+				* 
+			FROM
+				gztls_device
+			<where>
+				<if test='device_id != null'>
+				AND device_id = #{device_id}
+				</if>
+				<if test='device_name != null'>
+				AND device_name LIKE CONCAT('%', #{device_name}, '%')
+				</if>
+				<if test='device_address != null'>
+				AND device_address LIKE CONCAT('%', #{device_address}, '%')
+				</if>
+			</where>
+			ORDER BY
 				device_id
-				, device_name
-				, device_ip
-				, device_address
-				, device_latitude
-				, device_longitude
-		) VALUES( 
-				#{device_id}
-				, #{device_name}
-				, #{device_ip}
-				, #{device_address}
-				, #{device_latitude}
-				, #{device_longitude}
-		)
-	</insert>
-	
-	<!--행 조회 -->
-	<select id="selectDevice" resultType="DeviceVO">
-		SELECT
-			* 
-		FROM
-			gztls_device
-		<where>
-			<if test='device_id != null'>
-			AND device_id = #{device_id}
-			</if>
-			<if test='device_name != null'>
-			AND device_name LIKE CONCAT('%', #{device_name}, '%')
-			</if>
-			<if test='device_address != null'>
-			AND device_address LIKE CONCAT('%', #{device_address}, '%')
-			</if>
-		</where>
-		ORDER BY
-			device_id
-	</select>
-	
-	<!--전체 조회 -->
-	<select id="deviceList" resultType="DeviceVO">
-		SELECT
-			*
-		FROM 
-			gztls_device
-		ORDER BY
-			device_id
-	</select>
-	
-	<!-- 행 삭제 -->
-	<delete id="deleteDevice">
-		DELETE FROM
-			gztls_device
-		WHERE device_id = #{device_id}
-	</delete>
-	
-	<!-- 지도에 뿌릴 데이터 -->
-	<select id="selectByCondition" parameterType="String" resultMap="DeviceResult">		
+		</select>
+		
+		<!--전체 조회 -->
+		<select id="deviceList" resultType="DeviceVO">
+			SELECT
+				*
+			FROM 
+				gztls_device
+			ORDER BY
+				device_id
+		</select>
+		
+		<!-- 행 삭제 -->
+		<delete id="deleteDevice">
+			DELETE FROM
+				gztls_device
+			WHERE device_id = #{device_id}
+		</delete>
+		
+		<!-- 지도에 뿌릴 데이터 -->
+		<select id="selectByCondition" parameterType="String" resultMap="DeviceResult">		
+			SELECT 
+				a.device_name
+				, a.device_id
+				, a.device_latitude
+				, a.device_longitude
+				, a.device_address
+				, b.data_type
+				, b.data_content
+				, b.server_time
+			FROM 
+				gztls_device a
+			JOIN 
+				(
+					SELECT
+						device_id
+						, data_type
+						, data_content
+						, server_time 
+					FROM
+						gztls_success 
+					<where>
+						AND server_time = DATE_FORMAT(#{server_time}, '%Y-%m-%d %H:%i:%s')
+						<if test='device_id != null'>
+						AND device_id = #{device_id}
+						</if>
+					</where>
+					GROUP BY 
+						device_id
+						, data_type
+						, data_content
+				) b
+			<where>
+				AND a.device_id = b.device_id	
+				<if test='device_address != null'>
+				AND device_address LIKE CONCAT('%', #{device_address}, '%')
+				</if>
+				<if test='device_name != null'>
+				AND device_name LIKE CONCAT('%', #{device_name}, '%')
+				</if>
+			</where>
+			ORDER BY
+				device_id, data_type
+		</select>
+		
+		<!-- 조건별 평균값 통계용 -->
+		<select id="selectAvgByCondition" parameterType="String" resultMap="DeviceResult">
 		SELECT 
 			a.device_name
 			, a.device_id
-			, a.device_latitude
-			, a.device_longitude
-			, a.device_address
 			, b.data_type
-			, b.data_content
-			, b.server_time
+			, b.average 
 		FROM 
 			gztls_device a
 		JOIN 
 			(
-				SELECT
+				SELECT 
 					device_id
 					, data_type
-					, data_content
-					, server_time 
-				FROM
-					gztls_success 
+					, ROUND(AVG(data_content),2) AS average
+				FROM 
+					gztls_success 			 			
 				<where>
-					AND server_time = DATE_FORMAT(#{server_time}, '%Y-%m-%d %H:%i:%s')
 					<if test='device_id != null'>
-					AND device_id = #{device_id}
+						device_id = #{device_id}
 					</if>
+					<if test='server_time != null'>
+						AND server_time BETWEEN #{server_time} AND #{to_date}
+					</if>
+					<if test='data_type != null'>
+						AND data_type = #{data_type}
+					</if>				
 				</where>
-				GROUP BY 
-					device_id
-					, data_type
-					, data_content
-			) b
-		<where>
-			AND a.device_id = b.device_id	
-			<if test='device_address != null'>
-			AND device_address LIKE CONCAT('%', #{device_address}, '%')
-			</if>
-			<if test='device_name != null'>
-			AND device_name LIKE CONCAT('%', #{device_name}, '%')
-			</if>
-		</where>
-		ORDER BY
-			device_id, data_type
-	</select>
-	
-	<!-- 조건별 평균값 통계용 -->
-	<select id="selectAvgByCondition" parameterType="String" resultMap="DeviceResult">
-	SELECT 
-		a.device_name
-		, a.device_id
-		, b.data_type
-		, b.average 
-	FROM 
-		gztls_device a
-	JOIN 
-		(
-			SELECT 
-				device_id
-				, data_type
-				, ROUND(AVG(data_content),2) AS average
-			FROM 
-				gztls_success 			 			
-			<where>
-				<if test='device_id != null'>
-					device_id = #{device_id}
-				</if>
-				<if test='server_time != null'>
-					AND server_time BETWEEN #{server_time} AND #{to_date}
-				</if>
-				<if test='data_type != null'>
-					AND data_type = #{data_type}
-				</if>				
-			</where>
-			GROUP BY device_id, data_type
-		)b
-	WHERE 
-		a.device_id = b.device_id
-	</select>
-	
-	<!-- 기간별 -->
-	<select id="selectPeriod" parameterType="String" resultMap="SuccessResult">
-	SELECT 
-		data_type
-		, server_time
-		, data_content
-	FROM 
-		gztls_success 
-	WHERE 	
-		server_time BETWEEN #{from_date} AND #{to_date}	
-		AND device_id = #{device_id}	
-	</select>
-	
-	<select id="selectErrByTime" parameterType="String" resultMap="DeviceResult">
-	SELECT 
-		a.device_id
-		, a.device_name
-		, a.device_ip
-		, b.err_code
-		, b.err_type
-		, b.err_message
-		, b.server_time 
-	FROM 
-		gztls_device a
-	JOIN 
-		(
+				GROUP BY device_id, data_type
+			)b
+		WHERE 
+			a.device_id = b.device_id
+		</select>
+		
+		<!-- 기간별 -->
+		<select id="selectPeriod" parameterType="String" resultMap="SuccessResult">
 		SELECT 
-			device_ip
-			, err_code
-			, err_type
-			, err_message
-			, server_time 
+			data_type
+			, server_time
+			, data_content
 		FROM 
-			gztls_error
-		<where> 
-			<if test='server_time != null'>
-				server_time = #{server_time}
-			</if>			
-		</where>
-		) b
-		WHERE a.device_ip = b.device_ip;
-	</select>
-	
+			gztls_success 
+		WHERE 	
+			server_time BETWEEN #{from_date} AND #{to_date}	
+			AND device_id = #{device_id}	
+		</select>
 	</mapper>

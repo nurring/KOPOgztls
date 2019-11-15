@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- DTD 선언 -->
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">	
+	
+	<mapper namespace="ErrorMapper">	
+		<resultMap id="DeviceResult" type="DeviceVO">
+		    <id property="device_id" column="device_id" />
+		    <result property="device_name" column="device_name"/>
+		    <result property="device_address" column="device_address"/>
+		    <result property="device_latitude" column="device_latitude"/>
+		    <result property="device_longitude" column="device_longitude"/>
+		    <result property="regidate" column="regidate"/>
+		    <result property="updatedate" column="updatedate"/>
+		    <collection property="errorList" ofType="ErrorVO" resultMap="ErrorResult"/>
+		</resultMap>
+		
+		<resultMap id="ErrorResult" type="ErrorVO">
+			<id column="e_id" property="e_id"/>
+			<result column="device_ip" property="device_ip"/>
+			<result column="err_code" property="err_code"/>
+			<result column="err_type" property="err_type"/>
+			<result column="err_message" property="err_message"/>
+			<result column="server_time" property="server_time"/>
+		</resultMap>
+		
+		<select id="selectErrByTime" resultMap="DeviceResult">
+			SELECT 
+				a.device_id
+				, a.device_name
+				, a.device_ip
+				, b.err_code
+				, b.err_type
+				, b.err_message
+				, b.server_time 
+			FROM 
+				gztls_device a
+			JOIN 
+				(
+				SELECT 
+					device_ip
+					, err_code
+					, err_type
+					, err_message
+					, server_time 
+				FROM 
+					gztls_error
+				<where> 
+					<if test='server_time != null'>
+						server_time = #{server_time}
+					</if>			
+				</where>
+				) b
+			ON a.device_ip = b.device_ip;
+		</select>	
+	</mapper>
