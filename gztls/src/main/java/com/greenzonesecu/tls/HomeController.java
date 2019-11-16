@@ -77,4 +77,15 @@ public class HomeController { //jsp view로 return
 	public String errormain(Model model) {
 		return "errormain";
 	}
+	
+	@GetMapping(value = "/testdata")
+	public String testdata() {
+		return "testdata";
+	}
+	
+	@GetMapping(value = "/insertsuccessdata")
+	public String insertsuccessdata(Model model) {
+		
+		return "testdata";
+	}
 }

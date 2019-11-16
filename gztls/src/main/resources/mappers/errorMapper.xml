@@ -55,4 +55,23 @@
 				) b
 			ON a.device_ip = b.device_ip;
 		</select>	
+		
+		<insert id = "insertError">
+			INSERT INTO 
+				gztls_device( 
+					device_id
+					, device_name
+					, device_ip
+					, device_address
+					, device_latitude
+					, device_longitude
+			) VALUES( 
+					#{device_id}
+					, #{device_name}
+					, #{device_ip}
+					, #{device_address}
+					, #{device_latitude}
+					, #{device_longitude}
+			)
+		</insert>
 	</mapper>

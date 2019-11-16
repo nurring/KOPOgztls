@@ -10,10 +10,13 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
 <body>
-
+<script language="javascript" type="text/javascript">  
+function openWin(){  
+    window.open("http://35.213.20.175:8080/gztls/insertsuccessdata", "샘플 데이터 넣기", "width=600, height=200, toolbar=no, menubar=no, scrollbars=no, resizable=yes" );  
+}  
+</script> 
 <div style="background-color: black; padding: 10px;">
-<a href="/gztls/" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Dashboard</a>
-<a href="/gztls/errormain" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Error</a>
+<button class="btn btn-primary" onclick='javascript:openWin();'>샘플 데이터 넣기</button>
 </div>
 </body>
 </html>

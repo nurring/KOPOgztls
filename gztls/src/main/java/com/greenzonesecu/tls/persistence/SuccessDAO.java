@@ -6,8 +6,8 @@ import java.util.Map;
 
 import com.greenzonesecu.tls.domain.SuccessVO;
 
-public interface SuccessDAO {
-	public List<SuccessVO> selectTime(String time);
-	
+public interface SuccessDAO {	
 	public List<SuccessVO> selectPeriod(Map<String, String> map);
+	
+	public void insertData(Map<String, String> map);
 }

@@ -48,6 +48,7 @@ $(document).ready(function() {
 function deviceOne(device){
 	var deviname =	"";
 	obj.device_id = device;	
+	window.setInterval(function(){	
 	$.ajax({
 		url : "nowjsn",
 		data : obj,
@@ -80,6 +81,7 @@ function deviceOne(device){
 			
 			
 	});
+	}, 2000);
 };
 function reloading(){
 	var device_id = $("#deviceinfo").val();

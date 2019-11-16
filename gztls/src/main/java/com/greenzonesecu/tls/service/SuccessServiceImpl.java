@@ -21,5 +21,10 @@ public class SuccessServiceImpl implements SuccessService {
 		return dao.selectPeriod(map);
 	}
 
+	@Override
+	public void insertData(Map<String, String> map) {
+		dao.insertData(map);
+	}
+
 
 }

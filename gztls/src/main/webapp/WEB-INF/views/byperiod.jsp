@@ -55,7 +55,7 @@ $(document).ready(function() {
 				if (results[key].data_type == "H"){
 					hdata += results[key].data_content;
 					hdata += ",";
-					hlabels += moment(results[key].server_time).tz("Europe/London").format('YYMMDD HH:mm:ss');
+					hlabels += moment(results[key].server_time).format('YYMMDD HH:mm:ss');
 					hlabels +=","}
 				if (results[key].data_type == "T"){
 					tdata += results[key].data_content;

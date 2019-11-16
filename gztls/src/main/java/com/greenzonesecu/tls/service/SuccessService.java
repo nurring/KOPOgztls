@@ -8,4 +8,6 @@ import com.greenzonesecu.tls.domain.SuccessVO;
 
 public interface SuccessService {
 	public List<SuccessVO> selectPeriod(Map<String, String> map);
+	
+	public void insertData(Map<String, String> map);
 }

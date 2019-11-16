@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- DTD 선언 -->
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">	
+	
+	<mapper namespace="SuccessMapper">
+		<!-- 기간별 -->
+		<select id="selectPeriod" parameterType="String" resultType="SuccessVO">
+			SELECT 
+				data_type
+				, server_time
+				, data_content
+			FROM 
+				gztls_success 
+			WHERE 	
+				server_time BETWEEN #{from_date} AND #{to_date}	
+				AND device_id = #{device_id}	
+		</select>
+		
+		<insert id="insertData">
+			INSERT INTO 
+				gztls_success( 
+					device_id
+					, sequence_no
+					, data_type
+					, data_content
+					, create_time
+					, server_time
+			) VALUES( 
+					#{device_id}
+					, #{sequence_no}
+					, #{data_type}
+					, #{data_content}
+					, #{create_time}
+					, #{server_time}
+			)
+		</insert>
+	</mapper>
+	
+	

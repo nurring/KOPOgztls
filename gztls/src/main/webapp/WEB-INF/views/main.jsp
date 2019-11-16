@@ -15,28 +15,30 @@ div.container-fluid {
 	padding-left: 0px;
 	padding-right: 0px;
 }
+div.col-md-2 {
+	background-color: #eee;
+}
 </style>
+<%
+	// 넘어오는 값 받아서 div에 배치할 것 지정하기
+	String contentPage = request.getParameter("contentPage");
+	if (contentPage == null) {
+		contentPage = "dashboard.jsp";
+	}
+%>
 <body>
 <div class="container-fluid">
 	<div id="div1">
 		<%@include file="header.jsp" %>
 	</div>
-	<div class="row" style="padding: 10px; margin: 0px;">
-		<div class="col-md-6">
-			<jsp:include page="datanow.jsp" />		
+	<div class="row" style="padding: 0px; margin: 0px;">
+		<div class="col-md-2">
+			<jsp:include page="navi.jsp" />		
 		</div>
-		<div class="col-md-6">			
-			<jsp:include page="byperiod.jsp" />
+		<div class="col-md-10">			
+			<jsp:include page="<%=contentPage%>" />
 		</div>
 	</div>
-	<div class="row" style="padding: 10px; margin: 0px;">
-		<div class="col-md-6">
-		<jsp:include page="avgbycon.jsp" />
-		</div>
-		<div class="col-md-6">
-			<jsp:include page="bymap.jsp" />
-		</div>
-	</div>	
 </div>
 </body>
 </html>

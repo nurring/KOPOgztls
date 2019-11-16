@@ -18,17 +18,19 @@ public class SuccessDAOImpl implements SuccessDAO{
 	private SqlSession sqlSession;
 	
 	private static final String SM = "SuccessMapper";
-	private static final String SelectTime = SM + ".selectTime";
-	private static final String SelectPeriod = "DeviceMapper.selectPeriod";
+	private static final String SelectPeriod = SM + ".selectPeriod";
+	private static final String InsertData = SM + ".insertData";
 
-	@Override
-	public List<SuccessVO> selectTime(String time) {
-		return sqlSession.selectList(SelectTime, time);
-	}
 
 	@Override
 	public List<SuccessVO> selectPeriod(Map<String, String> map) {
 		return sqlSession.selectList(SelectPeriod, map);
+	}
+
+
+	@Override
+	public void insertData(Map<String, String> map) {
+		sqlSession.insert(InsertData, map);
 	}
 
 }
