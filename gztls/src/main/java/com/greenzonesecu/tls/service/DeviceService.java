@@ -6,6 +6,8 @@ import java.util.Map;
 import com.greenzonesecu.tls.domain.DeviceVO;
 
 public interface DeviceService {
+	public void insertDevice(Map<String, String> map);
+	
 	public List<DeviceVO> selectDevice(Map<String, String> map);
 	
 	public List<DeviceVO> deviceList();

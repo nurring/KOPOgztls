@@ -73,17 +73,17 @@ public class HomeController { //jsp view로 return
 		return "datanow";
 	}
 	
-	@GetMapping(value = "/errormain")
+	@GetMapping(value = "/errbytype")
 	public String errormain(Model model) {
-		return "errormain";
+		return "errbytype";
 	}
 	
-	@GetMapping(value = "/testdata")
-	public String testdata() {
-		return "testdata";
+	@GetMapping(value = "/errcntbyid")
+	public String errcntbyid() {
+		return "errcntbyid";
 	}
 	
-	@GetMapping(value = "/insertsuccessdata")
+	@GetMapping(value = "/insertdata")
 	public String insertsuccessdata(Model model) {
 		
 		return "testdata";

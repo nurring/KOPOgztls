@@ -51,10 +51,10 @@
 
 <button class="accordion">에러 데이터 리포트</button>
 	<div class="panel">
-		<a href="/gztls/">현재 데이터</a><br>
+		<a href="?contentPage=errbytype.jsp">전체 기간 내 누적 건수</a><br>
 		<a href="/gztls/">24시간 그래프</a><br>
 		<a href="/gztls/">기간 별 평균 통계</a><br>
-		<a href="/gztls/">디바이스 위치 확인</a>	
+		<a href="?contentPage=errbytype.jsp">항목 별</a>	
 	</div>
 
 <script>

@@ -12,12 +12,26 @@
 </head>
 <body>
 	<button class="btn btn-primary" role="button" onclick="servertimeinsert()">서버시간 랜덤 데이터 넣기</button>
+	<button class="btn btn-primary" role="button" onclick="deviceinsert()">디바이스 추가</button>
 	<button class="btn btn-primary" role="button" onclick="servertimeerror()">서버시간 에러 데이터 넣기</button>
 </body>
 <script>
 	function servertimeinsert(){
 		$.ajax({
 			url : "servertimeinsert",
+			type : "GET",
+			success : function() {
+				alert("데이터 삽입 완료");				
+			},
+			error : function() {
+				alert("error",error);
+			}
+		});
+		}
+	
+	function deviceinsert(){
+		$.ajax({
+			url : "deviceinsert",
 			type : "GET",
 			success : function() {
 				alert("데이터 삽입 완료");				

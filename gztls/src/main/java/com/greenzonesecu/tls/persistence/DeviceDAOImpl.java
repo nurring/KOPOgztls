@@ -26,8 +26,8 @@ public class DeviceDAOImpl implements DeviceDAO {
 	//update만들기~
 
 	@Override
-	public void insertDevice(DeviceVO vo) {
-		sqlSession.insert(InsertDevice,vo);
+	public void insertDevice(Map<String, String> map) {
+		sqlSession.insert(InsertDevice,map);
 	}
 
 	@Override

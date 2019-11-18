@@ -11,12 +11,16 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </head>
 <style>
+html, body {
+  height: 100%;
+}
 div.container-fluid {
 	padding-left: 0px;
 	padding-right: 0px;
+	height: 100%;
 }
 div.col-md-2 {
-	background-color: #eee;
+	background-color: #eee;	
 }
 </style>
 <%
@@ -31,7 +35,7 @@ div.col-md-2 {
 	<div id="div1">
 		<%@include file="header.jsp" %>
 	</div>
-	<div class="row" style="padding: 0px; margin: 0px;">
+	<div class="row" style="padding: 0px; margin: 0px; min-height: 100%;">
 		<div class="col-md-2">
 			<jsp:include page="navi.jsp" />		
 		</div>

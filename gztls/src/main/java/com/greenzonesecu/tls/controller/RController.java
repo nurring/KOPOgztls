@@ -18,8 +18,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.greenzonesecu.tls.domain.DeviceVO;
+import com.greenzonesecu.tls.domain.ErrorVO;
 import com.greenzonesecu.tls.domain.SuccessVO;
 import com.greenzonesecu.tls.service.DeviceService;
+import com.greenzonesecu.tls.service.ErrorService;
 import com.greenzonesecu.tls.service.SuccessService;
 
 @RestController //Rest방식만 따로 모음
@@ -28,6 +30,8 @@ public class RController {
 	private DeviceService ds; 	
 	@Autowired
 	private SuccessService ss;
+	@Autowired
+	private ErrorService es;
 	
 	private static final Logger logger = 	LoggerFactory.getLogger(RController.class);
 	
@@ -112,6 +116,21 @@ public class RController {
 		return vos;
 	}
 	
+	@RequestMapping(value="/errcntjsn", method=RequestMethod.GET)
+	public List<ErrorVO> errcnt(@RequestParam Map<String, String> param) {	
+		logger.info("param..........."+param);
+		List<ErrorVO> vos = es.selectErrCnt(param);
+		return vos;		
+	}
+	
+	@RequestMapping(value="/errcntbyidjsn", method=RequestMethod.GET)
+	public List<DeviceVO> errcntbyid(@RequestParam Map<String, String> param) {	
+		logger.info("param..........."+param);
+		List<DeviceVO> vos = es.selectOneErrCnt(param);
+		return vos;		
+	}
+	
+	//샘플 데이터 넣기
 	@RequestMapping(value="/servertimeinsert", method=RequestMethod.GET)
 	public void servertimeinsert() {
 	    Random random = new Random();
@@ -169,8 +188,29 @@ public class RController {
 			}
 		}
 	}
+	public static int randomRange(int n1, int n2) {
+		return (int) (Math.random() * (n2 - n1 + 1)) + n1;
+	}
+	@RequestMapping(value="/deviceinsert", method=RequestMethod.GET)//에러데이터넣기 ~ 미완성
+	public void deviceinsert() {
+		double device_latitude; double device_longitude;
+		String device_id = "test"+ randomRange(1,5555555);
+		String device_name = "test";
+		String device_ip = randomRange(0,255)+"."+randomRange(0,255)+"."+randomRange(0,255)+"."+randomRange(0,255);
+		String device_address = "test";		
+		device_latitude = (randomRange(32000000, 38000000))/1000000.0;
+		device_longitude = (randomRange(125500000, 131500000))/1000000.0;
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("device_id",device_id);
+		params.put("device_name", device_name);
+		params.put("device_ip", device_ip);
+		params.put("device_address", device_address);
+		params.put("device_latitude", Double.toString(device_latitude));
+		params.put("device_longitude", Double.toString(device_longitude));
+		ds.insertDevice(params);
+	}
 	
-	@RequestMapping(value="/servertimeerror", method=RequestMethod.GET)
+	@RequestMapping(value="/servertimeerror", method=RequestMethod.GET)//에러데이터넣기 ~ 미완성
 	public void servertimeerror() {
 		
 	}

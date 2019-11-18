@@ -12,6 +12,7 @@ public class ErrorVO {
 	private String err_type;
 	private String err_message;
 	private Date server_time;
+	private int count;
 	
 	public String getE_id() {
 		return e_id;
@@ -48,10 +49,16 @@ public class ErrorVO {
 	}
 	public void setServer_time(Date server_time) {
 		this.server_time = server_time;
+	}	
+	public int getCount() {
+		return count;
+	}
+	public void setCount(int count) {
+		this.count = count;
 	}
 	@Override
 	public String toString() {
 		return "ErrorVO [e_id=" + e_id + ", device_ip=" + device_ip + ", err_code=" + err_code + ", err_type="
-				+ err_type + ", err_message=" + err_message + ", server_time=" + server_time + "]";
+				+ err_type + ", err_message=" + err_message + ", server_time=" + server_time + ", count=" + count + "]";
 	} 
 }

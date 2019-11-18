@@ -16,6 +16,11 @@ public class DeviceServiceImpl implements DeviceService{
 	private DeviceDAO dao;
 
 	@Override
+	public void insertDevice(Map<String, String> map) {
+		dao.insertDevice(map);		
+	}
+	
+	@Override
 	public List<DeviceVO> deviceList() {
 		return dao.deviceList();
 	}
@@ -34,6 +39,7 @@ public class DeviceServiceImpl implements DeviceService{
 	public List<DeviceVO> selectDevice(Map<String, String> map) {
 		return dao.selectDevice(map);
 	}
+
 
 
 }

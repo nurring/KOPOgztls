@@ -13,9 +13,6 @@
 <head>
 <meta charset="UTF-8">
 <title>기간 변화 그래프</title>
-<script>
-
-</script>
 </head>
 <body>
 	<div class="container">
@@ -153,6 +150,7 @@ let tempData = {
         }]
     }
 let chartOptions = {
+
     title:{
         display:true,
         text:'24h data',
