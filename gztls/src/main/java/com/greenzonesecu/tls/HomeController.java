@@ -50,6 +50,14 @@ public class HomeController { //jsp view로 return
 		return "bymap"; //bymap.jsp
 	}
 	
+	@GetMapping(value = "/bymap2")
+	public String bymap(Model model) {
+		logger.info("bymap2.jsp started ===================================");
+		List<DeviceVO> vos = service.deviceList();
+		model.addAttribute("list",vos);
+		return "bymap2"; //bymap.jsp
+	}
+	
 	@GetMapping(value = "/bytime")
 	public String time() throws ParseException {	
 		logger.info("bytime.jsp started ===================================");	
@@ -84,9 +92,9 @@ public class HomeController { //jsp view로 return
 		return "errcntbyid";
 	}
 	
-	@GetMapping(value = "/errbymap")
+	@GetMapping(value = "/errbytime")
 	public String errbymap() {
-		return "errbymap";
+		return "errbytime";
 	}
 	
 	@GetMapping(value = "/errnow")

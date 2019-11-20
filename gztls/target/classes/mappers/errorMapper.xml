@@ -129,6 +129,8 @@
 			a.device_id
 			, a.device_name
 			, a.device_ip
+			, a.device_latitude
+			, a.device_longitude
 			, b.err_code
 			, b.err_type
 			, b.err_message
@@ -145,6 +147,8 @@
 		LEFT JOIN
 			gztls_device a
 		ON 
-			a.device_ip = b.device_ip;
+			a.device_ip = b.device_ip
+		ORDER BY
+			b.server_time DESC;
 		</select>
 	</mapper>

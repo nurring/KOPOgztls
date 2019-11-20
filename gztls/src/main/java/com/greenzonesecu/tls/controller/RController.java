@@ -266,4 +266,24 @@ public class RController {
 		es.insertError(params);
 	}
 	
+	@RequestMapping(value="/errorinsert2", method=RequestMethod.GET)//에러데이터넣기 ~ 미완성
+	public void errorinsert2() {
+		String device_ip; int err_code; String err_type; String err_message; String server_time;		
+		device_ip = "10.10.10.46";
+		err_code = 1;
+		err_type = "데이터 오류";
+		err_message = "DATA_ERROR_OUT_RANGE";
+		Calendar calt = Calendar.getInstance();	
+		SimpleDateFormat st= new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
+		server_time = st.format(calt.getTime());
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("device_ip", device_ip);
+		params.put("err_code", Integer.toString(err_code));
+		params.put("err_type", err_type);
+		params.put("err_message", err_message);
+		params.put("server_time", server_time);
+		System.out.println(params);
+		es.insertError(params);
+	}
+	
 }

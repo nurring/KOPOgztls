@@ -50,7 +50,7 @@ $(document).ready(function() {
 		//for(i in results){
 		//	}
 		if(results.length != 0){
-			alert("에러가 발생했습니다.");
+			alert("에러가 발생했습니다. 실시간 에러 확인 페이지로 이동합니다.");
 			window.location.href="?contentPage=errnow.jsp";
 		}
 		
@@ -67,15 +67,15 @@ $(document).ready(function() {
 		<a href="?contentPage=datanow.jsp">현재 데이터</a><br>
 		<a href="?contentPage=byperiod.jsp">24시간 그래프</a><br>
 		<a href="?contentPage=avgbycon.jsp">기간 별 평균 통계</a><br>
-		<a href="?contentPage=bymap.jsp">디바이스 위치 확인</a>
+		<a href="?contentPage=bymap2.jsp">디바이스 위치 확인</a>
 	 </div>
 
 <button class="accordion">에러 데이터 리포트</button>
 	<div class="panel">
-		<a href="?contentPage=errnow.jsp">실시간 에러 확인</a><br>
+		<a href="?contentPage=errnow.jsp">실시간 확인(24H)</a><br>
 		<a href="?contentPage=errbytype.jsp">전체 기간 내 누적 건수</a><br>
-		<a href="?contentPage=errbymap.jsp">지도지도</a><br>
-		<a href="?contentPage=errbytype.jsp">항목 별</a>	
+		<a href="?contentPage=errbytime.jsp">기간 별 통계</a><br>
+		<a href="?contentPage=errbytype.jsp">항목 별 통계</a>	
 	</div>
 
 <script>

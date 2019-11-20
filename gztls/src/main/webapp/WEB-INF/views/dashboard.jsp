@@ -23,7 +23,7 @@
 	<jsp:include page="avgbycon.jsp" />
 	</div>
 	<div class="col-md-6">
-		<jsp:include page="bymap.jsp" />
+		<jsp:include page="bymap2.jsp" />
 	</div>
 </div>
 </body>

@@ -57,28 +57,35 @@ function deviceOne(device){
 			alert("err");
 		}			
 	}).done(function(results){		
-		console.log("results",results);		
+		console.log("results.length",results.length);		
 		html = ""; deviname = "";	
-		for(key in results[0].successList){
-			$('#timeinsert').html(moment(results[0].successList[key].server_time).format('YYYY-MM-DD HH:mm'));			
-			
+		
+		if (results.length == 0){
+			html += "<h3>데이터 없음</h3>"	
+				console.log("html",html);			
+		}	
+		else {
 			deviname = 	results[0].device_name;	
-			if (results[0].successList[key].data_type == "H"){
-				html += "<h3>"+results[0].successList[key].data_content+" %</h3>"
-				}
-			if (results[0].successList[key].data_type == "T"){
-				html += "<h3>"+results[0].successList[key].data_content+" ℃</h3>"
-				}
-			if (results[0].successList[key].data_type == "D1"){
-				html += "<h3>"+results[0].successList[key].data_content+" μm</h3>"
-				}
-			if (results[0].successList[key].data_type == "D2"){
-				html += "<h3>"+results[0].successList[key].data_content+" μm</h3>"
-				}
+			$('#title').html("현재 데이터 - "+deviname);
+			for(key in results[0].successList){
+				$('#timeinsert').html(moment(results[0].successList[key].server_time).format('YYYY-MM-DD HH:mm'));					
+				
+				if (results[0].successList[key].data_type == "H"){
+					html += "<h3>"+results[0].successList[key].data_content+" %</h3>"
+					}
+				if (results[0].successList[key].data_type == "T"){
+					html += "<h3>"+results[0].successList[key].data_content+" ℃</h3>"
+					}
+				if (results[0].successList[key].data_type == "D1"){
+					html += "<h3>"+results[0].successList[key].data_content+" μm</h3>"
+					}
+				if (results[0].successList[key].data_type == "D2"){
+					html += "<h3>"+results[0].successList[key].data_content+" μm</h3>"
+					}
 			}
-			$('#datainsert').html(html);
-			$('#title').html("현재 데이터 - "+deviname)	
-			
+		}
+		console.log("html3",html);	
+		$('#datainsert').html(html);
 			
 	});
 	}, 2000);
@@ -94,10 +101,10 @@ function reloading(){
 	<h1 class="display-4" id="title" style="margin-bottom:100px;">현재 데이터</h1>
 	<div class="row align-items-end">
 		<div class="col order-first">
+			<h3>초미세먼지</h3>
+			<h3>미세먼지</h3>
 			<h3>습도</h3>
 			<h3>온도</h3>
-			<h3>미세먼지</h3>
-			<h3>초미세먼지</h3>
 		</div>
 		<div class="col" id="datainsert"></div> 	
 		<div class="col">
