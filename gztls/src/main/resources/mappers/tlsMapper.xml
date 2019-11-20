@@ -96,6 +96,7 @@
 				, a.device_address
 				, b.data_type
 				, b.data_content
+				, b.create_time
 				, b.server_time
 			FROM 
 				gztls_device a
@@ -105,6 +106,7 @@
 						device_id
 						, data_type
 						, data_content
+						, create_time
 						, server_time 
 					FROM
 						gztls_success 

@@ -49,9 +49,10 @@ public class RController {
 		//String tempDate = "20190901000000";//데이터 확인용!
 		
 		str.put("device_id", param.get("device_id")); //기기명
-		str.put("server_time", strDate);
+		str.put("create_time", strDate);
 		logger.info("str..........."+str);
 		List<DeviceVO> vos = ds.selectByCondition(str);
+		logger.info("vos.toString()"+vos.toString());
 		return vos; //객체를 json으로 리턴
 	}
 	
@@ -129,6 +130,41 @@ public class RController {
 		List<DeviceVO> vos = es.selectOneErrCnt(param);
 		return vos;		
 	}
+	
+	@RequestMapping(value="/errnowjsn", method=RequestMethod.GET)
+	public List<ErrorVO> errmntr() {	
+		Map<String, String> params = new HashMap<String, String>();
+		
+		SimpleDateFormat sdt= new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
+		Calendar calt = Calendar.getInstance();		
+		String til = sdt.format(calt.getTime());//현재시간	
+		calt.add(Calendar.MINUTE, -1);	
+		String from = sdt.format(calt.getTime());//1분 전			
+		params.put("from", from);
+		params.put("til", til);
+		logger.info("param..........."+params);
+		List<ErrorVO> vos = es.errmntr(params);
+		logger.info("vos..........."+vos.toString());
+		return vos;		
+	}
+	
+	@RequestMapping(value="/err24jsn", method=RequestMethod.GET)
+	public List<DeviceVO> err24(){
+		Map<String, String> params = new HashMap<String, String>();
+		
+		SimpleDateFormat sdt= new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
+		Calendar calt = Calendar.getInstance();		
+		String til = sdt.format(calt.getTime());//현재시간	
+		calt.add(Calendar.DATE, -1);	
+		String from = sdt.format(calt.getTime());//하루전			
+		params.put("from", from);
+		params.put("til", til);
+		logger.info("param..........."+params);
+		List<DeviceVO> vos = es.err24(params);
+		logger.info("vos..........."+vos.toString());
+		return vos;
+	}
+	
 	
 	//샘플 데이터 넣기
 	@RequestMapping(value="/servertimeinsert", method=RequestMethod.GET)
@@ -210,9 +246,24 @@ public class RController {
 		ds.insertDevice(params);
 	}
 	
-	@RequestMapping(value="/servertimeerror", method=RequestMethod.GET)//에러데이터넣기 ~ 미완성
-	public void servertimeerror() {
-		
+	@RequestMapping(value="/errorinsert", method=RequestMethod.GET)//에러데이터넣기 ~ 미완성
+	public void errorinsert() {
+		String device_ip; int err_code; String err_type; String err_message; String server_time;		
+		device_ip = "10.10.10.47";
+		err_code = 2;
+		err_type = "X509(인증서) 오류";
+		err_message = "X509_V_ERR_UNABLE_TO_GET_ISSUER_CERT";
+		Calendar calt = Calendar.getInstance();	
+		SimpleDateFormat st= new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
+		server_time = st.format(calt.getTime());
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("device_ip", device_ip);
+		params.put("err_code", Integer.toString(err_code));
+		params.put("err_type", err_type);
+		params.put("err_message", err_message);
+		params.put("server_time", server_time);
+		System.out.println(params);
+		es.insertError(params);
 	}
 	
 }

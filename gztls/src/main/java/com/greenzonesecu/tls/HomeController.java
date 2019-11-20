@@ -37,6 +37,7 @@ public class HomeController { //jsp view로 return
 //		SimpleDateFormat sdt= new SimpleDateFormat("YYYYMMddHHmmss");
 //		Calendar calt = Calendar.getInstance();
 		List<DeviceVO> vos = service.deviceList();
+		logger.info("vos", vos.toString());
 		model.addAttribute("list",vos);
 		return "main";
 	}
@@ -82,6 +83,16 @@ public class HomeController { //jsp view로 return
 	public String errcntbyid() {
 		return "errcntbyid";
 	}
+	
+	@GetMapping(value = "/errbymap")
+	public String errbymap() {
+		return "errbymap";
+	}
+	
+	@GetMapping(value = "/errnow")
+	public String errmntr() {
+		return "errnow";
+	}	
 	
 	@GetMapping(value = "/insertdata")
 	public String insertsuccessdata(Model model) {

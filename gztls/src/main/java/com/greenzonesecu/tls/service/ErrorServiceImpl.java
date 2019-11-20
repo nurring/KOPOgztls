@@ -31,4 +31,19 @@ public class ErrorServiceImpl implements ErrorService {
 		return dao.selectOneErrCnt(map);
 	}
 
+	@Override
+	public List<ErrorVO> errmntr(Map<String, String> map) {
+		return dao.errmntr(map);
+	}
+
+	@Override
+	public void insertError(Map<String, String> map) {
+		dao.insertError(map);
+	}
+
+	@Override
+	public List<DeviceVO> err24(Map<String, String> map) {
+		return dao.err24(map);
+	}
+
 }

@@ -19,6 +19,9 @@ public class ErrorDAOImpl implements ErrorDAO {
 	private static final String SelectErrByTime = EM + ".selectErrByTime";
 	private static final String SelectErrCnt = EM + ".selectErrCnt";
 	private static final String SelectOneErrCnt = EM + ".selectOneErrCnt";
+	private static final String ErrMntr = EM + ".errmntr";
+	private static final String InsertError = EM + ".insertError";
+	private static final String Err24 = EM + ".err24";
 
 	@Override
 	public List<DeviceVO> selectErrByTime(Map<String, String> map) {
@@ -32,7 +35,22 @@ public class ErrorDAOImpl implements ErrorDAO {
 
 	@Override
 	public List<DeviceVO> selectOneErrCnt(Map<String, String> map) {
-		// TODO Auto-generated method stub
 		return sqlSession.selectList(SelectOneErrCnt, map);
+	}
+
+	@Override
+	public List<ErrorVO> errmntr(Map<String, String> map) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList(ErrMntr, map);
+	}
+
+	@Override
+	public void insertError(Map<String, String> map) {
+		sqlSession.insert(InsertError, map);
+	}
+
+	@Override
+	public List<DeviceVO> err24(Map<String, String> map) {
+		return sqlSession.selectList(Err24, map);
 	}
 }

@@ -59,20 +59,18 @@
 		
 		<insert id = "insertError">
 			INSERT INTO 
-				gztls_device( 
-					device_id
-					, device_name
-					, device_ip
-					, device_address
-					, device_latitude
-					, device_longitude
+				gztls_error( 
+					device_ip
+					, err_code
+					, err_type
+					, err_message
+					, server_time
 			) VALUES( 
-					#{device_id}
-					, #{device_name}
-					, #{device_ip}
-					, #{device_address}
-					, #{device_latitude}
-					, #{device_longitude}
+					#{device_ip}
+					, #{err_code}
+					, #{err_type}
+					, #{err_message}
+					, #{server_time}
 			)
 		</insert>
 		
@@ -115,5 +113,38 @@
 			a.device_ip = b.device_ip
 		WHERE
 			device_id = #{device_id}
+		</select>
+		
+		<select id="errmntr" resultType="ErrorVO">
+		SELECT
+			*
+		FROM 
+			gztls_error
+		WHERE
+			server_time BETWEEN #{from} and #{til};
+		</select>
+		
+		<select id="err24" resultMap="DeviceResult">
+		SELECT 
+			a.device_id
+			, a.device_name
+			, a.device_ip
+			, b.err_code
+			, b.err_type
+			, b.err_message
+			, b.server_time
+		FROM
+			(
+				SELECT 
+					*
+				FROM 
+					gztls_error
+				WHERE
+					server_time BETWEEN #{from} and #{til}
+			) b
+		LEFT JOIN
+			gztls_device a
+		ON 
+			a.device_ip = b.device_ip;
 		</select>
 	</mapper>

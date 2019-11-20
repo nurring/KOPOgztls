@@ -12,4 +12,10 @@ public interface ErrorDAO {
 	public List<ErrorVO> selectErrCnt(Map<String, String> map);
 	
 	public List<DeviceVO> selectOneErrCnt(Map<String, String> map);
+	
+	public List<ErrorVO> errmntr(Map<String, String> map);
+	
+	public void insertError(Map<String, String> map);
+	
+	public List<DeviceVO> err24(Map<String, String> map);
 }

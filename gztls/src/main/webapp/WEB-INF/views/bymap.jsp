@@ -13,7 +13,6 @@
 <style>
 	#map {
 	  width: 80%;
-	  height: 300px;
 	  background-color: grey;
 	  margin: 10px;
 	}
@@ -110,19 +109,23 @@ function getdevice(d_id) {
 				alert("err");
 			}			
 		}).done(function(results){
-			add += "<table class='table table-bordered'>";			
-			for(i in results){
-				add += "<tr><td colspan='4'>"+results[i].device_name+"</td><tr>";
-				add += "<tr><td colspan='4'>"+results[i].device_address+"</td><tr>";
-				add += "<tr>";
-				for(j in results[i].successList){
-					add += "<td>"+results[i].successList[j].data_type+"</td>";
+			console.log(results);
+			add += "<table class='table table-bordered'>";
+			if (results.length != 0){
+				for(i in results){
+					add += "<tr><td colspan='4'>"+results[i].device_name+"</td><tr>";
+					add += "<tr><td colspan='4'>"+results[i].device_address+"</td><tr>";
+					add += "<tr>";
+					for(j in results[i].successList){
+						add += "<td>"+results[i].successList[j].data_type+"</td>";
 					}				
-				add += "</tr>";
-				for(j in results[i].successList){
-					add += "<td>"+results[i].successList[j].data_content+"</td>";
+					add += "</tr>";
+					for(j in results[i].successList){
+						add += "<td>"+results[i].successList[j].data_content+"</td>";
 					}
 				}
+			}			
+			else {add += "<tr><td>현재 시각 데이터 없음</td>"}
 			add += "</tr></table>"
 			console.log(add);
 			$('#list').html(add);
@@ -141,8 +144,7 @@ var avglat = 0;var avglng = 0;
 	arr.push(info);
 	info = new Array();
 </c:forEach>
-console.log(arr);
-
+console.log("arr",arr);
 avglat = avglat/${fn:length(list) }
 avglng = avglng/${fn:length(list) }
 
@@ -161,7 +163,8 @@ function initMapEach(_lat, _lng) {
 			infoWindow.open(map, marker)
     });    
 }
-
+console.log("avglat",avglat);
+console.log("avglng",avglng);
 function initMap() {
     var map = new google.maps.Map(document.getElementById('map'), {
       zoom: 10,

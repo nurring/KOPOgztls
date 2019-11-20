@@ -36,7 +36,28 @@
   transition: max-height 0.2s ease-out;
 }
 </style>
-<title>Insert title here</title>
+<script type="text/javascript">
+$(document).ready(function() {	
+	window.setInterval(function(){	
+	$.ajax({
+		url : "errnowjsn",
+		type : "GET",
+		error : function() {
+			alert("err");
+		}
+	}).done(function(results){
+		console.log("results",results);
+		//for(i in results){
+		//	}
+		if(results.length != 0){
+			alert("에러가 발생했습니다.");
+			window.location.href="?contentPage=errnow.jsp";
+		}
+		
+		})
+	}, 60000);
+});
+</script>
 </head>
 <body>
 <div id="navi">
@@ -51,9 +72,9 @@
 
 <button class="accordion">에러 데이터 리포트</button>
 	<div class="panel">
+		<a href="?contentPage=errnow.jsp">실시간 에러 확인</a><br>
 		<a href="?contentPage=errbytype.jsp">전체 기간 내 누적 건수</a><br>
-		<a href="/gztls/">24시간 그래프</a><br>
-		<a href="/gztls/">기간 별 평균 통계</a><br>
+		<a href="?contentPage=errbymap.jsp">지도지도</a><br>
 		<a href="?contentPage=errbytype.jsp">항목 별</a>	
 	</div>
 

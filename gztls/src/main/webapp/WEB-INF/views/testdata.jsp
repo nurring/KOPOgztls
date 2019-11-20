@@ -43,7 +43,7 @@
 		}
 	function servertimeerror() {
 		$.ajax({
-			url : "servertimeerror",
+			url : "errorinsert",
 			type : "GET",
 			success : function() {
 				alert("데이터 삽입 완료");				
