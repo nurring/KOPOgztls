@@ -18,4 +18,8 @@ public interface ErrorDAO {
 	public void insertError(Map<String, String> map);
 	
 	public List<DeviceVO> err24(Map<String, String> map);
+	
+	public List<DeviceVO> cntByMonth(Map<String, String> map);
+	
+	public List<ErrorVO> yearList();
 }

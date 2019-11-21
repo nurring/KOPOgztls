@@ -13,6 +13,8 @@ public class ErrorVO {
 	private String err_message;
 	private Date server_time;
 	private int count;
+	private int month;
+	private int year;
 	
 	public String getE_id() {
 		return e_id;
@@ -56,9 +58,22 @@ public class ErrorVO {
 	public void setCount(int count) {
 		this.count = count;
 	}
+	public int getMonth() {
+		return month;
+	}
+	public void setMonth(int month) {
+		this.month = month;
+	}
+	public int getYear() {
+		return year;
+	}
+	public void setYear(int year) {
+		this.year = year;
+	}
 	@Override
 	public String toString() {
 		return "ErrorVO [e_id=" + e_id + ", device_ip=" + device_ip + ", err_code=" + err_code + ", err_type="
-				+ err_type + ", err_message=" + err_message + ", server_time=" + server_time + ", count=" + count + "]";
+				+ err_type + ", err_message=" + err_message + ", server_time=" + server_time + ", count=" + count
+				+ ", month=" + month + ", year=" + year + "]";
 	} 
 }

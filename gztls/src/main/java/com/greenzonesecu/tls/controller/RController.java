@@ -165,8 +165,30 @@ public class RController {
 		return vos;
 	}
 	
+	@RequestMapping(value="/yearListjsn", method=RequestMethod.GET)
+	public List<ErrorVO> yearList(){
+		List<ErrorVO> vos = es.yearList();
+		return vos;
+	}
 	
-	//샘플 데이터 넣기
+	@RequestMapping(value="/cntbymonthjsn", method=RequestMethod.GET)
+	public List<DeviceVO> cntbymonth(@RequestParam Map<String, String> param){		
+		logger.info("param..........."+param);
+		List<DeviceVO> vos = es.cntByMonth(param);
+		logger.info("vos..........."+vos.toString());
+		return vos;
+	}
+	
+	@RequestMapping(value="/cntbyyearjsn", method=RequestMethod.GET)//이거 하다 말았음!!!쿼리부터 해야함xml
+	public List<DeviceVO> cntbyyear(@RequestParam Map<String, String> param){		
+		logger.info("param..........."+param);
+		List<DeviceVO> vos = es.cntByMonth(param);
+		logger.info("vos..........."+vos.toString());
+		return vos;
+	}
+	
+	
+	////////////////////////////////////////////////////////////////////////////////////샘플 데이터 넣기
 	@RequestMapping(value="/servertimeinsert", method=RequestMethod.GET)
 	public void servertimeinsert() {
 	    Random random = new Random();

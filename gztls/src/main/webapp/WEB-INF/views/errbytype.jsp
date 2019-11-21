@@ -150,20 +150,40 @@ function getChart(set){
 		}
 	}).done(function(results){
 		console.log(results);
+
 		lbl2 = ""; cnt2 = ""; dname = "";
-		dname = "전체 기간 내 ";
-		dname += results[0].device_name;
-		dname += "의 에러 건수";
-		for(key in results[0].errorList){
-			lbl2 += results[0].errorList[key].err_type;
-			lbl2 += ",";
-			cnt2 += results[0].errorList[key].count;
-			cnt2 += ",";
+		
+		if(results.length == 0){
+			lbl2 = "TLS(SSL) 오류,X509(인증서) 오류,데이터 오류,";
+			cnt2 = "0,0,0,";
+			dname = "전체 기간 내 ";
+			dname += $('#deviceinfo option:checked').text();
+			dname += "의 에러 건수";
 		}		
+		else{
+			dname = "전체 기간 내 ";
+			dname += results[0].device_name;
+			dname += "의 에러 건수";
+			for(key in results[0].errorList){
+				lbl2 += results[0].errorList[key].err_type;
+				lbl2 += ",";
+				cnt2 += results[0].errorList[key].count;
+				cnt2 += ",";
+			}		
+		}
+		
 		lbl2 = lbl2.substr(0, lbl2.length - 1);
 		lblarr2 = lbl2.split(",");
-		cnt2 = cnt2.substr(0, cnt2.length - 1);
-		cntarr2 = cnt2.split(",");
+
+		//아예 오류가 없었던 기기인지 체크
+		if(cnt2.length != 0){
+			cnt2 = cnt2.substr(0, cnt2.length - 1);
+			cntarr2 = cnt2.split(",");
+			}
+		else {
+			cntarr2 = "";
+			}	
+		
 		console.log("lblarr2",lblarr2);
 		console.log("cntarr2",cntarr2);
 		console.log("dname",dname);		
@@ -201,9 +221,7 @@ function getChart(set){
 		    	mode: 'index',
 				intersect: false
 		    },
-		    cutoutPercentage: 40,
-		    rotation: 1 * Math.PI,
-            circumference: 1 * Math.PI
+		    cutoutPercentage: 40
 		}
 		if(window.deviceChart && window.deviceChart !== null){
 	        window.deviceChart.destroy();
@@ -211,7 +229,7 @@ function getChart(set){
 
 		let tempChart = document.getElementById('tempChart').getContext('2d');
 		window.deviceChart = new Chart(tempChart, {		
-			type: 'pie',
+			type: 'polarArea',
 			data: deviceData,
 			options: deviceChartOptions
 		});

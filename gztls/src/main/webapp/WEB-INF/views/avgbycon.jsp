@@ -19,6 +19,7 @@
 	var hdtArray, hlabelsArray, tdtArray, d1dtArray, d2dtArray;	
 	let avgData;
 	let avgChart;
+	
 	function checking() {
 		var device_id = $("#device_id").val();
 		var server_time = $("#server_time").val();
@@ -84,6 +85,7 @@
 			updateChart();
 		});
 	};	
+	
 	function updateChart(){
 		avgData.datasets[0].data = hdtArray;
         avgData.datasets[1].data = tdtArray;

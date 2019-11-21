@@ -46,4 +46,14 @@ public class ErrorServiceImpl implements ErrorService {
 		return dao.err24(map);
 	}
 
+	@Override
+	public List<DeviceVO> cntByMonth(Map<String, String> map) {
+		return dao.cntByMonth(map);
+	}
+
+	@Override
+	public List<ErrorVO> yearList() {
+		return dao.yearList();
+	}
+
 }

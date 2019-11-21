@@ -15,8 +15,7 @@
 <title>기간 변화 그래프</title>
 </head>
 <body>
-	<div class="container">
-	
+	<div class="container">	
 		<div>
 			<canvas id="myChart"></canvas>
 			<select id="device" name="device" onchange="deviceSelect(this.value);"></select>
@@ -24,15 +23,15 @@
 	<p class="font-weight-light font-italic" >기기를 선택하면 최근 24시간 내 데이터 추이를 보여줍니다.</p>
 	</div>
 <script type="text/javascript">
-var set = new Object();	
+var setp = new Object();	
 function deviceSelect(device){
-	set.device_id = device;		
+	setp.device_id = device;		
 	}
 var hlabels = "", hdata="";
 var tdata="", d1data="", d2data="";	
 var hdataArray, hlabelsArray, tdataArray, d1dataArray, d2dataArray;
 	
-console.log("set",set);	
+console.log("setp",setp);	
 
 $(document).ready(function() {		
     updateDevice();    
@@ -40,11 +39,12 @@ $(document).ready(function() {
 		$.ajax({
 			url : "byperiodjsn",
 			type : "GET",
-			data : set,
+			data : setp,
 			error : function() {
 				alert("err");
 			}			
 		}).done(function(results){
+			console.log("results",results);
 		hlabels = "", hdata="";
 		tdata="", d1data="", d2data="";
 					    
@@ -88,7 +88,7 @@ $(document).ready(function() {
 		if(window.testchart && window.testchart !== null){
 	        window.testchart.destroy();
 	    }
-    	updateChart();
+    	updateChartp();
 	}, 2000); //1초마다
 
 function updateDevice(){
@@ -108,7 +108,7 @@ function updateDevice(){
 	});
 };
 
-function updateChart(){
+function updateChartp(){
     tempData.datasets[0].data = hdataArray;
     tempData.datasets[1].data = tdataArray;
     tempData.datasets[2].data = d1dataArray;

@@ -75,7 +75,7 @@ $(document).ready(function() {
 		<a href="?contentPage=errnow.jsp">실시간 확인(24H)</a><br>
 		<a href="?contentPage=errbytype.jsp">전체 기간 내 누적 건수</a><br>
 		<a href="?contentPage=errbytime.jsp">기간 별 통계</a><br>
-		<a href="?contentPage=errbytype.jsp">항목 별 통계</a>	
+		<a href="?contentPage=charttest.jsp">항목 별 통계</a>	
 	</div>
 
 <script>

@@ -25,6 +25,8 @@
 			<result column="err_message" property="err_message"/>
 			<result column="server_time" property="server_time"/>
 			<result column="count" property="count"/>
+			<result column="month" property="month"/>
+			<result column="year" property="year"/>
 		</resultMap>
 		
 		<select id="selectErrByTime" resultMap="DeviceResult">
@@ -150,5 +152,41 @@
 			a.device_ip = b.device_ip
 		ORDER BY
 			b.server_time DESC;
+		</select>
+		
+		<select id="cntByMonth" resultMap="DeviceResult">
+		SELECT 
+			b.device_id
+			, b.device_name
+			, a.device_ip
+			, a.month
+			, a.count
+		FROM
+			(	
+				SELECT 
+					device_ip, SUBSTR(server_time,6,2) AS month, COUNT(SUBSTR(server_time,6,2)) AS count
+				FROM gztls_error 
+				WHERE
+					SUBSTR(server_time,1,4) = #{year}
+				GROUP BY device_ip, SUBSTR(server_time,6,2)
+			) a
+		LEFT JOIN
+			gztls_device b
+		ON 
+			a.device_ip = b.device_ip
+		<where>
+			<if test='device_id != null'>
+				device_id = '00000000522291dbb827eb'			
+			</if>
+		</where> 
+		ORDER BY month;
+		</select>
+		
+		<select id="yearList" resultType="errorVO">
+		SELECT 
+			SUBSTR(server_time,1,4) AS year
+		FROM 
+			gztls_error
+		GROUP BY year;
 		</select>
 	</mapper>
