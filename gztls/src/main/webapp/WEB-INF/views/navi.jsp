@@ -73,9 +73,9 @@ $(document).ready(function() {
 <button class="accordion">에러 데이터 리포트</button>
 	<div class="panel">
 		<a href="?contentPage=errnow.jsp">실시간 확인(24H)</a><br>
-		<a href="?contentPage=errbytype.jsp">전체 기간 내 누적 건수</a><br>
 		<a href="?contentPage=errbytime.jsp">기간 별 통계</a><br>
-		<a href="?contentPage=charttest.jsp">항목 별 통계</a>	
+		<a href="?contentPage=errbytype2.jsp">에러 타입 별 통계</a><br>
+		<a href="?contentPage=charttest.jsp">에러 내용 별 통계</a>	
 	</div>
 
 <script>

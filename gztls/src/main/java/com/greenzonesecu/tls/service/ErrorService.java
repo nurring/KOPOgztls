@@ -21,5 +21,7 @@ public interface ErrorService {
 	
 	public List<DeviceVO> cntByMonth(Map<String, String> map);
 	
+	public List<DeviceVO> cntByYear(Map<String, String> map);
+	
 	public List<ErrorVO> yearList();
 }

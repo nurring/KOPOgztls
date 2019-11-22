@@ -83,8 +83,8 @@
 		FROM 
 			gztls_error
 		<where>
-			<if test='device_ip != null'>
-			device_ip = #{device_ip}
+			<if test='server_time != null'>
+			server_time BETWEEN #{server_time} AND #{to_date}
 			</if>
 		</where> 
 		GROUP BY 
@@ -106,6 +106,11 @@
 					, COUNT(err_type) AS count
 				FROM 
 					gztls_error
+				<where>
+					<if test='server_time != null'>
+					server_time BETWEEN #{server_time} AND #{to_date}
+					</if>
+				</where>
 				GROUP BY 
 					err_type, device_ip
 			) b
@@ -176,10 +181,38 @@
 			a.device_ip = b.device_ip
 		<where>
 			<if test='device_id != null'>
-				device_id = '00000000522291dbb827eb'			
+				device_id = #{device_id}			
 			</if>
 		</where> 
-		ORDER BY month;
+		ORDER BY device_name, month;
+		</select>
+		
+		<select id="cntByYear" resultMap="DeviceResult">
+		SELECT 
+			b.device_id
+			, b.device_name
+			, a.device_ip
+			, a.year
+			, a.count
+		FROM
+			(	
+				SELECT 
+					device_ip, SUBSTR(server_time,1,4) AS year, COUNT(SUBSTR(server_time,1,4)) AS count
+				FROM gztls_error 
+				WHERE
+					SUBSTR(server_time,6,2) = #{month} 
+				GROUP BY device_ip, SUBSTR(server_time,1,4) 
+			)a
+		LEFT JOIN
+			gztls_device b
+		ON 
+			a.device_ip = b.device_ip
+		<where>
+			<if test='device_id != null'>
+				device_id = #{device_id}			
+			</if>
+		</where>
+		ORDER BY device_name, year;
 		</select>
 		
 		<select id="yearList" resultType="errorVO">

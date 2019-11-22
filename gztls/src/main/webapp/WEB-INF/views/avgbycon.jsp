@@ -11,7 +11,6 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 <head>
 <meta charset="UTF-8">
-<title>조건검색</title>
 <script type="text/javascript">
 	var dlabels = "";
 	var hdt="", tdt="", d1dt="", d2dt="";	

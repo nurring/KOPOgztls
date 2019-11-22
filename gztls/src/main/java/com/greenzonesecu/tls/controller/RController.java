@@ -179,10 +179,10 @@ public class RController {
 		return vos;
 	}
 	
-	@RequestMapping(value="/cntbyyearjsn", method=RequestMethod.GET)//이거 하다 말았음!!!쿼리부터 해야함xml
+	@RequestMapping(value="/cntbyyearjsn", method=RequestMethod.GET)
 	public List<DeviceVO> cntbyyear(@RequestParam Map<String, String> param){		
 		logger.info("param..........."+param);
-		List<DeviceVO> vos = es.cntByMonth(param);
+		List<DeviceVO> vos = es.cntByYear(param);
 		logger.info("vos..........."+vos.toString());
 		return vos;
 	}

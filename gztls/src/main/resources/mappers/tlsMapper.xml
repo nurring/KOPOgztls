@@ -116,7 +116,7 @@
 						AND device_id = #{device_id}
 						</if>
 					</where>
-
+					ORDER BY server_time LIMIT 4
 				) b
 			<where>
 				AND a.device_id = b.device_id	
