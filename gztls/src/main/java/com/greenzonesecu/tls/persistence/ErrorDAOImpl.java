@@ -25,6 +25,8 @@ public class ErrorDAOImpl implements ErrorDAO {
 	private static final String CntByMonth = EM + ".cntByMonth";
 	private static final String CntByYear = EM + ".cntByYear";
 	private static final String YearList = EM + ".yearList";
+	private static final String ErrByMsg = EM + ".errByMsg";
+	private static final String ErrAllByMsg = EM + ".errAllByMsg";
 
 	@Override
 	public List<DeviceVO> selectErrByTime(Map<String, String> map) {
@@ -68,6 +70,16 @@ public class ErrorDAOImpl implements ErrorDAO {
 	@Override
 	public List<ErrorVO> yearList() {
 		return sqlSession.selectList(YearList);
+	}
+
+	@Override
+	public List<DeviceVO> errByMsg(Map<String, String> map) {
+		return sqlSession.selectList(ErrByMsg, map);
+	}
+
+	@Override
+	public List<ErrorVO> errAllByMsg(Map<String, String> map) {
+		return sqlSession.selectList(ErrAllByMsg, map);
 	}
 
 

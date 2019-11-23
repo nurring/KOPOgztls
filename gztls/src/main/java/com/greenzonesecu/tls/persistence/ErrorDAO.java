@@ -24,4 +24,8 @@ public interface ErrorDAO {
 	public List<DeviceVO> cntByYear(Map<String, String> map);
 	
 	public List<ErrorVO> yearList();
+	
+	public List<DeviceVO> errByMsg(Map<String, String> map);
+	
+	public List<ErrorVO> errAllByMsg(Map<String, String> map);
 }

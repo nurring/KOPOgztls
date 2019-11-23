@@ -39,15 +39,13 @@ public class RController {
 	 * @RequestMapping(value="/OOOjsn") ~ json 형식으로 return함
 	 */		
 	@RequestMapping(value="/bymapjsn", method=RequestMethod.GET)
-	public List<DeviceVO> main(@RequestParam Map<String, String> param){
-		Map<String, String> str = new HashMap<String, String>();
-		
+	public List<DeviceVO> main(@RequestParam Map<String, String> param){				
 		Calendar cal = Calendar.getInstance();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmm");
 		String strDate = sdf.format(cal.getTime());
-		strDate+="00";
-		//String tempDate = "20190901000000";//데이터 확인용!
+		strDate+="00";		
 		
+		Map<String, String> str = new HashMap<String, String>();
 		str.put("device_id", param.get("device_id")); //기기명
 		str.put("create_time", strDate);
 		logger.info("str..........."+str);
@@ -68,8 +66,7 @@ public class RController {
 	public List<SuccessVO> byperiod(@RequestParam Map<String, String> param){
 		SimpleDateFormat sdt= new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
 		Calendar calt = Calendar.getInstance();	//현재시간		
-		String to_date = sdt.format(calt.getTime());
-		
+		String to_date = sdt.format(calt.getTime());		
 		calt.add(Calendar.DATE, -1);//하루전		
 		String from_date = sdt.format(calt.getTime());
 		
@@ -105,10 +102,7 @@ public class RController {
 		SimpleDateFormat sdt= new SimpleDateFormat("yyyyMMddHHmm");		
 		String now = sdt.format(calt.getTime());
 		now+="00";
-		//String tempDate = "20190901000000";//데이터 확인용!
-		
 		params.put("create_time", now);
-		//params.put("server_time", tempDate);
 		params.put("device_id", param.get("device_id"));
 		List<DeviceVO> vos = ds.selectByCondition(params);
 		logger.info("params..........."+params);
@@ -187,6 +181,21 @@ public class RController {
 		return vos;
 	}
 	
+	@RequestMapping(value="/errallbymsgjsn", method=RequestMethod.GET)
+	public List<ErrorVO> errallbymsg(@RequestParam Map<String, String> param){		
+		logger.info("param..........."+param);
+		List<ErrorVO> vos = es.errAllByMsg(param);
+		logger.info("vos..........."+vos.toString());
+		return vos;
+	}
+	
+	@RequestMapping(value="/errbymsgjsn", method=RequestMethod.GET)
+	public List<DeviceVO> errbymsg(@RequestParam Map<String, String> param){		
+		logger.info("param..........."+param);
+		List<DeviceVO> vos = es.errByMsg(param);
+		logger.info("vos..........."+vos.toString());
+		return vos;
+	}
 	
 	////////////////////////////////////////////////////////////////////////////////////샘플 데이터 넣기
 	@RequestMapping(value="/servertimeinsert", method=RequestMethod.GET)

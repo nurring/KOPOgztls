@@ -59,4 +59,14 @@ public class ErrorServiceImpl implements ErrorService {
 	public List<ErrorVO> yearList() {
 		return dao.yearList();
 	}
+
+	@Override
+	public List<DeviceVO> errByMsg(Map<String, String> map) {
+		return dao.errByMsg(map);
+	}
+
+	@Override
+	public List<ErrorVO> errAllByMsg(Map<String, String> map) {
+		return dao.errAllByMsg(map);
+	}
 }

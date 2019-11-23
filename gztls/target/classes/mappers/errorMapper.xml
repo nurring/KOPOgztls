@@ -169,8 +169,11 @@
 		FROM
 			(	
 				SELECT 
-					device_ip, SUBSTR(server_time,6,2) AS month, COUNT(SUBSTR(server_time,6,2)) AS count
-				FROM gztls_error 
+					device_ip
+					, SUBSTR(server_time,6,2) AS month
+					, COUNT(SUBSTR(server_time,6,2)) AS count
+				FROM 
+					gztls_error 
 				WHERE
 					SUBSTR(server_time,1,4) = #{year}
 				GROUP BY device_ip, SUBSTR(server_time,6,2)
@@ -197,8 +200,11 @@
 		FROM
 			(	
 				SELECT 
-					device_ip, SUBSTR(server_time,1,4) AS year, COUNT(SUBSTR(server_time,1,4)) AS count
-				FROM gztls_error 
+					device_ip
+					, SUBSTR(server_time,1,4) AS year
+					, COUNT(SUBSTR(server_time,1,4)) AS count
+				FROM 
+					gztls_error 
 				WHERE
 					SUBSTR(server_time,6,2) = #{month} 
 				GROUP BY device_ip, SUBSTR(server_time,1,4) 
@@ -221,5 +227,54 @@
 		FROM 
 			gztls_error
 		GROUP BY year;
+		</select>
+		
+		<select id="errAllByMsg" resultType="errorVO">
+			SELECT
+				err_code, err_message, count(err_message) AS count
+			FROM gztls_error
+			<where>
+				err_type = #{err_type}
+				<if test='server_time != null'>
+				AND server_time BETWEEN #{server_time} AND #{to_date}
+				</if>
+			</where>                           
+			GROUP BY err_code, err_message;
+		</select>
+		
+		<select id="errByMsg" resultMap="DeviceResult">
+		SELECT 
+			a.device_id
+			, a.device_name
+			, a.device_ip
+			, b.err_code
+			, b.err_message
+			, b.count
+		FROM
+			(
+				SELECT
+					device_ip
+					, err_code, err_message, count(err_message) AS count
+				FROM 
+					gztls_error
+				<where>
+					err_type = #{err_type}  
+					<if test='server_time != null'>
+					AND server_time BETWEEN #{server_time} AND #{to_date}
+					</if>
+				</where>
+				GROUP BY 
+					device_ip, err_code, err_message
+			) b
+		LEFT JOIN
+			gztls_device a
+		ON
+			a.device_ip = b.device_ip
+		<where>
+			<if test='device_id != null'>
+			device_id = #{device_id}
+			</if>
+		</where> 			
+		ORDER BY err_code;
 		</select>
 	</mapper>
