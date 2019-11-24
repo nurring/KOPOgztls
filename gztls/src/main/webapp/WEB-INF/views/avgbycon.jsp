@@ -11,6 +11,11 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 <head>
 <meta charset="UTF-8">
+<style>
+.container-fluid {
+	color: gray;
+}
+</style>
 <script type="text/javascript">
 	var dlabels = "";
 	var hdt="", tdt="", d1dt="", d2dt="";	
@@ -24,6 +29,19 @@
 		var server_time = $("#server_time").val();
 		var to_date = $("#to_date").val();
 		var data_type = $("#data_type").val();	
+
+		//-을 구분자로 연,월,일로 잘라내어 배열로 반환
+	    var startArray = server_time.split('-');
+	    var endArray = to_date.split('-');   
+	    //배열에 담겨있는 연,월,일을 사용해서 Date 객체 생성
+	    var start_date = new Date(startArray[0], startArray[1], startArray[2]);
+	    var end_date = new Date(endArray[0], endArray[1], endArray[2]);
+	         //날짜를 숫자형태의 날짜 정보로 변환하여 비교한다.
+	    if(start_date.getTime() > end_date.getTime()) {
+	        alert("종료 일자보다 시작 일자가 앞서야 합니다.");
+	        return false;
+	    }
+	    
 		var obj = new Object();	
 		if (device_id){	obj.device_id = device_id;}
 		if (server_time){ obj.server_time = server_time;}
@@ -99,23 +117,23 @@ $(document).ready(function() {
 		    datasets: [
 		        {
 		            label: "H:습도",
-		            backgroundColor: "rgba(0, 123, 255, 0.6)",
+		            backgroundColor: "rgba(63, 137, 166, 0.6)",
 		            borderColor: "gray",
 		            data: hdtArray
 		        },
 		        {
 		            label: "T:온도",
-		            backgroundColor: "rgba(220, 53, 69, 0.6)",
+		            backgroundColor: "rgba(115, 2, 32, 0.6)",
 		            data: tdtArray
 		        },
 		        {
 		            label: "D1:미세먼지",
-		            backgroundColor: "rgba(255, 193, 7, 0.6)",
+		            backgroundColor: "rgba(89, 75, 2, 0.6)",
 		            data: d1dtArray
 		        },
 		        {
 		            label: "D2:초미세먼지",
-		            backgroundColor: "rgba(23, 162, 184, 0.6)",
+		            backgroundColor: "rgba(191, 180, 147, 0.6)",
 		            data: d2dtArray
 		        }
 		    ]
@@ -124,7 +142,7 @@ $(document).ready(function() {
 	let avgOptions = {
 		    title:{
 		        display:true,
-		        text:'average data',
+		        text:'기간 별 평균 통계',
 		        fontSize:25
 		    },
 		    legend:{
@@ -164,19 +182,18 @@ $(document).ready(function() {
 
 	checking();
 });
+
 </script>
 </head>
 <body>
-<div>
+<div class="container-fluid">
 	<div>
 		<canvas id="myAvgCanvas"></canvas>
 	</div>
 	<div>
 		<form method="GET" id="conditionform" onsubmit="return false;">
-			<input type="text" id="device_id" placeholder="device_id">
-			<input type="date" id="server_time" placeholder="fromdate">
-			<input type="date" id="to_date" placeholder="todate">
-			<input type="text" id="data_type" placeholder="data_type">
+			시작 일자:<input type="date" id="server_time" placeholder="fromdate">
+			종료 일자:<input type="date" id="to_date" placeholder="todate">
 			<button type="submit" id="submit" class="btn btn-dark" onclick='checking()'>조회</button>
 		</form>
 	</div>	

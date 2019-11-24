@@ -7,15 +7,20 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 <script src="resources/js/Chart.min.js"></script>
 <link rel="stylesheet" type="text/css" href="resources/css/Chart.min.css">
-
 <head>
 <meta charset="UTF-8">
+<style>
+.container-fluid {
+	color: gray;
+}
+</style>
 </head>
 <body>
 <script>
 var obj = new Object();	
 var lbl; var cnt;
 var lblarr; var cntarr;
+var server_time; var to_date;
 let tempData;
 let chartOptions;
 
@@ -26,8 +31,8 @@ $(document).ready(function() {
 	getChart2();
 });
 function dateSelect(){
-	var server_time = $("#server_time").val();
-	var to_date = $("#to_date").val();
+	server_time = $("#server_time").val();
+	to_date = $("#to_date").val();
 	if (server_time){ obj.server_time = server_time;}
 	if (to_date){ obj.to_date = to_date;}
 	console.log("obj",obj);
@@ -37,8 +42,22 @@ function newDateSelect(){
 	getChart();
 }
 
-function getChart(){
-	console.log("obj",obj);
+function getChart(){	
+	console.log("obj",obj);	
+	//-을 구분자로 연,월,일로 잘라내어 배열로 반환
+    var startArray = server_time.split('-');
+    var endArray = to_date.split('-');   
+
+    console.log("startArray",startArray);
+    console.log("endArray",endArray); 
+    //배열에 담겨있는 연,월,일을 사용해서 Date 객체 생성
+    var start_date = new Date(startArray[0], startArray[1], startArray[2]);
+    var end_date = new Date(endArray[0], endArray[1], endArray[2]);
+         //날짜를 숫자형태의 날짜 정보로 변환하여 비교한다.
+    if(start_date.getTime() > end_date.getTime()) {
+        alert("종료 일자보다 시작 일자가 앞서야 합니다.");
+        return false;
+    }
 	$.ajax({
 		url : "errcntjsn", //날짜조건에 맞는 
 		type : "GET",
@@ -103,12 +122,7 @@ function getChart(){
 		        labels: lblarr,
 		        datasets:[{
 		            data: cntarr,
-		            borderColor: ["rgba(0, 123, 255, 0.6)",
-		            	"rgba(220, 53, 69, 0.6)",
-		            	"rgba(255, 193, 7, 0.6)"],
-		            backgroundColor: ["rgba(0, 123, 255, 0.6)",
-		            	"rgba(220, 53, 69, 0.6)",
-		            	"rgba(255, 193, 7, 0.6)"],
+		            backgroundColor: ["rgba(166, 3, 33, 0.8)","rgba(115, 2, 32, 0.8)","rgba(63, 137, 166, 0.8)"],
 		            hoverBorderWidth:4,
 		            fill: false
 		        }]
@@ -140,8 +154,8 @@ var set = new Object();
 
 function yearSelect2(){
 	var device_id = $("#deviceinfo").val();
-	var server_time = $("#server_time2").val();
-	var to_date = $("#to_date2").val();
+	server_time = $("#server_time2").val();
+	to_date = $("#to_date2").val();
 	set.device_id = device_id;
 	if (server_time){ set.server_time = server_time;}
 	if (to_date){ set.to_date = to_date;}
@@ -154,6 +168,22 @@ function newYearSelect2(){
 
 
 function getChart2(){
+	console.log("set",set);	
+	//-을 구분자로 연,월,일로 잘라내어 배열로 반환
+    var startArray = server_time.split('-');
+    var endArray = to_date.split('-');  
+    console.log("startArray",startArray);
+    console.log("endArray",endArray); 
+    //배열에 담겨있는 연,월,일을 사용해서 Date 객체 생성
+    var start_date = new Date(startArray[0], startArray[1], startArray[2]);
+    var end_date = new Date(endArray[0], endArray[1], endArray[2]);
+    console.log("start_date",start_date); 
+    console.log("end_date",end_date); 
+         //날짜를 숫자형태의 날짜 정보로 변환하여 비교한다.
+    if(start_date.getTime() > end_date.getTime()) {
+        alert("종료 일자보다 시작 일자가 앞서야 합니다.");
+        return false;
+    }
 	$.ajax({
 		url : "errcntbyidjsn",
 		type : "GET",
@@ -205,12 +235,7 @@ function getChart2(){
 		        labels: lblarr2,
 		        datasets:[{
 		            data: cntarr2,
-		            borderColor: ["rgba(0, 123, 255, 0.6)",
-		            	"rgba(220, 53, 69, 0.6)",
-		            	"rgba(255, 193, 7, 0.6)"],
-		            backgroundColor: ["rgba(0, 123, 255, 0.6)",
-		            	"rgba(220, 53, 69, 0.6)",
-		            	"rgba(255, 193, 7, 0.6)"],
+		            backgroundColor: ["rgba(166, 3, 33, 0.8)","rgba(115, 2, 32, 0.8)","rgba(63, 137, 166, 0.8)"],
 		            hoverBorderWidth:4,
 		            fill: false
 		        }]
@@ -251,7 +276,7 @@ function getChart2(){
 };
 
 </script>
-<div class="container-fluid" style="padding-top:100px;">
+<div class="container-fluid">
 	<div class="row">
 		<div class="col" style="width:50%;">
 			<canvas id="myChart" style="max-width:900px; min-width:300px;"></canvas>
@@ -260,18 +285,18 @@ function getChart2(){
 			<canvas id="tempChart" style="max-width:900px; min-width:300px;"></canvas>
 		</div>
 	</div>
-	<div class="row">
+	<div class="row" style="padding-top:20px;">
 		<div class="col" style="width:50%;">
-			<input type="date" id="server_time">
-			<input type="date" id="to_date">
+			시작 일자:<input type="date" id="server_time">
+			종료 일자:<input type="date" id="to_date">
 			<button type="submit" id="submit" class="btn btn-dark" onclick='newDateSelect()'>조회</button>
 			<p class="font-weight-light font-italic">조건 조회 시 기간 내 누적 에러 건수를 확인하실 수 있습니다.<br>날짜를 선택하지 않을 시 전체 기간으로 조회됩니다.</p>
 			
 		</div>
 		<div class="col" style="width:50%;">
 			<select id="deviceinfo" name="deviceinfo"></select>
-			<input type="date" id="server_time2">
-			<input type="date" id="to_date2">
+			시작 일자:<input type="date" id="server_time2">
+			종료 일자:<input type="date" id="to_date2">
 			<button type="submit" id="submit" class="btn btn-dark" onclick='newYearSelect2()'>조회</button>		
 			<p class="font-weight-light font-italic">조건 조회 시 기간 내 해당 기기의 누적 에러 건수를 확인하실 수 있습니다.<br>날짜를 선택하지 않을 시 전체 기간으로 조회됩니다.</p>
 		</div>

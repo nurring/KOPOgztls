@@ -25,8 +25,7 @@ var obj = new Object();
 var dname = "";
 var html = "";
 $(document).ready(function() {		
-	updateDev();
-	
+	updateDev();	
 	function updateDev(){
 		$.ajax({
 			url : "dlistjsn",
@@ -48,7 +47,7 @@ $(document).ready(function() {
 function deviceOne(device){
 	var deviname =	"";
 	obj.device_id = device;	
-	//window.setInterval(function(){	
+	window.setInterval(function(){	
 	$.ajax({
 		url : "nowjsn",
 		data : obj,
@@ -62,7 +61,8 @@ function deviceOne(device){
 		
 		if (results.length == 0){
 			html += "<h3>데이터 없음</h3>"	
-				console.log("html",html);			
+				console.log("html",html);
+			$('#timeinsert').html("");			
 		}	
 		else {
 			deviname = 	results[0].device_name;	
@@ -88,7 +88,7 @@ function deviceOne(device){
 		$('#datainsert').html(html);
 			
 	});
-	//}, 2000);
+	}, 2000);
 };
 function reloading(){
 	var device_id = $("#deviceinfo").val();
@@ -98,7 +98,7 @@ function reloading(){
 </head>
 <body>
 <div class="container-fluid">	
-	<h1 class="display-4" id="title" style="margin-bottom:100px;">현재 데이터</h1>
+	<h1 class="display-4" id="title" style="margin-bottom:60px;">실시간 데이터</h1>
 	<div class="row align-items-end">
 		<div class="col order-first">
 			<h3>초미세먼지</h3>

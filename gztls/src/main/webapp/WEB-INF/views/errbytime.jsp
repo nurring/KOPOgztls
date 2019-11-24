@@ -8,29 +8,36 @@
 <script src="resources/js/Chart.min.js"></script>
 <link rel="stylesheet" type="text/css" href="resources/css/Chart.min.css">
 <head>
-	<meta charset="utf-8"/>
+<meta charset="utf-8"/>
+<style>
+.container-fluid {
+	color: gray;
+}
+</style>
 <script>
+
 var dname = new Array();
 var month = new Array();
 var dtset=new Array();
 var lbl = new Array();
 var dtsize=new Array();
-var dtsetArr=new Array(); var dtsetArr2 = new Object(); var dtsetFin=new Array();
+var dtsetArr=new Array();
 ///////
 var dnamem = new Array();
 var lblm = new Array();
 var dtsetm = new Array();
 var lblm = new Array();
-var dtsetArrm = new Array(); var dtsetArrm2 = new Array(); var dtsetFinm = new Array();
-
+var dtsetArrm = new Array();
+var lineChartData; var lineChartData2;
 
 var colors = new Array();
 
-colors = ["rgba(0, 123, 255, 0.6)","rgba(220, 53, 69, 0.6)","rgba(255, 193, 7, 0.6)",'rgba(23, 162, 184, 0.6)','blue','pink','purble','gray','black','red','orange','yellow'];
+colors = ["rgba(166, 3, 33, 0.8)","rgba(115, 2, 32, 0.8)","rgba(63, 137, 166, 0.8)","rgba(89, 75, 2, 0.8)","rgba(191, 180, 147, 0.8)",
+	"rgba(140, 58, 88, 0.8)","rgba(7, 14, 38, 0.8)","rgba(13, 24, 38, 0.8)","rgba(191, 176, 170, 0.8)","rgba(140, 66, 66, 0.8)"];
 $(document).ready(function() {	
 	yearlist();	
-	drawYearChart(lbl,dtset);
-	drawMonthChart(lblm,dtsetm);
+	drawYearChart();
+	drawMonthChart();
 });
 </script>
 </head>
@@ -98,22 +105,20 @@ function yearChange(selection){
 			}
 			dtsetArr.push(dtset);			
 		}
-		console.log("lbl",lbl);//라벨
-		console.log("dtsize",dtsize);
-		console.log("dtsetArr",dtsetArr);
-		console.log("dname",dname);
-		console.log(Math.max.apply(null, dtsize));
-		console.log("colors[0]",colors[0]);
-		dtsetFin=[];
-		for (i=0; i<dname.length; i++){
-			dtsetArr2=[];
-			dtsetArr2.label=dname[i];	
-			dtsetArr2.data=dtsetArr[i];
-			//dtsetArr2.backgroundColor=colors[i];
-			console.log("dtsetArr2",dtsetArr2);		
-			dtsetFin.push(dtsetArr2);
-		}
-		console.log("dtsetFin",dtsetFin);//데이터셋		
+///////////////////		
+		lineChartData = { labels: lbl, datasets: [] },
+		array = dtsetArr;
+		label = dname;
+
+		array.forEach(function (a, i) {
+		  lineChartData.datasets.push({
+		      backgroundColor: colors[i],
+		      data: a,
+		      label: dname[i]
+		  });
+		});		
+		console.log("lineChartData",lineChartData);
+////////////////////		
 		updateYear();
 	});
 }
@@ -142,37 +147,39 @@ function monthChange(selection){
 			dtsetArrm.push(dtsetm);
 			
 		}
-		console.log("lblm",lblm);//라벨
-		console.log("dtsetArrm",dtsetArrm);
-		console.log("dnamem",dnamem);
+///////////////////		
+		lineChartData2 = { labels: lblm, datasets: [] },
+		array = dtsetArrm;
+		label = dnamem;
 
-		dtsetFinm=[];
-		for (i=0; i<dnamem.length; i++){
-			dtsetArrm2=[];
-			dtsetArrm2.label=dnamem[i];
-			dtsetArrm2.data=dtsetArrm[i];
-			dtsetArrm2.backgroundColor=colors[i];
-			console.log("dtsetArrm2",dtsetArrm2);		
-			dtsetFinm.push(dtsetArrm2);
-		}
-		console.log("dtsetFinm",dtsetFinm);//데이터셋
+		array.forEach(function (a, i) {
+		  lineChartData2.datasets.push({
+		      backgroundColor: colors[i],
+		      data: a,
+		      label: dnamem[i]
+		  });
+		});		
+		console.log("lineChartData2",lineChartData2);
+////////////////////
 		updateMonth();
 	});
 }
 function updateYear(){	
-	myChart.data.datasets = dtsetFin;
-    myChart.data.labels = lbl;
+	//myChart.data.datasets = dtsetFin;
+    //myChart.data.labels = lbl;
+    myChart.data = lineChartData;
     //myChart.data.datasets.backgroundColor = "rgba(0, 123, 255, 0.6)";
 	myChart.update();
 };
 function updateMonth(){	
-	myChartm.data.datasets = dtsetFinm;
-    myChartm.data.labels = lblm;
+	//myChartm.data.datasets = dtsetFinm;
+    //myChartm.data.labels = lblm;
+    myChartm.data = lineChartData2;
     //myChartm.data.datasets[0].fillColor = 'black';
 	myChartm.update();
 };
 
-function drawYearChart(lbl,dtset){
+function drawYearChart(){
 	//if(window.myChart && window.myChart !== null){
     //    window.myChart.destroy();
     //}    
@@ -180,10 +187,7 @@ function drawYearChart(lbl,dtset){
 	
 	window.myChart = new Chart(ctx, {
 	    type: 'bar',
-	    data: {
-	        labels: lbl,
-	        datasets: dtsetFin
-	    },
+	    data: lineChartData,
 	    options: {
 		    title: {
 			    display: true,
@@ -201,7 +205,7 @@ function drawYearChart(lbl,dtset){
 	});
 }
 
-function drawMonthChart(lbl,dtset){
+function drawMonthChart(){
 	//if(window.myChart && window.myChart !== null){
     //    window.myChart.destroy();
     //}    
@@ -209,10 +213,7 @@ function drawMonthChart(lbl,dtset){
 	
 	window.myChartm = new Chart(ctx, {
 	    type: 'bar',
-	    data: {
-	        labels: lbl,
-	        datasets: dtsetFin
-	    },
+	    data: lineChartData2,
 	    options: {
 	    	title: {
 			    display: true,

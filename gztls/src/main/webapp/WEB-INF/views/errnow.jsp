@@ -8,7 +8,11 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="resources/js/moment.min.js"></script>
 <meta charset="UTF-8">
-
+<style>
+.container {
+	color: gray;
+}
+</style>
 </head>
 <body>
 <div class="container">	

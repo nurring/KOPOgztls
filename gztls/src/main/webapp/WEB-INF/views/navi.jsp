@@ -64,15 +64,15 @@ $(document).ready(function() {
 <button class="accordion" onclick="location.href='?contentPage=dashboard.jsp'">대시보드</button>
 <button class="accordion">정상 데이터 리포트</button>
 	<div class="panel">
-		<a href="?contentPage=datanow.jsp">현재 데이터</a><br>
-		<a href="?contentPage=byperiod.jsp">24시간 그래프</a><br>
-		<a href="?contentPage=avgbycon.jsp">기간 별 평균 통계</a><br>
+		<a href="?contentPage=datanow.jsp">실시간 데이터</a><br>
+		<a href="?contentPage=byperiod.jsp">24시간 내 데이터 추이(기기별)</a><br>
+		<a href="?contentPage=avgbycon.jsp">기간 별 평균</a><br>
 		<a href="?contentPage=bymap2.jsp">디바이스 위치 확인</a>
 	 </div>
 
 <button class="accordion">에러 데이터 리포트</button>
 	<div class="panel">
-		<a href="?contentPage=errnow.jsp">실시간 확인(24H)</a><br>
+		<a href="?contentPage=errnow.jsp">24시간 내 에러 발생 목록</a><br>
 		<a href="?contentPage=errbytime.jsp">기간 별 통계</a><br>
 		<a href="?contentPage=errbytype2.jsp">에러 타입 별 통계</a><br>
 		<a href="?contentPage=errbymessage.jsp">에러 내용 별 통계</a>	

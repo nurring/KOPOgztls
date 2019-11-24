@@ -39,7 +39,7 @@ div.col-md-2 {
 		<div class="col-md-2">
 			<jsp:include page="navi.jsp" />		
 		</div>
-		<div class="col-md-10">			
+		<div class="col-md-10" style="padding-top: 40px;padding-left: 30px; padding-right: 30px;">			
 			<jsp:include page="<%=contentPage%>" />
 		</div>
 	</div>

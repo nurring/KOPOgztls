@@ -7,10 +7,13 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 <script src="resources/js/Chart.min.js"></script>
 <link rel="stylesheet" type="text/css" href="resources/css/Chart.min.css">
-
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<style>
+.container-fluid {
+	color: gray;
+}
+</style>
 </head>
 <body>
 <script type="text/javascript">
@@ -26,6 +29,7 @@ var tdt; var tdtarr=new Array();
 var totlbl; var totlblarr = new Array();
 var totcnt; var totcntarr = new Array();
 var totlbls;
+var dtdvname; var xdvname; var tdvname;
 let dataerrChart; let x509errChart; let tlserrChart;
 $(document).ready(function() {	
 	updateDev();
@@ -62,15 +66,18 @@ function dateSelect(){
 	var device_id = $("#deviceinfo").val();
 	var server_time = $("#server_time").val();
 	var to_date = $("#to_date").val();
+	obj = {};
 	if (device_id){ obj.device_id = device_id;}
 	if (server_time){ obj.server_time = server_time;}
 	if (to_date){ obj.to_date = to_date;}
 	console.log("obj",obj);
+	$('#deviceinfo').val('');
 }
 function dateSelect2(){
 	var err_type = $("#errinfo").val();
 	var server_time = $("#server_time2").val();
 	var to_date = $("#to_date2").val();
+	obj = {};
 	if (err_type){ set.err_type = err_type;}
 	if (server_time){ set.server_time = server_time;}
 	if (to_date){ set.to_date = to_date;}
@@ -93,11 +100,13 @@ function getDataChart(){
 	}).done(function(results){
 		console.log("dataResults",results);
 		dtlbl=""; dtdt="";
-		for(i in results){
+		for(i in results){	
 			if (!results[i].device_id){
+				dtdvname = " ";
 				dtlbl += results[i].err_code + " " + results[i].err_message + "," ;
 				dtdt += results[i].count + "," ;
 			} else{
+				dtdvname = results[i].device_name+" ";
 				for(j in results[i].errorList){
 					dtlbl += results[i].errorList[j].err_code + " " + results[i].errorList[j].err_message + "," ;
 					dtdt += results[i].errorList[j].count + "," ;
@@ -108,7 +117,6 @@ function getDataChart(){
 		dtdt = dtdt.substr(0, dtdt.length - 1);	dtdtarr = dtdt.split(",");
 		console.log("dtlblarr",dtlblarr);
 		console.log("dtdtarr", dtdtarr);
-		
 		if(dataerrChart && dataerrChart !== null){
 	        dataerrChart.destroy();
 	    }	    
@@ -120,8 +128,7 @@ function getDataChart(){
 		        labels: dtlblarr,
 		        datasets:[{
 		            data: dtdtarr,
-		            backgroundColor: ["rgba(169, 50, 38, 0.8)",
-		            	"rgba(36, 113, 163, 0.8)"],
+		            backgroundColor: ["rgba(115, 2, 32, 0.6)","rgba(63, 137, 166, 0.6)"],
 		            hoverBorderWidth:4,
 		            fill: false
 		        }]
@@ -129,7 +136,7 @@ function getDataChart(){
 		    options: {
 			    title:{
 			        display:true,
-			        text:'에러 타입 분석 - \'데이터 오류\'',
+			        text: dtdvname +'에러 타입 분석 - \'데이터 오류\'',
 			        fontSize:25
 			    },
 			    legend:{
@@ -152,7 +159,6 @@ function getDataChart(){
 		dataerrChart.data.datasets[0].data = dtdtarr;	
 		dataerrChart.labels = dtlblarr;
 		dataerrChart.update();
-		
 	});
 }
 function getX509Chart(){
@@ -174,9 +180,11 @@ function getX509Chart(){
 		xlbl=""; xdt="";
 		for(i in results){
 			if (!results[i].device_id){
+				xdvname = " ";
 				xlbl += results[i].err_code + " " + results[i].err_message + "," ;
 				xdt += results[i].count + "," ;
 			} else{
+				xdvname = results[i].device_name+" ";
 				for(j in results[i].errorList){
 					xlbl += results[i].errorList[j].err_code + " " + results[i].errorList[j].err_message + "," ;
 					xdt += results[i].errorList[j].count + "," ;
@@ -199,7 +207,7 @@ function getX509Chart(){
 		        labels: xlblarr,
 		        datasets:[{
 		            data: xdtarr,
-		            backgroundColor: "#117A65",
+		            backgroundColor: "rgba(17, 122, 101, 0.8)",
 		            hoverBorderWidth:4,
 		            fill: false
 		        }]
@@ -207,7 +215,7 @@ function getX509Chart(){
 		    options: {
 			    title:{
 			        display:true,
-			        text:'에러 타입 분석 - \'X509(인증서) 오류\'',
+			        text: xdvname +'에러 타입 분석 - \'X509(인증서) 오류\'',
 			        fontSize:25
 			    },
 			    legend:{
@@ -248,9 +256,11 @@ function getTlsChart(){
 		tlbl=""; tdt="";
 		for(i in results){
 			if (!results[i].device_id){
+				tdvname = " ";
 				tlbl += results[i].err_code + " " + results[i].err_message + "," ;
 				tdt += results[i].count + "," ;
 			} else{
+				tdvname = results[i].device_name+" ";
 				for(j in results[i].errorList){
 					tlbl += results[i].errorList[j].err_code + " " + results[i].errorList[j].err_message + "," ;
 					tdt += results[i].errorList[j].count + "," ;
@@ -273,8 +283,8 @@ function getTlsChart(){
 		        labels: tlblarr,
 		        datasets:[{
 		            data: tdtarr,
-		            backgroundColor: ["rgba(166, 3, 33, 0.8)","rgba(115, 2, 32, 0.8)","rgba(63, 137, 166, 0.8)","rgba(89, 75, 2, 0.8)","rgba(191, 180, 147, 0.8)",
-		            	"rgba(140, 58, 88, 0.8)","rgba(7, 14, 38, 0.8)","rgba(13, 24, 38, 0.8)","rgba(191, 176, 170, 0.8)","rgba(140, 66, 66, 0.8)"],
+		            backgroundColor: ["rgba(166, 3, 33, 0.6)","rgba(115, 2, 32, 0.6)","rgba(63, 137, 166, 0.6)","rgba(89, 75, 2, 0.6)","rgba(191, 180, 147, 0.6)",
+		            	"rgba(140, 58, 88, 0.6)","rgba(7, 14, 38, 0.6)","rgba(13, 24, 38, 0.6)","rgba(191, 176, 170, 0.6)","rgba(140, 66, 66, 0.6)"],
 		            hoverBorderWidth:4,
 		            fill: false
 		        }]
@@ -282,7 +292,7 @@ function getTlsChart(){
 		    options: {
 			    title:{
 			        display:true,
-			        text:'에러 타입 분석 - \'TLS(SSL) 오류\'',
+			        text: tdvname + '에러 타입 분석 - \'TLS(SSL) 오류\'',
 			        fontSize:25
 			    },
 			    legend:{
@@ -336,29 +346,15 @@ function getTotalStatsChart(){
 	});
 	
 }
-var lineChartData = { labels:
-	 ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20',
-	 '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31'], 
-	 datasets: [] },
-array = ["[0,0,0,0,0,0,0,0,0,0,0,0,0,58,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]", 
-   "[0,0,53,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]", 
-   "[0,0,381,0,0,649,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]"];
 
-array.forEach(function (a, i) {
-   lineChartData.datasets.push({
-       label: 'Label ' + i,
-       fillColor: 'rgba(220,220,220,0.2)',
-       data: JSON.parse(a)
-   });
-});
-
-console.log("lineChartData",lineChartData);
 </script>
 <div class="container-fluid">
 			<select id="deviceinfo" name="deviceinfo"></select>
-			<input type="date" id="server_time">
-			<input type="date" id="to_date">
+			시작일자:<input type="date" id="server_time">
+			종료일자:<input type="date" id="to_date">
 			<button type="submit" id="submit" class="btn btn-dark" onclick='periodSelect()'>조회</button>
+			<p class="font-weight-light font-italic">기기와 기간을 선택하여 조회 시 에러 타입별 누적 횟수를 확인할 수 있습니다.<br>
+													첫 화면에는 데이터가 기록 된 전체 기간, 전체 기기의 누적 횟수가 제시됩니다.</p>
 	<div class="row">
 		<div class="col" style="width:50%;">
 
@@ -369,11 +365,11 @@ console.log("lineChartData",lineChartData);
 		</div>
 	</div>
 	
-	<div class="container" style="width:70%;">
+	<div class="container" style="width:70%; padding-top:60px;">
 		<canvas id="x509errChart" height="200"></canvas>	
 	</div>	
 	
-	<div>
+<!--	<div>
 		<select id="errinfo" name="errinfo">
 			<option value='데이터 오류'>데이터 오류</option>
 			<option value='X509(인증서) 오류'>X509(인증서) 오류</option>
@@ -383,7 +379,7 @@ console.log("lineChartData",lineChartData);
 		<input type="date" id="to_date2">
 		<button type="submit" id="submit2" class="btn btn-dark" onclick='errSelect()'>조회</button>
 		<canvas id="totalerrChart" height="200"></canvas>	
-	</div>
+	</div>  -->
 
 </div>
 

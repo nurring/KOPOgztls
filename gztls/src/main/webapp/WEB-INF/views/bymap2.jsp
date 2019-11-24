@@ -9,6 +9,11 @@
 <script src="resources/js/moment.min.js"></script>
 <meta charset="UTF-8">
 </head>
+<style>
+.container {
+	color: gray;
+}
+</style>
 <body>
 <div class="container">	
 <div id="map" class="mx-auto" style="width:90%;height:450px;"></div>
@@ -75,7 +80,7 @@ function getmap(arr, clat, clng){
 	var mapContainer = document.getElementById('map'), 
 	mapOption = { 
 	    center: new kakao.maps.LatLng(clat, clng),
-	    level: 11 // 지도의 확대 레벨
+	    level: 12 // 지도의 확대 레벨
 	};		
 	var map = new kakao.maps.Map(mapContainer, mapOption); 
 	var mapTypeControl = new kakao.maps.MapTypeControl();	

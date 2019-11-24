@@ -12,6 +12,11 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 <head>
 <meta charset="UTF-8">
+<style>
+.container {
+	color: gray;
+}
+</style>
 <title>기간 변화 그래프</title>
 </head>
 <body>
@@ -52,7 +57,7 @@ $(document).ready(function() {
 				if (results[key].data_type == "H"){
 					hdata += results[key].data_content;
 					hdata += ",";
-					hlabels += moment(results[key].server_time).format('HH:mm:ss');
+					hlabels += moment(results[key].server_time).format('LT');
 					hlabels +=","}
 				if (results[key].data_type == "T"){
 					tdata += results[key].data_content;
@@ -116,35 +121,34 @@ function updateChartp(){
     tempData.labels = hlabelsArray;
     testChart.update();
 };
-
 let tempData = {
         labels: hlabelsArray,
         datasets:[{
             label: 'H:습도',
             data: hdataArray,
-            borderColor: "rgba(0, 123, 255, 0.6)",
-            backgroundColor: "rgba(0, 123, 255, 0.6)",
+            borderColor: "rgba(63, 137, 166, 0.6)",
+            backgroundColor: "rgba(63, 137, 166, 0.6)",
             hoverBorderWidth:4,
             fill: false
         },{
             label: 'T:온도',
             data: tdataArray,
-            borderColor:"rgba(220, 53, 69, 0.6)",
-            backgroundColor:"rgba(220, 53, 69, 0.6)",
+            borderColor:"rgba(115, 2, 32, 0.6)",
+            backgroundColor:"rgba(115, 2, 32, 0.6)",
             hoverBorderWidth:4,
             fill: false
         },{
             label: 'D1:미세먼지',
             data: d1dataArray,
-            borderColor:"rgba(255, 193, 7, 0.6)",
-            backgroundColor:"rgba(255, 193, 7, 0.6)", 
+            borderColor:"rgba(89, 75, 2, 0.6)",
+            backgroundColor:"rgba(89, 75, 2, 0.6)", 
             hoverBorderWidth:4,
             fill: false
         },{
             label: 'D2:초미세먼지',
             data: d2dataArray,
-            borderColor:"rgba(23, 162, 184, 0.6)",
-            backgroundColor:"rgba(23, 162, 184, 0.6)", 
+            borderColor:"rgba(191, 180, 147, 0.6)",
+            backgroundColor:"rgba(191, 180, 147, 0.6)", 
             hoverBorderWidth:4,
             fill: false
         }]
@@ -153,7 +157,7 @@ let chartOptions = {
 
     title:{
         display:true,
-        text:'24h data',
+        text:'24시간 내 데이터 추이(기기별)',
         fontSize:25
     },
     legend:{
