@@ -88,7 +88,7 @@ function deviceOne(device){
 		$('#datainsert').html(html);
 			
 	});
-	}, 2000);
+	}, 20000);
 };
 function reloading(){
 	var device_id = $("#deviceinfo").val();

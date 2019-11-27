@@ -58,7 +58,7 @@ $(document).ready(function() {
 				<option value="07">7</option><option value="08">8</option><option value="09">9</option>
 				<option value="10">10</option><option value="11">11</option><option value="12">12</option>
 			</select>
-			<p class="font-weight-light font-italic">월를 선택하면 연도 별 해당 월 에러 발생 건수를 비교하실 수 있습니다.</p>
+			<p class="font-weight-light font-italic">월을 선택하면 연도 별 해당 월 에러 발생 건수를 비교하실 수 있습니다.</p>
 			
 		</div>
 	</div>
