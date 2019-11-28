@@ -10,7 +10,6 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
 <style>
 .container-fluid {
 	color: gray;
@@ -113,7 +112,7 @@ function reloading(){
 	</div>
 	<div style="margin-top:50px;">
 		<select id="deviceinfo" name="deviceinfo" onchange="deviceOne(this.value);"></select>
-		<button class="btn btn-dark" style="float: right;" onclick="reloading();">새로고침</button>
+		
 	</div>
 	<p class="font-weight-light font-italic">기기를 선택하면 현재 데이터 현황을 확인하실 수 있습니다.</p>
 </div>

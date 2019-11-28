@@ -27,27 +27,14 @@ public class HomeController { //jsp view로 return
 	private DeviceService service; 	
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
-	
-	/**
-	 * Simply selects the home view to render by returning its name.
-	 */
+
 	@GetMapping(value = "/")
 	public String home(Model model) {
-		logger.info("Welcome home!");		
-//		SimpleDateFormat sdt= new SimpleDateFormat("YYYYMMddHHmmss");
-//		Calendar calt = Calendar.getInstance();
+		logger.info("Welcome home!");
 		List<DeviceVO> vos = service.deviceList();
 		logger.info("vos", vos.toString());
 		model.addAttribute("list",vos);
 		return "main";
-	}
-	
-	@GetMapping(value = "/bymap")
-	public String oneView(Model model) {
-		logger.info("main.jsp started ===================================");
-		List<DeviceVO> vos = service.deviceList();
-		model.addAttribute("list",vos);
-		return "bymap"; //bymap.jsp
 	}
 	
 	@GetMapping(value = "/bymap2")
@@ -55,7 +42,7 @@ public class HomeController { //jsp view로 return
 		logger.info("bymap2.jsp started ===================================");
 		List<DeviceVO> vos = service.deviceList();
 		model.addAttribute("list",vos);
-		return "bymap2"; //bymap.jsp
+		return "bymap2"; //bymap2.jsp
 	}
 	
 	@GetMapping(value = "/bytime")

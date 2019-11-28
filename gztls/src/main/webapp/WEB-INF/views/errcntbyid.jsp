@@ -9,7 +9,6 @@
 <link rel="stylesheet" type="text/css" href="resources/css/Chart.min.css">
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
 </head>
 <body>
 <div>

@@ -17,7 +17,7 @@
 </head>
 <body>
 <script type="text/javascript">
-//errbymsgjsn
+
 var obj = new Object();
 var set = new Object();
 var dtlbl; var dtlblarr=new Array();
@@ -368,19 +368,6 @@ function getTotalStatsChart(){
 	<div class="container" style="width:70%; padding-top:60px;">
 		<canvas id="x509errChart" height="200"></canvas>	
 	</div>	
-	
-<!--	<div>
-		<select id="errinfo" name="errinfo">
-			<option value='데이터 오류'>데이터 오류</option>
-			<option value='X509(인증서) 오류'>X509(인증서) 오류</option>
-			<option value='TLS(SSL) 오류'>TLS(SSL) 오류</option>
-		</select>
-		<input type="date" id="server_time2">
-		<input type="date" id="to_date2">
-		<button type="submit" id="submit2" class="btn btn-dark" onclick='errSelect()'>조회</button>
-		<canvas id="totalerrChart" height="200"></canvas>	
-	</div>  -->
-
 </div>
 
 </body>
