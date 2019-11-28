@@ -24,7 +24,7 @@
 			<option value='device_address'>주소</option>
 		</select>
 		<input type="text" id="keyword" placeholder="입력">
-		<button type="submit" class='btn btn-dark' id="submit" onclick="searching()">검색</button>
+		<button type="submit" class='btn btn-dark' id="submit" onclick="searching()">조회</button>
 	</form>
 	<p class="font-weight-light font-italic" >기기명 또는 주소를 검색하여 지도 상 위치를 확인하세요.</p>
 </div>

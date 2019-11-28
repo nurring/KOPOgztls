@@ -39,6 +39,7 @@ var hdataArray, hlabelsArray, tdataArray, d1dataArray, d2dataArray;
 console.log("setp",setp);	
 
 $(document).ready(function() {		
+	
     updateDevice();    
 	window.setInterval(function(){			
 		$.ajax({
@@ -157,7 +158,7 @@ let chartOptions = {
 
     title:{
         display:true,
-        text:'24시간 내 데이터 추이(기기별)',
+        text:'24시간 내 데이터 추이(기기 별)',
         fontSize:25
     },
     legend:{

@@ -42,11 +42,15 @@ $(document).ready(function() {
 	};
 
 });
+function startInterval(callback, seconds) { 
+	callback(); 
+	return setInterval(callback, seconds * 1000);
+}
 
 function deviceOne(device){
 	var deviname =	"";
 	obj.device_id = device;	
-	window.setInterval(function(){	
+	startInterval(function(){	
 	$.ajax({
 		url : "nowjsn",
 		data : obj,
@@ -65,7 +69,7 @@ function deviceOne(device){
 		}	
 		else {
 			deviname = 	results[0].device_name;	
-			$('#title').html("현재 데이터 - "+deviname);
+			$('#title').html("실시간 데이터 - "+deviname);
 			for(key in results[0].successList){
 				$('#timeinsert').html(moment(results[0].successList[key].server_time).format('YYYY-MM-DD HH:mm'));					
 				
@@ -87,7 +91,7 @@ function deviceOne(device){
 		$('#datainsert').html(html);
 			
 	});
-	}, 20000);
+	}, 20);
 };
 function reloading(){
 	var device_id = $("#deviceinfo").val();
