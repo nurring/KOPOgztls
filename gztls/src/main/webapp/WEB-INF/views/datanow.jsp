@@ -74,16 +74,16 @@ function deviceOne(device){
 				$('#timeinsert').html(moment(results[0].successList[key].server_time).format('YYYY-MM-DD HH:mm'));					
 				
 				if (results[0].successList[key].data_type == "H"){
-					html += "<h3>"+results[0].successList[key].data_content+" %</h3>"
+					html += "<h3>"+results[0].successList[key].data_content.toFixed(2)+" %</h3>"
 					}
 				if (results[0].successList[key].data_type == "T"){
-					html += "<h3>"+results[0].successList[key].data_content+" ℃</h3>"
+					html += "<h3>"+results[0].successList[key].data_content.toFixed(2)+" ℃</h3>"
 					}
 				if (results[0].successList[key].data_type == "D1"){
-					html += "<h3>"+results[0].successList[key].data_content+" μm</h3>"
+					html += "<h3>"+results[0].successList[key].data_content.toFixed(2)+" μm</h3>"
 					}
 				if (results[0].successList[key].data_type == "D2"){
-					html += "<h3>"+results[0].successList[key].data_content+" μm</h3>"
+					html += "<h3>"+results[0].successList[key].data_content.toFixed(2)+" μm</h3>"
 					}
 			}
 		}
@@ -91,7 +91,7 @@ function deviceOne(device){
 		$('#datainsert').html(html);
 			
 	});
-	}, 20);
+	}, 2);
 };
 function reloading(){
 	var device_id = $("#deviceinfo").val();
