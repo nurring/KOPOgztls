@@ -36,28 +36,7 @@
   transition: max-height 0.2s ease-out;
 }
 </style>
-<script type="text/javascript">
-$(document).ready(function() {	
-	window.setInterval(function(){	
-	$.ajax({
-		url : "errnowjsn",
-		type : "GET",
-		error : function() {
-			alert("err");
-		}
-	}).done(function(results){
-		console.log("results",results);
-		//for(i in results){
-		//	}
-		if(results.length != 0){
-			alert("에러가 발생했습니다. 실시간 에러 확인 페이지로 이동합니다.");
-			window.location.href="?contentPage=errnow.jsp";
-		}
-		
-		})
-	}, 60000);
-});
-</script>
+
 </head>
 <body>
 <div id="navi">

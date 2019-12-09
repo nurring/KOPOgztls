@@ -30,6 +30,27 @@
 </div>
 <div id="list"></div>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b0046eb968ae938c420eab6c01f02df4&libraries=services,clusterer,drawing"></script>
+<script type="text/javascript">
+$(document).ready(function() {	
+(function poll(){
+	$.ajax({
+		url : "errnowjsn",
+		type : "GET",
+		success: function(results){
+			if(results.length != 0){
+				alert("에러가 발생했습니다. 실시간 에러 확인 페이지로 이동합니다.");
+				window.location.href="?contentPage=errnow.jsp";
+			}
+		},
+		error : function() {
+			alert("err");
+		},
+		complete: poll,
+		timeout: 600000
+	});
+})();
+});
+</script>
 <script>
 var arr = new Array();
 var arr2 = new Array();

@@ -28,6 +28,27 @@
 	<p class="font-weight-light font-italic" >기기를 선택하면 최근 24시간 내 데이터 추이를 보여줍니다.</p>
 	</div>
 <script type="text/javascript">
+$(document).ready(function() {	
+(function poll(){
+	$.ajax({
+		url : "errnowjsn",
+		type : "GET",
+		success: function(results){
+			if(results.length != 0){
+				alert("에러가 발생했습니다. 실시간 에러 확인 페이지로 이동합니다.");
+				window.location.href="?contentPage=errnow.jsp";
+			}
+		},
+		error : function() {
+			alert("err");
+		},
+		complete: poll,
+		timeout: 600000
+	});
+})();
+});
+</script>	
+<script type="text/javascript">
 var setp = new Object();	
 function deviceSelect(device){
 	setp.device_id = device;		

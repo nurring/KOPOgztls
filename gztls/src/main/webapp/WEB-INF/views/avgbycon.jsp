@@ -17,6 +17,27 @@
 }
 </style>
 <script type="text/javascript">
+$(document).ready(function() {	
+(function poll(){
+	$.ajax({
+		url : "errnowjsn",
+		type : "GET",
+		success: function(results){
+			if(results.length != 0){
+				alert("에러가 발생했습니다. 실시간 에러 확인 페이지로 이동합니다.");
+				window.location.href="?contentPage=errnow.jsp";
+			}
+		},
+		error : function() {
+			alert("err");
+		},
+		complete: poll,
+		timeout: 600000
+	});
+})();
+});
+</script>
+<script type="text/javascript">
 	var dlabels = "";
 	var hdt="", tdt="", d1dt="", d2dt="";	
 	var dlabelsArray;
